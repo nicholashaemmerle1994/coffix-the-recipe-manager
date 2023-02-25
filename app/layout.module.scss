@@ -1,0 +1,14 @@
+.footer {
+  z-index: 1;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #1a120b;
+  padding: 20px 0px;
+
+  & nav {
+    width: 100vw;
+    display: flex;
+    justify-content: space-around;
+  }
+}

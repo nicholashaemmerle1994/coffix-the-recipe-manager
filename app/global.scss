@@ -1,0 +1,15 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 21px;
+  background-color: #1a120b;
+  color: #e5e5cb;
+  line-height: 1.5;
+  margin: 0px;
+}
