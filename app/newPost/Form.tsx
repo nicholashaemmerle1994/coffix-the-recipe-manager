@@ -59,51 +59,6 @@ export default function Form() {
       Spice: ['Ginger', 'Cinnamon', 'Black pepper'],
     },
   });
-
-  const tastingNotesOptions = [
-    { name: 'Dark Chocolate', category: 'Chocolatey' },
-    { name: 'Milk chocolate', category: 'Chocolatey' },
-    { name: 'White chocolate', category: 'Chocolatey' },
-    { name: 'Cocoa', category: 'Chocolatey' },
-    { name: 'Lemon', category: 'Fruity' },
-    { name: 'Lime', category: 'Fruity' },
-    { name: 'Grapefruit', category: 'Fruity' },
-    { name: 'Orange', category: 'Fruity' },
-    { name: 'Apple', category: 'Fruity' },
-    { name: 'Pear', category: 'Fruity' },
-    { name: 'Melon', category: 'Fruity' },
-    { name: 'Mango', category: 'Fruity' },
-    { name: 'Banana', category: 'Fruity' },
-    { name: 'Coconut', category: 'Fruity' },
-    { name: 'Strawberry', category: 'Fruity' },
-    { name: 'Raspberry', category: 'Fruity' },
-    { name: 'Blueberry', category: 'Fruity' },
-    { name: 'Plum', category: 'Fruity' },
-    { name: 'Almond', category: 'Nutty' },
-    { name: 'Peanut', category: 'Nutty' },
-    { name: 'Hazelnut', category: 'Nutty' },
-    { name: 'Cashew', category: 'Nutty' },
-    { name: 'Walnut', category: 'Nutty' },
-    { name: 'Vanilla', category: 'Sweet' },
-    { name: 'Cane sugar', category: 'Sweet' },
-    { name: 'Brown sugar', category: 'Sweet' },
-    { name: 'Caramel', category: 'Sweet' },
-    { name: 'Maple syrup', category: 'Sweet' },
-    { name: 'Marzipan', category: 'Sweet' },
-    { name: 'Nougat', category: 'Sweet' },
-    { name: 'Honey', category: 'Sweet' },
-    { name: 'Butter', category: 'Sweet' },
-    { name: 'Cream', category: 'Sweet' },
-    { name: 'Marshmallow', category: 'Sweet' },
-    { name: 'Rose', category: 'Floral' },
-    { name: 'Lavender', category: 'Floral' },
-    { name: 'Jasmine', category: 'Floral' },
-    { name: 'Lemongrass', category: 'Floral' },
-    { name: 'Ginger', category: 'Spice' },
-    { name: 'Cinnamon', category: 'Spice' },
-    { name: 'Black pepper', category: 'Spice' },
-  ];
-
   return (
     <form className={styles.form}>
       <h3>Setup</h3>
@@ -166,7 +121,7 @@ export default function Form() {
             });
           }}
         >
-          <option disabled selected>
+          <option defaultValue="Choose the brewing temperature">
             Choose the brewing temperature
           </option>
           <option>89°</option>

@@ -19,10 +19,10 @@ export default function RootLayout({
         {children}
         <footer className={styles.footer}>
           <nav>
-            <Link href="/home">
+            <Link href="/">
               <Image src="/home1.png" alt="home" width={30} height={30} />
             </Link>
-            <Link href="/newPost">
+            <Link href="/newpost/categorys">
               <Image src="/newPost1.png" alt="home" width={30} height={30} />
             </Link>
             <Link href="/profile">
