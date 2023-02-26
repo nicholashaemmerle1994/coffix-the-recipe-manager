@@ -21,7 +21,7 @@ type Coffee = {
   };
 };
 
-export default function Form() {
+export default function Form(props: any) {
   const [coffee, setCoffee] = useState<Coffee>({
     name: '',
     roaster: '',
