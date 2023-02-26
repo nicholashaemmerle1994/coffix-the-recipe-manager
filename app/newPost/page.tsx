@@ -1,9 +1,9 @@
-import Form from './Form';
+import Category from './Category';
 
-export default function NewPostPage() {
+export default function CategoryPage() {
   return (
     <div>
-      <Form />
+      <Category />
     </div>
   );
 }

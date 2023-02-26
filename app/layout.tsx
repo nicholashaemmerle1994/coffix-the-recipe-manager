@@ -22,7 +22,7 @@ export default function RootLayout({
             <Link href="/">
               <Image src="/home1.png" alt="home" width={30} height={30} />
             </Link>
-            <Link href="/newpost/categorys">
+            <Link href="/newpost">
               <Image src="/newPost1.png" alt="home" width={30} height={30} />
             </Link>
             <Link href="/profile">
