@@ -1,5 +1,6 @@
 'use client';
 
+import { tastingNotes } from '@/database/tastingnotes';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import styles from './form.module.scss';
@@ -17,18 +18,41 @@ export type Coffee = {
     minutes: number;
     seconds: number;
   };
-  tastingNotes: {
-    Chocolatey?: string[];
-    Fruity?: string[];
-    Nutty?: string[];
-    Sweet?: string[];
-    Floral?: string[];
-    Spice?: string[];
-  };
+  tastingNotes?: {
+    name: string;
+  }[];
 };
+
+type ApiTaste = {
+  name: string;
+}[];
+
+type TastingNote = {
+  name: string;
+}[];
+
+const chocolatey = tastingNotes.filter(
+  (note) => note.category === 'Chocolatey',
+);
+const fruity: TastingNote = tastingNotes.filter(
+  (note) => note.category === 'Fruity',
+);
+const nutty: TastingNote = tastingNotes.filter(
+  (note) => note.category === 'Nutty',
+);
+const sweet: TastingNote = tastingNotes.filter(
+  (note) => note.category === 'Sweet',
+);
+const floral: TastingNote = tastingNotes.filter(
+  (note) => note.category === 'Floral',
+);
+const spice: TastingNote = tastingNotes.filter(
+  (note) => note.category === 'Spice',
+);
 
 export default function Form(props: { name: string }) {
   const router = useRouter();
+  const apiTaste: ApiTaste = [];
   const [coffee, setCoffee] = useState<Coffee>({
     category: props.name,
     name: '',
@@ -41,34 +65,7 @@ export default function Form(props: { name: string }) {
       minutes: 0,
       seconds: 0,
     },
-    tastingNotes: {
-      Chocolatey: [
-        'Dark Chocolate',
-        'Milk chocolate',
-        'White chocolate',
-        'Cocoa',
-      ],
-      Fruity: [
-        'Lemon',
-        'Lime',
-        'Grapefruit',
-        'Orange',
-        'Apple',
-        'Pear',
-        'Melon',
-        'Mango',
-        'Banana',
-        'Coconut',
-        'Strawberry',
-        'Raspberry',
-        'Blueberry',
-        'Plum',
-      ],
-      Nutty: ['Almond', 'Peanut', 'Hazelnut', 'Cashew', 'Walnut'],
-      Sweet: ['Vanilla', 'Cane sugar', 'Brown sugar', 'Caramel'],
-      Floral: ['Rose', 'Lavender', 'Jasmine', 'Lemongrass'],
-      Spice: ['Ginger', 'Cinnamon', 'Black pepper'],
-    },
+    tastingNotes: apiTaste,
   });
   return (
     <form className={styles.form}>
@@ -153,30 +150,162 @@ export default function Form(props: { name: string }) {
         </label>
       </div>
       <h3>Tasting Notes</h3>
-      {/* mapping of the tastingNotesOptions to generate the clickable lables for every category */}
-      {Object.entries(coffee.tastingNotes).map(([category, options]) => (
-        <div key={`category-${category}`}>
-          <h4>{category}</h4>
-          <div className={styles.categoryTaste}>
-            {options.map((option) => (
-              <label key={`option-${option}`} className={styles.label}>
-                <input
-                  className={styles.item}
-                  type="checkbox"
-                  value={option}
-                  onChange={(event) => {
-                    console.log(
-                      `Changed ${option} in category ${category} to ${event.target.checked}`,
-                    );
-                  }}
-                />
-                {option}
-              </label>
-            ))}
-          </div>
+      {/* mapping over the chocolatey array to display every possiple choice for the user */}
+      <div>
+        <h4>Chocolatey</h4>
+        <div className={styles.categoryTaste}>
+          {chocolatey.map((note) => (
+            <label key={`option-${note.name}`} className={styles.label}>
+              <input
+                className={styles.item}
+                type="checkbox"
+                value={note.name}
+                onChange={(event) => {
+                  if (event.target.checked) {
+                    apiTaste.push(note.name);
+                  }
+                  // if the checkbox is unchecked, remove the value from the array
+                  else {
+                    const index = apiTaste.indexOf(note.name);
+                    apiTaste.splice(index, 1);
+                  }
+                }}
+              />
+              {note.name}
+            </label>
+          ))}
         </div>
-      ))}
-
+      </div>
+      {/* Mapping over the Fruity array to display all choices for the user */}
+      <div>
+        <h4>Fruity</h4>
+        <div className={styles.categoryTaste}>
+          {fruity.map((note) => (
+            <label key={`option-${note.name}`} className={styles.label}>
+              <input
+                className={styles.item}
+                type="checkbox"
+                value={note.name}
+                onChange={(event) => {
+                  if (event.target.checked) {
+                    apiTaste.push(note.name);
+                  }
+                  // if the checkbox is unchecked, remove the value from the array
+                  else {
+                    const index = apiTaste.indexOf(note.name);
+                    apiTaste.splice(index, 1);
+                  }
+                }}
+              />
+              {note.name}
+            </label>
+          ))}
+        </div>
+      </div>
+      {/* Mapping over the Nutty array to display all choices for the user */}
+      <div>
+        <h4>Nutty</h4>
+        <div className={styles.categoryTaste}>
+          {nutty.map((note) => (
+            <label key={`option-${note.name}`} className={styles.label}>
+              <input
+                className={styles.item}
+                type="checkbox"
+                value={note.name}
+                onChange={(event) => {
+                  if (event.target.checked) {
+                    apiTaste.push(note.name);
+                  }
+                  // if the checkbox is unchecked, remove the value from the array
+                  else {
+                    const index = apiTaste.indexOf(note.name);
+                    apiTaste.splice(index, 1);
+                  }
+                }}
+              />
+              {note.name}
+            </label>
+          ))}
+        </div>
+      </div>
+      {/* Mapping over the Sweet array to display all choices for the user */}
+      <div>
+        <h4>Sweet</h4>
+        <div className={styles.categoryTaste}>
+          {sweet.map((note) => (
+            <label key={`option-${note.name}`} className={styles.label}>
+              <input
+                className={styles.item}
+                type="checkbox"
+                value={note.name}
+                onChange={(event) => {
+                  if (event.target.checked) {
+                    apiTaste.push(note.name);
+                  }
+                  // if the checkbox is unchecked, remove the value from the array
+                  else {
+                    const index = apiTaste.indexOf(note.id);
+                    apiTaste.splice(index, 1);
+                  }
+                }}
+              />
+              {note.name}
+            </label>
+          ))}
+        </div>
+      </div>
+      {/* Mapping over the Floral array to display all choices for the user */}
+      <div>
+        <h4>Floral</h4>
+        <div className={styles.categoryTaste}>
+          {floral.map((note) => (
+            <label key={`option-${note.name}`} className={styles.label}>
+              <input
+                className={styles.item}
+                type="checkbox"
+                value={note.name}
+                onChange={(event) => {
+                  if (event.target.checked) {
+                    apiTaste.push(note.name);
+                  }
+                  // if the checkbox is unchecked, remove the value from the array
+                  else {
+                    const index = apiTaste.indexOf(note.name);
+                    apiTaste.splice(index, 1);
+                  }
+                }}
+              />
+              {note.name}
+            </label>
+          ))}
+        </div>
+      </div>
+      {/* Mapping over the Spicy array to display all choices for the user */}
+      <div>
+        <h4>Spices</h4>
+        <div className={styles.categoryTaste}>
+          {spice.map((note) => (
+            <label key={`option-${note.name}`} className={styles.label}>
+              <input
+                className={styles.item}
+                type="checkbox"
+                value={note.name}
+                onChange={(event) => {
+                  if (event.target.checked) {
+                    apiTaste.push(note.name);
+                  }
+                  // if the checkbox is unchecked, remove the value from the array
+                  else {
+                    const index = apiTaste.indexOf(note.name);
+                    apiTaste.splice(index, 1);
+                  }
+                }}
+              />
+              {note.name}
+            </label>
+          ))}
+        </div>
+      </div>
       <h3>Rating</h3>
 
       <h3>Taste</h3>
