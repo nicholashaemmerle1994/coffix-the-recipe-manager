@@ -70,7 +70,6 @@ export default function Form(props: { name: string }) {
       Spice: ['Ginger', 'Cinnamon', 'Black pepper'],
     },
   });
-  console.log(coffee.brewTime);
   return (
     <form className={styles.form}>
       <h3>Setup</h3>
