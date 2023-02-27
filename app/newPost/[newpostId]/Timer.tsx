@@ -1,16 +1,36 @@
+'use client';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { Coffee } from './Form';
 import styles from './form.module.scss';
 
-export const Timer = () => {
+export default function Timer({
+  coffee,
+  setCoffee,
+}: {
+  coffee: Coffee;
+  setCoffee: (coffee: Coffee) => void;
+}) {
+  const router = useRouter();
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
 
   const handleMinutesChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setMinutes(parseInt(event.target.value));
+    setCoffee({
+      ...coffee,
+      brewTime: { minutes: minutes, seconds: seconds },
+    });
+    router.refresh();
   };
 
   const handleSecondsChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSeconds(parseInt(event.target.value));
+    setCoffee({
+      ...coffee,
+      brewTime: { minutes: minutes, seconds: seconds },
+    });
+    router.refresh();
   };
 
   const minuteOptions = Array.from({ length: 6 }, (_, i) => (
@@ -37,4 +57,4 @@ export const Timer = () => {
       </select>
     </div>
   );
-};
+}

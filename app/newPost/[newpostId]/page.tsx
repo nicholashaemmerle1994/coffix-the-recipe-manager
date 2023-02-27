@@ -1,4 +1,4 @@
-import { category } from 'database/category';
+import { getCategory } from 'database/category';
 import Form from './Form';
 
 type Params = {
@@ -7,9 +7,13 @@ type Params = {
   };
 };
 
-export default function NewPostPage({ params }: Params) {
+export default async function NewPostPage({ params }: Params) {
+  // get the category name from the url
+  const category = await getCategory();
   // get the whole category object for the form to use
-  const categoryName = category.filter((cat) => cat.name === params.newpostId);
+  const categoryName = category.filter(
+    (cat) => cat.siteName === params.newpostId,
+  );
   const name = categoryName[0]['name'];
   return (
     <div>

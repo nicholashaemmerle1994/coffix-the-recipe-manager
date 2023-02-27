@@ -1,16 +1,22 @@
 'use client';
+
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import styles from './form.module.scss';
-import { Timer } from './Timer';
+import Timer from './Timer';
 
-type Coffee = {
+export type Coffee = {
+  category: string;
   name: string;
   roaster: string;
   amountIn: number;
   amountOut: number;
   grindSetting: number;
   temperature: number;
-  brewTime: string;
+  brewTime: {
+    minutes: number;
+    seconds: number;
+  };
   tastingNotes: {
     Chocolatey?: string[];
     Fruity?: string[];
@@ -21,15 +27,20 @@ type Coffee = {
   };
 };
 
-export default function Form(props: any) {
+export default function Form(props: { name: string }) {
+  const router = useRouter();
   const [coffee, setCoffee] = useState<Coffee>({
+    category: props.name,
     name: '',
     roaster: '',
     amountIn: 0,
     amountOut: 0,
     grindSetting: 0,
     temperature: 0, // in celsius
-    brewTime: '',
+    brewTime: {
+      minutes: 0,
+      seconds: 0,
+    },
     tastingNotes: {
       Chocolatey: [
         'Dark Chocolate',
@@ -59,6 +70,7 @@ export default function Form(props: any) {
       Spice: ['Ginger', 'Cinnamon', 'Black pepper'],
     },
   });
+  console.log(coffee.brewTime);
   return (
     <form className={styles.form}>
       <h3>Setup</h3>
@@ -124,19 +136,20 @@ export default function Form(props: any) {
           <option defaultValue="Choose the brewing temperature">
             Choose the brewing temperature
           </option>
-          <option>89°</option>
-          <option>90°</option>
-          <option>91°</option>
-          <option>92°</option>
-          <option>93°</option>
-          <option>94°</option>
-          <option>95°</option>
-          <option>96°</option>
-          <option>97°</option>
+          <option>89</option>
+          <option>90</option>
+          <option>91</option>
+          <option>92</option>
+          <option>93</option>
+          <option>94</option>
+          <option>95</option>
+          <option>96</option>
+          <option>97</option>
         </select>
         <label htmlFor="brew-time-select">
           <div id="brew-time-select" aria-label="Select brew time">
-            <Timer />
+            {/* set brew time minutes */}
+            <Timer coffee={coffee} setCoffee={setCoffee} />
           </div>
         </label>
       </div>
