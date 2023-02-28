@@ -1,6 +1,6 @@
 export async function up(sql) {
   await sql`
-  CREATE TABLE category (
+  CREATE TABLE categories (
     id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(50) NOT NULL,
     icon varchar(100) NOT NULL,
@@ -11,6 +11,6 @@ export async function up(sql) {
 
 export async function down(sql) {
   await sql`
-  DROP TABLE category;
+  DROP TABLE categories;
 `;
 }

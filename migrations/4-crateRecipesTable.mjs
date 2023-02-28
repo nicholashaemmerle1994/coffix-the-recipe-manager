@@ -3,7 +3,7 @@ export async function up(sql) {
     CREATE TABLE recipes (
     id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     user_id integer REFERENCES users (id),
-    category_id integer REFERENCES category (id),
+    category_id integer REFERENCES categories (id),
     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
     coffee varchar(100) NOT NULL,
     roaster varchar(100) NOT NULL,
@@ -12,7 +12,6 @@ export async function up(sql) {
     grind_size integer NOT NULL,
     brew_temperatur integer NOT NULL,
     brew_time integer NOT NULL,
-    taste varchar(100) NOT NULL,
     notes varchar(500)
 );
 `;
