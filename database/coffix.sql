@@ -71,9 +71,48 @@ CREATE TABLE recipes (
     roaster varchar(100) NOT NULL,
     amount_in integer NOT NULL,
     amount_out integer NOT NULL,
-    grind_size integer(100) NOT NULL,
+    grind_size integer NOT NULL,
     brew_temperatur integer NOT NULL,
     brew_time integer NOT NULL,
-    taste varchar(100) NOT NULL,
+    taste text[] NOT NULL,
     notes varchar(500)
 );
+
+
+-- Just for testing
+CREATE TABLE recipes (
+    id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    coffee varchar(100) NOT NULL,
+    roaster varchar(100) NOT NULL,
+    amount_in integer NOT NULL,
+    amount_out integer NOT NULL,
+    grind_size integer NOT NULL,
+    brew_temperatur integer NOT NULL,
+    brew_minutes integer,
+    brew_seconds integer,
+    notes varchar(500)
+);
+
+
+INSERT INTO recipes (coffee, roaster, amount_in, amount_out, grind_size, brew_temperatur, brew_minutes, brew_seconds, taste)
+VALUES ('Espresso Perfetto Bar',
+    'Espresso Perfetto',
+    18.5,
+    37,
+    14,
+    96,
+    3,
+    25,
+    {"fruity", "chocolate", "caramel"});
+
+
+
+    'Espresso Perfetto Bar',
+    'Espresso Perfetto',
+    18.5,
+    37,
+    14,
+    96
+    0,
+    0,
+    ['fruity', 'chocolate', 'caramel']
