@@ -5,7 +5,6 @@ import styles from './category.module.scss';
 
 export default async function CategoryPage() {
   const category = await getCategory();
-  console.log(category);
   return (
     <div className={styles.wholePage}>
       <h2>Choose your brew method</h2>

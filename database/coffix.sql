@@ -77,3 +77,10 @@ CREATE TABLE recipes (
     taste text[] NOT NULL,
     notes varchar(500)
 );
+
+
+INSERT INTO recipes (user_id, category_id, coffee, roaster, amount_in, amount_out, grind_size, brew_temperatur, brew_time_minutes, brew_time_seconds, notes)
+VALUES (1, 1, 'You cute mf', 'Coffix', 18, 30, 2, 92, 2, 30, 'This is a test');
+
+INSERT INTO recipes_tastingnotes(tasting_note_name, recipe_id)
+VALUES ('sweet',4);

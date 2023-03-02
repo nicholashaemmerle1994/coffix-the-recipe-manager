@@ -3,9 +3,10 @@ export async function up(sql) {
   CREATE TABLE posts (
     id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     category_id integer REFERENCES categories (id),
-    user_id integer REFERENCES users (id),
+    user_id integer REFERENCES users (id) ON DELETE CASCADE,
     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    tasting_note_id integer REFERENCES recepiestastingnotes (id)
+    recipe_id integer REFERENCES recipes (id) ON DELETE CASCADE
+
 );
   `;
 }

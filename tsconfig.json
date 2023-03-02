@@ -29,7 +29,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "**/*.mjs"
+    "**/*.mjs",
+    "stylelint.config.cjs"
   ],
   "exclude": ["node_modules"]
 }

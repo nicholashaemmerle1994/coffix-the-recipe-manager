@@ -13,13 +13,12 @@ export type Coffee = {
   amountOut: number;
   grindSetting: number;
   temperature: number;
-  brewTime: {
-    minutes: number;
-    seconds: number;
-  };
+  brewTimeMinutes: number;
+  brewTimeSeconds: number;
   tastingNotes?: {
     name: string;
   }[];
+  notes: string;
 };
 
 type ApiTaste = {
@@ -67,18 +66,17 @@ export default function Form(props: { name: string }) {
     amountOut: 0,
     grindSetting: 0,
     temperature: 0, // in celsius
-    brewTime: {
-      minutes: 0,
-      seconds: 0,
-    },
+    brewTimeMinutes: 0,
+    brewTimeSeconds: 0,
     tastingNotes: apiTaste,
+    notes: '',
   });
   // creating the handler function for the timer
   const handleMinutesChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setMinutes(parseInt(event.target.value));
     setCoffee({
       ...coffee,
-      brewTime: { minutes: minutes, seconds: seconds },
+      brewTimeMinutes: minutes,
     });
     router.refresh();
   };
@@ -87,9 +85,8 @@ export default function Form(props: { name: string }) {
     setSeconds(parseInt(event.target.value));
     setCoffee({
       ...coffee,
-      brewTime: { minutes: minutes, seconds: seconds },
+      brewTimeSeconds: seconds,
     });
-    router.refresh();
   };
   // creating the options for the timer
   const minuteOptions = Array.from({ length: 6 }, (_, i) => (
@@ -367,9 +364,13 @@ export default function Form(props: { name: string }) {
           ))}
         </div>
       </div>
-      <h3>Rating</h3>
-
-      <h3>Taste</h3>
+      <h3>Notes</h3>
+      <div>
+        <textarea name="notes" />
+      </div>
+      <div className={styles.buttonDiv}>
+        <button>Save</button>
+      </div>
     </form>
   );
 }

@@ -13,12 +13,12 @@ const category = [
 
 export async function up(sql) {
   await sql`
-  INSERT INTO category ${sql(category, 'name', 'icon', 'site_name')}
+  INSERT INTO categories ${sql(category, 'name', 'icon', 'site_name')}
   `;
 }
 
 export async function down(sql) {
   for (const cat of category) {
-    await sql`DELETE FROM category WHERE id = ${cat.id}`;
+    await sql`DELETE FROM categories WHERE id = ${cat.id}`;
   }
 }
