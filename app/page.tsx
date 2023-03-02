@@ -1,4 +1,4 @@
-import { getAllRecipes } from '@/database/recipes';
+import { getAllRecipes } from '../database/recipes';
 
 export const metadata = {
   title: 'Coffix',

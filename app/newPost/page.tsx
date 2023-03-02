@@ -1,6 +1,6 @@
-import { getCategory } from '@/database/category';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getCategory } from '../../database/category';
 import styles from './category.module.scss';
 
 export default async function CategoryPage() {

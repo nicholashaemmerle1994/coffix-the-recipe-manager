@@ -1,8 +1,7 @@
 'use client';
-
-import { tastingNotes } from '@/database/tastingnotes';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { tastingNotes } from '../../../database/tastingnotes';
 import styles from './form.module.scss';
 
 export type Coffee = {
@@ -11,7 +10,7 @@ export type Coffee = {
   roaster: string;
   amountIn: number;
   amountOut: number;
-  grindSetting: number;
+  grindSize: number;
   temperature: number;
   brewTimeMinutes: number;
   brewTimeSeconds: number;
@@ -31,8 +30,29 @@ type TastingNote = {
   name: string;
 }[];
 
+type CheckedBoxes = {
+  chocolatey: {
+    [key: string]: boolean;
+  };
+  fruity: {
+    [key: string]: boolean;
+  };
+  nutty: {
+    [key: string]: boolean;
+  };
+  sweet: {
+    [key: string]: boolean;
+  };
+  floral: {
+    [key: string]: boolean;
+  };
+  spice: {
+    [key: string]: boolean;
+  };
+};
+
 // Filter the whole tasting notes database into categories
-const chocolatey = tastingNotes.filter(
+const chocolatey: TastingNote = tastingNotes.filter(
   (note) => note.category === 'Chocolatey',
 );
 const fruity: TastingNote = tastingNotes.filter(
@@ -53,18 +73,27 @@ const spice: TastingNote = tastingNotes.filter(
 
 export default function Form(props: { name: string }) {
   const router = useRouter();
+  const [checkedBoxes, setCheckedBoxes] = useState<CheckedBoxes>({
+    chocolatey: {},
+    fruity: {},
+    nutty: {},
+    sweet: {},
+    floral: {},
+    spice: {},
+  });
+  const category = props.name;
   // setting minutes and seconds for the timer
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const apiTaste: ApiTaste = [];
   // setting the state for the coffee object will be sent to the api
   const [coffee, setCoffee] = useState<Coffee>({
-    category: props.name,
+    category: category,
     name: '',
     roaster: '',
     amountIn: 0,
     amountOut: 0,
-    grindSetting: 0,
+    grindSize: 0,
     temperature: 0, // in celsius
     brewTimeMinutes: 0,
     brewTimeSeconds: 0,
@@ -150,7 +179,7 @@ export default function Form(props: { name: string }) {
           onChange={(event) => {
             setCoffee({
               ...coffee,
-              grindSetting: parseInt(event.target.value),
+              grindSize: parseInt(event.target.value),
             });
           }}
         />
@@ -181,20 +210,12 @@ export default function Form(props: { name: string }) {
             {/* set brew time minutes */}
             <div className={styles.div}>
               Brew Time:
-              <select
-                name="minutes"
-                value={minutes}
-                onChange={handleMinutesChange}
-              >
+              <select name="minutes" onChange={handleMinutesChange}>
                 {minuteOptions}
               </select>
               <span>:</span>
               {/* set brew time seconds */}
-              <select
-                name="seconds"
-                value={seconds}
-                onChange={handleSecondsChange}
-              >
+              <select name="seconds" onChange={handleSecondsChange}>
                 {secondOptions}
               </select>
             </div>
@@ -207,12 +228,19 @@ export default function Form(props: { name: string }) {
         <h4>Chocolatey</h4>
         <div className={styles.categoryTaste}>
           {chocolatey.map((note) => (
-            <label key={`option-${note.name}`} className={styles.label}>
+            <label key={`not-id${note.id}`}>
               <input
-                className={styles.item}
                 type="checkbox"
-                value={note.name}
+                name={note.name}
+                checked={checkedBoxes.chocolatey[note.name] || false}
                 onChange={(event) => {
+                  setCheckedBoxes({
+                    ...checkedBoxes,
+                    chocolatey: {
+                      ...checkedBoxes.chocolatey,
+                      [event.target.name]: event.target.checked,
+                    },
+                  });
                   const tastingNote = {
                     name: note.name,
                   };
@@ -234,12 +262,19 @@ export default function Form(props: { name: string }) {
         <h4>Fruity</h4>
         <div className={styles.categoryTaste}>
           {fruity.map((note) => (
-            <label key={`option-${note.name}`} className={styles.label}>
+            <label key={`not-id${note.id}`}>
               <input
-                className={styles.item}
                 type="checkbox"
-                value={note.name}
+                name={note.name}
+                checked={checkedBoxes.fruity[note.name] || false}
                 onChange={(event) => {
+                  setCheckedBoxes({
+                    ...checkedBoxes,
+                    fruity: {
+                      ...checkedBoxes.fruity,
+                      [event.target.name]: event.target.checked,
+                    },
+                  });
                   const tastingNote = {
                     name: note.name,
                   };
@@ -261,12 +296,19 @@ export default function Form(props: { name: string }) {
         <h4>Nutty</h4>
         <div className={styles.categoryTaste}>
           {nutty.map((note) => (
-            <label key={`option-${note.name}`} className={styles.label}>
+            <label key={`not-id${note.id}`}>
               <input
-                className={styles.item}
                 type="checkbox"
-                value={note.name}
+                name={note.name}
+                checked={checkedBoxes.nutty[note.name] || false}
                 onChange={(event) => {
+                  setCheckedBoxes({
+                    ...checkedBoxes,
+                    nutty: {
+                      ...checkedBoxes.nutty,
+                      [event.target.name]: event.target.checked,
+                    },
+                  });
                   const tastingNote = {
                     name: note.name,
                   };
@@ -288,12 +330,19 @@ export default function Form(props: { name: string }) {
         <h4>Sweet</h4>
         <div className={styles.categoryTaste}>
           {sweet.map((note) => (
-            <label key={`option-${note.name}`} className={styles.label}>
+            <label key={`not-id${note.id}`}>
               <input
-                className={styles.item}
                 type="checkbox"
-                value={note.name}
+                name={note.name}
+                checked={checkedBoxes.sweet[note.name] || false}
                 onChange={(event) => {
+                  setCheckedBoxes({
+                    ...checkedBoxes,
+                    sweet: {
+                      ...checkedBoxes.sweet,
+                      [event.target.name]: event.target.checked,
+                    },
+                  });
                   const tastingNote = {
                     name: note.name,
                   };
@@ -315,12 +364,19 @@ export default function Form(props: { name: string }) {
         <h4>Floral</h4>
         <div className={styles.categoryTaste}>
           {floral.map((note) => (
-            <label key={`option-${note.name}`} className={styles.label}>
+            <label key={`not-id${note.id}`}>
               <input
-                className={styles.item}
                 type="checkbox"
-                value={note.name}
+                name={note.name}
+                checked={checkedBoxes.floral[note.name] || false}
                 onChange={(event) => {
+                  setCheckedBoxes({
+                    ...checkedBoxes,
+                    floral: {
+                      ...checkedBoxes.floral,
+                      [event.target.name]: event.target.checked,
+                    },
+                  });
                   const tastingNote = {
                     name: note.name,
                   };
@@ -342,12 +398,19 @@ export default function Form(props: { name: string }) {
         <h4>Spices</h4>
         <div className={styles.categoryTaste}>
           {spice.map((note) => (
-            <label key={`option-${note.name}`} className={styles.label}>
+            <label key={`not-id${note.id}`}>
               <input
-                className={styles.item}
                 type="checkbox"
-                value={note.name}
+                name={note.name}
+                checked={checkedBoxes.spice[note.name] || false}
                 onChange={(event) => {
+                  setCheckedBoxes({
+                    ...checkedBoxes,
+                    spice: {
+                      ...checkedBoxes.spice,
+                      [event.target.name]: event.target.checked,
+                    },
+                  });
                   const tastingNote = {
                     name: note.name,
                   };
@@ -369,7 +432,47 @@ export default function Form(props: { name: string }) {
         <textarea name="notes" />
       </div>
       <div className={styles.buttonDiv}>
-        <button>Save</button>
+        <button
+          onClick={async (event) => {
+            event.preventDefault();
+            const response = await fetch('/api/recipes', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                categoryName: coffee.category,
+                coffee: coffee.name,
+                roaster: coffee.roaster,
+                amountIn: coffee.amountIn,
+                amountOut: coffee.amountOut,
+                grindSize: coffee.grindSize,
+                brewTemperature: coffee.temperature,
+                brewTimeMinutes: coffee.brewTimeMinutes,
+                brewTimeSeconds: coffee.brewTimeSeconds,
+                tastingNotes: apiTaste,
+                notes: coffee.notes,
+              }),
+            });
+            setCheckedBoxes({
+              chocolatey: {},
+              fruity: {},
+              nutty: {},
+              sweet: {},
+              floral: {},
+              spice: {},
+            });
+
+            setMinutes(0);
+            setSeconds(0);
+
+            router.refresh();
+            const data = await response.json();
+            router.push('/');
+          }}
+        >
+          Save
+        </button>
       </div>
     </form>
   );
