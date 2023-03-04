@@ -1,7 +1,7 @@
 export async function up(sql) {
   await sql`
-  INSERT INTO users (username, password, email)
-  VALUES ('admin', 'admin', 'admin@admin.at');
+  INSERT INTO users (username, password)
+  VALUES ('admin', 'admin');
   `;
 }
 

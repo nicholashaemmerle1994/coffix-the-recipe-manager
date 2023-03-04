@@ -18,8 +18,8 @@ type RecipeSQL = {
 };
 
 type Recipe = {
-  // id: number;
-  // userId: number;
+  id: number;
+  userId: number;
   categoryName: string;
   coffee: string;
   roaster: string;
@@ -27,9 +27,9 @@ type Recipe = {
   amountOut: number;
   grindSize: number;
   brewTemperature: number;
-  brewTimeMinutes: number | null;
-  brewTimeSeconds: number | null;
-  notes: string | null;
+  brewTimeMinutes: number;
+  brewTimeSeconds: number;
+  notes: string;
 };
 
 // GET METHODS

@@ -1,15 +1,15 @@
 export async function up(sql) {
   await sql`
-CREATE TABLE users (
+CREATE TABLE sessions (
     id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    username VARCHAR(50) NOT NULL,
-    password VARCHAR(100) NOT NULL
+    token VARCHAR(110) NOT NULL,
+    user_id integer NOT NULL REFERENCES users(id)
 );
 `;
 }
 
 export async function down(sql) {
   await sql`
-  DROP TABLE users;
+  DROP TABLE sessions;
 `;
 }

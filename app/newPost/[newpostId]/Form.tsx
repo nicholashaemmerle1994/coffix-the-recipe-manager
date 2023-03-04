@@ -1,5 +1,5 @@
 'use client';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { tastingNotes } from '../../../database/tastingnotes';
 import styles from './form.module.scss';
@@ -14,13 +14,12 @@ export type Coffee = {
   temperature: number;
   brewTimeMinutes: number;
   brewTimeSeconds: number;
-  tastingNotes?: {
-    name: string;
-  }[];
   notes: string;
 };
 
 type ApiTaste = {
+  id: number;
+  category: string;
   name: string;
 }[];
 
@@ -29,27 +28,6 @@ type TastingNote = {
   category: string;
   name: string;
 }[];
-
-type CheckedBoxes = {
-  chocolatey: {
-    [key: string]: boolean;
-  };
-  fruity: {
-    [key: string]: boolean;
-  };
-  nutty: {
-    [key: string]: boolean;
-  };
-  sweet: {
-    [key: string]: boolean;
-  };
-  floral: {
-    [key: string]: boolean;
-  };
-  spice: {
-    [key: string]: boolean;
-  };
-};
 
 // Filter the whole tasting notes database into categories
 const chocolatey: TastingNote = tastingNotes.filter(
@@ -73,14 +51,6 @@ const spice: TastingNote = tastingNotes.filter(
 
 export default function Form(props: { name: string }) {
   const router = useRouter();
-  const [checkedBoxes, setCheckedBoxes] = useState<CheckedBoxes>({
-    chocolatey: {},
-    fruity: {},
-    nutty: {},
-    sweet: {},
-    floral: {},
-    spice: {},
-  });
   const category = props.name;
   // setting minutes and seconds for the timer
   const [minutes, setMinutes] = useState(0);
@@ -97,7 +67,6 @@ export default function Form(props: { name: string }) {
     temperature: 0, // in celsius
     brewTimeMinutes: 0,
     brewTimeSeconds: 0,
-    tastingNotes: apiTaste,
     notes: '',
   });
   // creating the handler function for the timer
@@ -228,26 +197,18 @@ export default function Form(props: { name: string }) {
         <h4>Chocolatey</h4>
         <div className={styles.categoryTaste}>
           {chocolatey.map((note) => (
-            <label key={`not-id${note.id}`}>
+            <label key={`option-${note.name}`} className={styles.label}>
               <input
+                className={styles.item}
                 type="checkbox"
-                name={note.name}
-                checked={checkedBoxes.chocolatey[note.name] || false}
+                value={note.name}
                 onChange={(event) => {
-                  setCheckedBoxes({
-                    ...checkedBoxes,
-                    chocolatey: {
-                      ...checkedBoxes.chocolatey,
-                      [event.target.name]: event.target.checked,
-                    },
-                  });
-                  const tastingNote = {
-                    name: note.name,
-                  };
                   if (event.target.checked) {
-                    apiTaste.push(tastingNote);
-                  } else {
-                    const index = apiTaste.indexOf(tastingNote);
+                    apiTaste.push(note);
+                  }
+                  // if the checkbox is unchecked, remove the value from the array
+                  else {
+                    const index = apiTaste.indexOf(note);
                     apiTaste.splice(index, 1);
                   }
                 }}
@@ -262,26 +223,18 @@ export default function Form(props: { name: string }) {
         <h4>Fruity</h4>
         <div className={styles.categoryTaste}>
           {fruity.map((note) => (
-            <label key={`not-id${note.id}`}>
+            <label key={`option-${note.name}`} className={styles.label}>
               <input
+                className={styles.item}
                 type="checkbox"
-                name={note.name}
-                checked={checkedBoxes.fruity[note.name] || false}
+                value={note.name}
                 onChange={(event) => {
-                  setCheckedBoxes({
-                    ...checkedBoxes,
-                    fruity: {
-                      ...checkedBoxes.fruity,
-                      [event.target.name]: event.target.checked,
-                    },
-                  });
-                  const tastingNote = {
-                    name: note.name,
-                  };
                   if (event.target.checked) {
-                    apiTaste.push(tastingNote);
-                  } else {
-                    const index = apiTaste.indexOf(tastingNote);
+                    apiTaste.push(note);
+                  }
+                  // if the checkbox is unchecked, remove the value from the array
+                  else {
+                    const index = apiTaste.indexOf(note);
                     apiTaste.splice(index, 1);
                   }
                 }}
@@ -296,26 +249,18 @@ export default function Form(props: { name: string }) {
         <h4>Nutty</h4>
         <div className={styles.categoryTaste}>
           {nutty.map((note) => (
-            <label key={`not-id${note.id}`}>
+            <label key={`option-${note.name}`} className={styles.label}>
               <input
+                className={styles.item}
                 type="checkbox"
-                name={note.name}
-                checked={checkedBoxes.nutty[note.name] || false}
+                value={note.name}
                 onChange={(event) => {
-                  setCheckedBoxes({
-                    ...checkedBoxes,
-                    nutty: {
-                      ...checkedBoxes.nutty,
-                      [event.target.name]: event.target.checked,
-                    },
-                  });
-                  const tastingNote = {
-                    name: note.name,
-                  };
                   if (event.target.checked) {
-                    apiTaste.push(tastingNote);
-                  } else {
-                    const index = apiTaste.indexOf(tastingNote);
+                    apiTaste.push(note);
+                  }
+                  // if the checkbox is unchecked, remove the value from the array
+                  else {
+                    const index = apiTaste.indexOf(note);
                     apiTaste.splice(index, 1);
                   }
                 }}
@@ -330,26 +275,18 @@ export default function Form(props: { name: string }) {
         <h4>Sweet</h4>
         <div className={styles.categoryTaste}>
           {sweet.map((note) => (
-            <label key={`not-id${note.id}`}>
+            <label key={`option-${note.name}`} className={styles.label}>
               <input
+                className={styles.item}
                 type="checkbox"
-                name={note.name}
-                checked={checkedBoxes.sweet[note.name] || false}
+                value={note.name}
                 onChange={(event) => {
-                  setCheckedBoxes({
-                    ...checkedBoxes,
-                    sweet: {
-                      ...checkedBoxes.sweet,
-                      [event.target.name]: event.target.checked,
-                    },
-                  });
-                  const tastingNote = {
-                    name: note.name,
-                  };
                   if (event.target.checked) {
-                    apiTaste.push(tastingNote);
-                  } else {
-                    const index = apiTaste.indexOf(tastingNote);
+                    apiTaste.push(note);
+                  }
+                  // if the checkbox is unchecked, remove the value from the array
+                  else {
+                    const index = apiTaste.indexOf(note);
                     apiTaste.splice(index, 1);
                   }
                 }}
@@ -364,26 +301,18 @@ export default function Form(props: { name: string }) {
         <h4>Floral</h4>
         <div className={styles.categoryTaste}>
           {floral.map((note) => (
-            <label key={`not-id${note.id}`}>
+            <label key={`option-${note.name}`} className={styles.label}>
               <input
+                className={styles.item}
                 type="checkbox"
-                name={note.name}
-                checked={checkedBoxes.floral[note.name] || false}
+                value={note.name}
                 onChange={(event) => {
-                  setCheckedBoxes({
-                    ...checkedBoxes,
-                    floral: {
-                      ...checkedBoxes.floral,
-                      [event.target.name]: event.target.checked,
-                    },
-                  });
-                  const tastingNote = {
-                    name: note.name,
-                  };
                   if (event.target.checked) {
-                    apiTaste.push(tastingNote);
-                  } else {
-                    const index = apiTaste.indexOf(tastingNote);
+                    apiTaste.push(note);
+                  }
+                  // if the checkbox is unchecked, remove the value from the array
+                  else {
+                    const index = apiTaste.indexOf(note);
                     apiTaste.splice(index, 1);
                   }
                 }}
@@ -398,26 +327,18 @@ export default function Form(props: { name: string }) {
         <h4>Spices</h4>
         <div className={styles.categoryTaste}>
           {spice.map((note) => (
-            <label key={`not-id${note.id}`}>
+            <label key={`option-${note.name}`} className={styles.label}>
               <input
+                className={styles.item}
                 type="checkbox"
-                name={note.name}
-                checked={checkedBoxes.spice[note.name] || false}
+                value={note.name}
                 onChange={(event) => {
-                  setCheckedBoxes({
-                    ...checkedBoxes,
-                    spice: {
-                      ...checkedBoxes.spice,
-                      [event.target.name]: event.target.checked,
-                    },
-                  });
-                  const tastingNote = {
-                    name: note.name,
-                  };
                   if (event.target.checked) {
-                    apiTaste.push(tastingNote);
-                  } else {
-                    const index = apiTaste.indexOf(tastingNote);
+                    apiTaste.push(note);
+                  }
+                  // if the checkbox is unchecked, remove the value from the array
+                  else {
+                    const index = apiTaste.indexOf(note);
                     apiTaste.splice(index, 1);
                   }
                 }}
@@ -435,6 +356,14 @@ export default function Form(props: { name: string }) {
         <button
           onClick={async (event) => {
             event.preventDefault();
+            const finalApiTaste = apiTaste.map((taste) => {
+              return {
+                id: taste.id,
+                category: taste.category,
+                tasting_note_name: taste.name,
+              };
+            });
+            console.log(finalApiTaste);
             const response = await fetch('/api/recipes', {
               method: 'POST',
               headers: {
@@ -450,25 +379,14 @@ export default function Form(props: { name: string }) {
                 brewTemperature: coffee.temperature,
                 brewTimeMinutes: coffee.brewTimeMinutes,
                 brewTimeSeconds: coffee.brewTimeSeconds,
-                tastingNotes: apiTaste,
+                tastingNotes: finalApiTaste,
                 notes: coffee.notes,
               }),
-            });
-            setCheckedBoxes({
-              chocolatey: {},
-              fruity: {},
-              nutty: {},
-              sweet: {},
-              floral: {},
-              spice: {},
             });
 
             setMinutes(0);
             setSeconds(0);
-
-            router.refresh();
-            const data = await response.json();
-            router.push('/');
+            // router.push('/');
           }}
         >
           Save
