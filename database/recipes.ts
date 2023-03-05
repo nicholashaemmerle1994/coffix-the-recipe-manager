@@ -99,9 +99,17 @@ export const getRecipeWithOffsetAndLimit = cache(
 // Create recipe
 export const createFullRecipe = cache(async (recipe: Recipe) => {
   const newRecipe = await sql<RecipeSQL[]>`
-      INSERT INTO recipes (category_name, coffee, roaster, amount_in, amount_out, grind_size, brew_temperature, brew_time_minutes, brew_time_seconds, notes)
-      VALUES  (${recipe.categoryName}, ${recipe.coffee}, ${recipe.roaster}, ${recipe.amountIn}, ${recipe.amountOut}, ${recipe.grindSize}, ${recipe.brewTemperature}, ${recipe.brewTimeMinutes}, ${recipe.brewTimeSeconds}, ${recipe.notes})
-      RETURNING *
+      INSERT INTO recipes
+        (category_name, coffee, roaster, amount_in,
+        amount_out, grind_size, brew_temperature, brew_time_minutes,
+        brew_time_seconds, notes)
+      VALUES
+        (${recipe.categoryName}, ${recipe.coffee}, ${recipe.roaster},
+        ${recipe.amountIn}, ${recipe.amountOut}, ${recipe.grindSize},
+        ${recipe.brewTemperature}, ${recipe.brewTimeMinutes}, ${recipe.brewTimeSeconds},
+        ${recipe.notes})
+      RETURNING
+        *
     `;
   return newRecipe;
 });
@@ -112,10 +120,10 @@ export const deleteRecipeById = cache(async (id: number) => {
   const deletedRecipe = await sql<RecipeSQL[]>`
   DELETE
   FROM
-  recipes
+    recipes
   WHERE
-  id = ${id}
-  RETURNING *
+    id = ${id}
+    RETURNING *
   `;
   return deletedRecipe;
 });
@@ -127,7 +135,7 @@ export const updateFullRecipeById = cache(
   async (id: number, recipe: Recipe) => {
     const updatedRecipe = await sql<RecipeSQL[]>`
       UPDATE recipes
-      SET
+        SET
       category_name = ${recipe.categoryName},
       coffee = ${recipe.coffee},
       roaster = ${recipe.roaster},
@@ -138,7 +146,7 @@ export const updateFullRecipeById = cache(
       brew_time_minutes = ${recipe.brewTimeMinutes},
       brew_time_seconds = ${recipe.brewTimeSeconds},
       notes = ${recipe.notes}
-      WHERE id = ${id}
+        WHERE id = ${id}
       RETURNING *
     `;
     return updatedRecipe;

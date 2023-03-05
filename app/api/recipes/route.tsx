@@ -14,7 +14,7 @@ type FormBody = {
   roaster: string;
   amountIn: number;
   amountOut: number;
-  grindSize: string;
+  grindSize: number;
   brewTemperature: number;
   brewTimeMinutes: number;
   brewTimeSeconds: number;
@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
   const body: FormBody = await request.json();
   const recipeBody = {
     id: body.id,
-    user_id: body.userId,
+    userId: body.userId,
     categoryName: body.categoryName,
     coffee: body.coffee,
     roaster: body.roaster,
@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
   };
   const newRecipe = await createFullRecipe(recipeBody);
 
-  const newestbody = body.tastingNotes.map((tastingNote) => {
+  const newestBody = body.tastingNotes.map((tastingNote) => {
     return {
       id: tastingNote.id,
       tasting_note_name: tastingNote.tasting_note_name,
@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
     };
   });
 
-  await insertTastingNoteTable(newestbody);
+  await insertTastingNoteTable(newestBody);
 
   return NextResponse.json({ newRecipe: newRecipe });
 }

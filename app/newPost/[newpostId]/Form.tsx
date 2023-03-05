@@ -363,8 +363,7 @@ export default function Form(props: { name: string }) {
                 tasting_note_name: taste.name,
               };
             });
-            console.log(finalApiTaste);
-            const response = await fetch('/api/recipes', {
+            await fetch('/api/recipes', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
