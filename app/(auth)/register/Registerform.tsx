@@ -17,10 +17,10 @@ export default function Registerform() {
     const response = await fetch('/api/register', {
       method: 'POST',
       body: JSON.stringify({
-        userName: userName.toLowerCase(),
-        firstName,
-        lastName,
-        password,
+        userName: userName.trim().toLowerCase(),
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
+        password: password.trim(),
       }),
     });
     const data: RegisterResponseBody = await response.json();
@@ -32,11 +32,21 @@ export default function Registerform() {
       });
       return;
     }
+    toast.success('Registration successful');
+    setTimeout(() => {
+      router.push('/');
+    }, 3000);
   };
 
   return (
     <>
-      <Toaster />
+      <Toaster
+        toastOptions={{
+          success: {
+            duration: 3000,
+          },
+        }}
+      />
       <form className={styles.container} onSubmit={handleSubmit}>
         <div className={styles.card}>
           <a className={styles.singup}>Sign Up</a>

@@ -9,6 +9,11 @@ type User = {
   passwordHash: string;
 };
 
+export type GetUser = {
+  id: number;
+  userName: string;
+};
+
 type CreateUser = {
   id: number;
   userName: string;
@@ -17,9 +22,10 @@ type CreateUser = {
 // function to get user by username
 
 export const getUserByUsername = cache(async (username: string) => {
-  const [user] = await sql<User[]>`
+  const [user] = await sql<GetUser[]>`
     SELECT
-      *
+      id,
+      user_name
     FROM
       users
     WHERE
@@ -48,21 +54,18 @@ export const createUser = cache(
   },
 );
 
-export async function createUser1(
-  userName: string,
-  firstName: string,
-  lastName: string,
-  passwordHash: string,
-) {
-  const user = await sql<{ id: number; userName: string }[]>`
-    INSERT INTO users (user_name, first_name, last_name, password_hash)
-    VALUES (${userName}, ${firstName}, ${lastName}, ${passwordHash})
-    RETURNING id, user_name;
-  `;
-  console.log('createUser function', user);
-  return user;
-}
+// compare function for login
 
-// INSERT INTO users (user_name, first_name, last_name, password_hash)
-// VALUES ('test', 'test', 'test', 'test')
-// RETURNING id, user_name;
+export const getUserWithPassword = cache(async (username: string) => {
+  const [user] = await sql<User[]>`
+    SELECT
+      *
+    FROM
+      users
+    WHERE
+      user_name = ${username}
+    ;
+  `;
+
+  return user;
+});

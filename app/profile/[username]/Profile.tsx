@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import styles from './profile.module.scss';
 
-export default function Profile() {
+export default function Profile({ user }) {
+  console.log(user);
   return (
     <div>
       <div className={styles.upperPart}>
@@ -11,7 +12,7 @@ export default function Profile() {
         <div>
           <p>Posts:</p>
           <div>
-            <h5>Bio</h5>
+            <h5>{user.userName}</h5>
             <p>Bla Bla Bla</p>
           </div>
         </div>

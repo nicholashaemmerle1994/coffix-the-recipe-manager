@@ -1,18 +1,20 @@
 import bcrypt from 'bcrypt';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { createUser, getUserByUsername } from '../../../../database/users';
+import { getUserWithPassword } from '../../../../database/users';
 
 const userSchema = z.object({
   userName: z.string(),
-  firstName: z.string(),
-  lastName: z.string(),
   password: z.string(),
 });
 export type RegisterResponseBody =
   | { errors: { message: string }[] }
   | { user: { username: string } };
+
+// Making the login route
+
 export const POST = async (request: NextRequest) => {
+  // check if the stings are empty
   // 1. validate the data
   const body = await request.json();
   const result = userSchema.safeParse(body);
@@ -40,36 +42,33 @@ export const POST = async (request: NextRequest) => {
       { status: 400 },
     );
   }
-  // 2. check if the user already exist
+  // 2. check if the user exist
   // 2.a compare the username with the database
-  const user = await getUserByUsername(result.data.userName);
-  if (user) {
+  const userWitchPassword = await getUserWithPassword(result.data.userName);
+  if (!userWitchPassword) {
     return NextResponse.json(
       {
-        errors: [
-          { message: 'Username is already taken - please choose another one!' },
-        ],
+        errors: [{ message: 'User or password is wrong' }],
       },
       { status: 400 },
     );
   }
-  // 3. hash the password
-  const passwordHash = await bcrypt.hash(result.data.password, 12);
-  // 4. create the user
-  const newUser = await createUser(
-    result.data.userName,
-    result.data.firstName,
-    result.data.lastName,
-    passwordHash,
+  // 3. compare the password
+  const passwordMatch = await bcrypt.compare(
+    result.data.password,
+    userWitchPassword.passwordHash,
   );
-  if (!newUser) {
+  if (!passwordMatch) {
     return NextResponse.json(
       {
-        errors: [{ message: 'Internal Server Error - User Creation failed!' }],
+        errors: [{ message: 'User or password is wrong' }],
       },
-      { status: 500 },
+      { status: 400 },
     );
   }
-  // 5. return the new username
-  return NextResponse.json({ user: { username: newUser.userName } });
+
+  // 4. create the session
+
+  // 5. return the user
+  return NextResponse.json({ user: { username: userWitchPassword.userName } });
 };
