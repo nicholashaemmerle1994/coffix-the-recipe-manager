@@ -5,7 +5,10 @@ CREATE TABLE users (
     user_name VARCHAR(50) NOT NULL UNIQUE,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
-    password_hash VARCHAR(100) NOT NULL UNIQUE
+    password_hash VARCHAR(100) NOT NULL UNIQUE,
+    bio varchar(200),
+    picture_url varchar(200)
+
 );
 `;
 }

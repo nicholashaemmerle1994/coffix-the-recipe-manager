@@ -2,7 +2,6 @@ import Image from 'next/image';
 import styles from './profile.module.scss';
 
 export default function Profile({ user }) {
-  console.log(user);
   return (
     <div>
       <div className={styles.upperPart}>

@@ -1,6 +1,8 @@
 import './global.scss';
+import { cookies } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getUserBySessionToken } from '../database/users';
 import styles from './layout.module.scss';
 
 export const metadata = {
@@ -8,11 +10,25 @@ export const metadata = {
   description: 'Log your recipes and share them with the world',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // 1. get the session token from the cookie
+  const cookieStore = cookies();
+  const sessionToken = cookieStore.get('sessionToken');
+
+  // 2. validate that session
+  // 3. get the user profile matching the session
+  const user = !sessionToken?.value
+    ? undefined
+    : await getUserBySessionToken(sessionToken.value);
+
+  // const user = await getUserBySessionToken(sessionToken?.value);
+
+  // if user is not undefined, the person is logged in
+  // if user is undefined, the person is logged out
   return (
     <html lang="en">
       <head>
@@ -32,7 +48,7 @@ export default function RootLayout({
             <Link href="/newpost">
               <Image src="/newPost1.png" alt="home" width={30} height={30} />
             </Link>
-            <Link href="/profile">
+            <Link href={`profile/${user?.userName}`}>
               <Image src="/profile1.png" alt="home" width={30} height={30} />
             </Link>
           </nav>

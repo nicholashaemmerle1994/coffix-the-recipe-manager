@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
@@ -22,16 +23,15 @@ export default function Registerform() {
     const data: RegisterResponseBody = await response.json();
     // showing the error message
     if ('errors' in data) {
-      console.log(data.errors);
       data.errors.forEach((error) => {
         toast.error(error.message);
       });
       return;
     }
-    toast.success('Log in successful');
-    setTimeout(() => {
-      router.push(`/profile/${userName.toLowerCase()}`);
-    }, 3000);
+    // setTimeout(() => {
+    router.push('/');
+    // }, 3000);
+    router.refresh();
   };
 
   return (
@@ -65,8 +65,12 @@ export default function Registerform() {
             />
             <span>Password</span>
           </div>
-
-          <button className={styles.enter}>Enter</button>
+          <div>
+            <button className={styles.enter}>Enter</button>
+            <Link href="/register">
+              <button className={styles.enter}>Register</button>
+            </Link>
+          </div>
         </div>
       </form>
     </>

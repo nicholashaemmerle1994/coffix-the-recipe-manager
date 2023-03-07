@@ -26,7 +26,6 @@ export default function Registerform() {
     const data: RegisterResponseBody = await response.json();
     // showing the error message
     if ('errors' in data) {
-      console.log(data.errors);
       data.errors.forEach((error) => {
         toast.error(error.message);
       });
@@ -34,8 +33,9 @@ export default function Registerform() {
     }
     toast.success('Registration successful');
     setTimeout(() => {
+      router.refresh();
       router.push('/');
-    }, 3000);
+    }, 2000);
   };
 
   return (

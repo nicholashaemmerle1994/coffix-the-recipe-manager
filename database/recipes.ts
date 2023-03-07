@@ -3,24 +3,26 @@ import { sql } from './connect';
 
 type RecipeSQL = {
   id: number;
-  userId: number;
-  categoryName: string;
+  userId: number | null;
+  categoryId: number | null;
   createdAt: Date;
   coffee: string;
   roaster: string;
   amountIn: number;
   amountOut: number;
   grindSize: number;
-  brewTemperature: number;
-  brewTimeMinutes: number;
-  brewTimeSeconds: number;
-  notes: string;
+  brewTemperature: number | null;
+  brewTimeMinutes: number | null;
+  brewTimeSeconds: number | null;
+  notes: string | null;
+  pictureUrl: string | null;
+  comments: string | null;
 };
 
 type Recipe = {
   id: number;
   userId: number;
-  categoryName: string;
+  categoryId: number;
   coffee: string;
   roaster: string;
   amountIn: number;
@@ -57,14 +59,14 @@ export const getRecipeById = cache(async (id: number) => {
 });
 
 // Get recipes by category
-export const getRecipeByCategory = cache(async (category: string) => {
+export const getRecipeByCategory = cache(async (category: number) => {
   const recipes = await sql<RecipeSQL[]>`
   SELECT
   *
   FROM
   recipes
   WHERE
-  category_name = ${category}`;
+  category_id  = ${category}`;
   return recipes;
 });
 
@@ -100,11 +102,11 @@ export const getRecipeWithOffsetAndLimit = cache(
 export const createFullRecipe = cache(async (recipe: Recipe) => {
   const newRecipe = await sql<RecipeSQL[]>`
       INSERT INTO recipes
-        (category_name, coffee, roaster, amount_in,
+        (category_id, coffee, roaster, amount_in,
         amount_out, grind_size, brew_temperature, brew_time_minutes,
         brew_time_seconds, notes)
       VALUES
-        (${recipe.categoryName}, ${recipe.coffee}, ${recipe.roaster},
+        (${recipe.categoryId}, ${recipe.coffee}, ${recipe.roaster},
         ${recipe.amountIn}, ${recipe.amountOut}, ${recipe.grindSize},
         ${recipe.brewTemperature}, ${recipe.brewTimeMinutes}, ${recipe.brewTimeSeconds},
         ${recipe.notes})
@@ -136,7 +138,7 @@ export const updateFullRecipeById = cache(
     const updatedRecipe = await sql<RecipeSQL[]>`
       UPDATE recipes
         SET
-      category_name = ${recipe.categoryName},
+      category_id = ${recipe.categoryId},
       coffee = ${recipe.coffee},
       roaster = ${recipe.roaster},
       amount_in = ${recipe.amountIn},

@@ -5,7 +5,8 @@ import { tastingNotes } from '../../../database/tastingnotes';
 import styles from './form.module.scss';
 
 export type Coffee = {
-  category: string;
+  userId: number;
+  category: number;
   name: string;
   roaster: string;
   amountIn: number;
@@ -49,15 +50,20 @@ const spice: TastingNote = tastingNotes.filter(
   (note) => note.category === 'Spice',
 );
 
-export default function Form(props: { name: string }) {
+export default function Form(props: { id: number; userId: number }) {
   const router = useRouter();
-  const category = props.name;
+  const category = props.id;
+  const userID = props.userId;
+  // console.log('catergory: ', typeof category);
+  // console.log('userID: ', typeof userID);
+
   // setting minutes and seconds for the timer
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const apiTaste: ApiTaste = [];
   // setting the state for the coffee object will be sent to the api
   const [coffee, setCoffee] = useState<Coffee>({
+    userId: userID,
     category: category,
     name: '',
     roaster: '',
@@ -69,6 +75,7 @@ export default function Form(props: { name: string }) {
     brewTimeSeconds: 0,
     notes: '',
   });
+
   // creating the handler function for the timer
   const handleMinutesChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setMinutes(parseInt(event.target.value));
@@ -153,6 +160,7 @@ export default function Form(props: { name: string }) {
           }}
         />
         <select
+          title="brew temperature"
           placeholder="Brew temperature"
           onChange={(event) => {
             setCoffee({
@@ -179,12 +187,20 @@ export default function Form(props: { name: string }) {
             {/* set brew time minutes */}
             <div className={styles.div}>
               Brew Time:
-              <select name="minutes" onChange={handleMinutesChange}>
+              <select
+                title="minutes"
+                name="minutes"
+                onChange={handleMinutesChange}
+              >
                 {minuteOptions}
               </select>
               <span>:</span>
               {/* set brew time seconds */}
-              <select name="seconds" onChange={handleSecondsChange}>
+              <select
+                title="seconds"
+                name="seconds"
+                onChange={handleSecondsChange}
+              >
                 {secondOptions}
               </select>
             </div>
@@ -350,7 +366,7 @@ export default function Form(props: { name: string }) {
       </div>
       <h3>Notes</h3>
       <div>
-        <textarea name="notes" />
+        <textarea name="notes" title="notes" />
       </div>
       <div className={styles.buttonDiv}>
         <button
@@ -369,7 +385,8 @@ export default function Form(props: { name: string }) {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({
-                categoryName: coffee.category,
+                userID: userID,
+                categoryId: coffee.category,
                 coffee: coffee.name,
                 roaster: coffee.roaster,
                 amountIn: coffee.amountIn,
@@ -385,7 +402,7 @@ export default function Form(props: { name: string }) {
 
             setMinutes(0);
             setSeconds(0);
-            // router.push('/');
+            router.push('/');
           }}
         >
           Save

@@ -1,27 +1,34 @@
-import { getCategory } from '../../../database/category';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import { getValidSessionByToken } from '../../../database/sessions';
 import Form from './Form';
 
 type Params = {
   params: {
-    newpostId: string;
+    newpostId: number;
   };
 };
 
 export default async function NewPostPage({ params }: Params) {
-  // get the category name from the url¥‚
-  const category = await getCategory();
-  // get the whole category object for the form to use
-  const categoryName = category.filter(
-    (cat) => cat.siteName === params.newpostId,
-  );
-  if (categoryName.length === 0) {
-    return <div>404</div>;
+  const categoryID = Number(params.newpostId);
+  console.log(typeof categoryID);
+  const sessionTokenCookie = cookies().get('sessionToken');
+  const user =
+    sessionTokenCookie &&
+    (await getValidSessionByToken(sessionTokenCookie.value));
+  if (!user) {
+    redirect('/login');
   }
-  const name = categoryName[0]!.name;
+  if (!user.userId) {
+    redirect('/login');
+  }
+
+  const userId = user.userId;
+
   return (
     <div>
       {/* giving the form the props so i can give the api the category name */}
-      <Form name={name} />
+      <Form id={params.newpostId} userId={userId} />
     </div>
   );
 }

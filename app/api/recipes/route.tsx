@@ -9,7 +9,7 @@ import {
 type FormBody = {
   id: number;
   userId: number;
-  categoryName: string;
+  categoryId: number;
   coffee: string;
   roaster: string;
   amountIn: number;
@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
   const recipeBody = {
     id: body.id,
     userId: body.userId,
-    categoryName: body.categoryName,
+    categoryId: body.categoryId,
     coffee: body.coffee,
     roaster: body.roaster,
     amountIn: body.amountIn,

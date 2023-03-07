@@ -2,7 +2,7 @@ export async function up(sql) {
   await sql`
     CREATE TABLE recipes_tastingnotes (
     id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    tasting_note_name varchar(100),
+    tasting_note_id integer,
     recipe_id integer NOT NULL REFERENCES recipes (id) ON DELETE CASCADE
 );
 `;

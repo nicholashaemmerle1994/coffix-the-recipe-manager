@@ -1,7 +1,10 @@
+import crypto from 'node:crypto';
 import bcrypt from 'bcrypt';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
+import { createSession } from '../../../../database/sessions';
 import { getUserWithPassword } from '../../../../database/users';
+import { createSerializedCookie } from '../../../../utils/cookies';
 
 const userSchema = z.object({
   userName: z.string(),
@@ -20,7 +23,7 @@ export const POST = async (request: NextRequest) => {
   const result = userSchema.safeParse(body);
   if (!result.success) {
     // Inside of result.error.issues you are going to have more granular information about what is failing allowing you to create more specific error massages
-    // console.log(result.error.issues);
+
     return NextResponse.json(
       {
         errors: result.error.issues,
@@ -68,7 +71,25 @@ export const POST = async (request: NextRequest) => {
   }
 
   // 4. create the session
+  //  4.a create a session token
+  const token = crypto.randomBytes(80).toString('base64');
+
+  //  4.b create the session
+  const session = await createSession(token, userWitchPassword.id);
+  //  4.c attach the new cookie to the  header of the response
+
+  if (!session) {
+    return NextResponse.json(
+      { errors: [{ message: 'Something went wrong' }] },
+      { status: 500 },
+    );
+  }
+
+  const serializedCookie = createSerializedCookie(session.token);
 
   // 5. return the user
-  return NextResponse.json({ user: { username: userWitchPassword.userName } });
+  return NextResponse.json(
+    { user: { username: userWitchPassword.userName } },
+    { status: 200, headers: { 'Set-Cookie': serializedCookie } },
+  );
 };
