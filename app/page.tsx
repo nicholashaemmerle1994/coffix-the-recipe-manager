@@ -1,13 +1,6 @@
-import { AdvancedImage } from '@cloudinary/react';
-import { CloudinaryImage } from '@cloudinary/url-gen';
-import { fill } from '@cloudinary/url-gen/actions/resize';
 import { cookies } from 'next/headers';
-import Image from 'next/image';
 import { redirect } from 'next/navigation';
-import {
-  getAllRecipes,
-  getRecipeWithLimitAndOffset,
-} from '../database/recipes';
+import { getAllRecipes } from '../database/recipes';
 import { getValidSessionByToken } from '../database/sessions';
 import Home from './Home';
 
@@ -27,7 +20,7 @@ export default async function HomePage() {
     redirect('/login');
   }
 
-  const recipes = await getRecipeWithLimitAndOffset(10, 0);
+  const recipes = await getAllRecipes();
 
   // Create an array with recipes array but the date object is translated to a string but still call it createdAt
   const recipesWithDate = recipes.map((recipe) => {

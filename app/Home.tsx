@@ -6,6 +6,7 @@ type Recipe = {
   id: number;
   userId: number;
   categoryId: number;
+  createdAt: Date | undefined;
   coffee: string;
   roaster: string;
   amountIn: number;
@@ -16,7 +17,6 @@ type Recipe = {
   notes: string;
   pictureUrl: string;
   comments: string;
-  createdAt: Date | undefined;
 }[];
 type Props = {
   recipes: Recipe[];
@@ -34,9 +34,8 @@ export default function Home(props: Props) {
   recipesWithDate.sort((a, b) => {
     return b.createdAt.getTime() - a.createdAt.getTime();
   });
-  console.log(recipesWithDate);
-
   const [recipes, setRecipes] = useState(recipesWithDate);
+  console.log(recipes);
   // router.refresh();
 
   return (
@@ -47,7 +46,7 @@ export default function Home(props: Props) {
             return (
               <div key={`recipe-id-${recipe.id}`}>
                 <div>
-                  <h3>{recipe.categoryid}</h3>
+                  <h3>{recipe.categoryId}</h3>
                   <p>{recipe.coffee}</p>
                   <p>{recipe.roaster}</p>
                 </div>

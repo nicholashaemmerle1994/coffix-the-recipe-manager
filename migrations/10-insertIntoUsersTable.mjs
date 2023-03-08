@@ -1,17 +1,17 @@
 const users = [
   {
     id: 1,
-    user_name: 'admin',
-    first_name: 'admin',
-    last_name: 'daniel',
-    password_hash: 'jdsjksfdajkdsfjkdsf',
+    user_name: 'a',
+    first_name: 'a',
+    last_name: 'a',
+    password_hash: 'a',
   },
   {
     id: 2,
-    user_name: 'user',
-    first_name: 'user',
-    last_name: 'daniel',
-    password_hash: 'jdsjksfdajkdsddsadsfjkdsf',
+    user_name: 'b',
+    first_name: 'b',
+    last_name: 'b',
+    password_hash: 'b',
   },
 ];
 

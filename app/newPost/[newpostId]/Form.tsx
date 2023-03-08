@@ -91,13 +91,13 @@ export default function Form(props: { id: number; userId: number }) {
     });
   };
   // creating the options for the timer
-  const minuteOptions = Array.from({ length: 6 }, (_, i) => (
-    <option key={`minute-${i}`} value={i}>
+  const minuteOptions = Array.from({ length: 6 }, (unuseParam, i) => (
+    <option key={`second-${i}`} value={i}>
       {i.toString().padStart(2, '0')}
     </option>
   ));
 
-  const secondOptions = Array.from({ length: 60 }, (_, i) => (
+  const secondOptions = Array.from({ length: 60 }, (unuseParam, i) => (
     <option key={`second-${i}`} value={i}>
       {i.toString().padStart(2, '0')}
     </option>

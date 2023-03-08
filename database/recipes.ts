@@ -1,7 +1,7 @@
 import { cache } from 'react';
 import { sql } from './connect';
 
-type RecipeSQL = {
+export type RecipeSQL = {
   id: number;
   userId: number;
   categoryId: number;
@@ -19,7 +19,7 @@ type RecipeSQL = {
   comments: string;
 };
 
-type Recipe = {
+type UserRecipe = {
   userId: number;
   categoryId: number;
   coffee: string;
@@ -38,10 +38,10 @@ type Recipe = {
 // Get all recipes
 export const getAllRecipes = cache(async () => {
   const recipes = await sql<RecipeSQL[]>`
-  SELECT
-  *
-  FROM
-  recipes`;
+    SELECT *
+    FROM recipes
+    ORDER BY created_at DESC
+  `;
   return recipes;
 });
 
@@ -99,7 +99,7 @@ export const getRecipeWithLimitAndOffset = cache(
 // CREATE METHODS
 
 // Create recipe
-export const createFullRecipe = cache(async (recipe: Recipe) => {
+export const createFullRecipe = cache(async (recipe: UserRecipe) => {
   const newRecipe = await sql<RecipeSQL[]>`
       INSERT INTO recipes
         (user_id, category_id, coffee, roaster, amount_in,
@@ -134,7 +134,7 @@ export const deleteRecipeById = cache(async (id: number) => {
 
 // Update  full recipe by id
 export const updateFullRecipeById = cache(
-  async (id: number, recipe: Recipe) => {
+  async (id: number, recipe: UserRecipe) => {
     const updatedRecipe = await sql<RecipeSQL[]>`
       UPDATE recipes
         SET
