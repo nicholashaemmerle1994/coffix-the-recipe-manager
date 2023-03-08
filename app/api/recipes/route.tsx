@@ -4,10 +4,11 @@ import {
   createFullRecipe,
   getAllRecipes,
   getRecipeWithLimit,
+  getRecipeWithLimitAndOffset,
+  getRecipeWithOffsetAndLimit,
 } from '../../../database/recipes';
 
 type FormBody = {
-  id: number;
   userId: number;
   categoryId: number;
   coffee: string;
@@ -35,16 +36,13 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'No limit and offset' }, { status: 400 });
   }
 
-  const recipes = limit
-    ? await getRecipeWithLimit(Number(limit))
-    : await getAllRecipes();
+  const recipes = await getRecipeWithLimitAndOffset(limit, offset);
   return NextResponse.json({ recipes: recipes });
 }
 
 export async function POST(request: NextRequest) {
   const body: FormBody = await request.json();
   const recipeBody = {
-    id: body.id,
     userId: body.userId,
     categoryId: body.categoryId,
     coffee: body.coffee,
@@ -59,6 +57,7 @@ export async function POST(request: NextRequest) {
   };
   const newRecipe = await createFullRecipe(recipeBody);
 
+  // Create an array with all the tasting notes (id, tasting_note_name, category, recipe_id)
   const newestBody = body.tastingNotes.map((tastingNote) => {
     return {
       id: tastingNote.id,
@@ -67,7 +66,11 @@ export async function POST(request: NextRequest) {
       recipe_id: newRecipe[0]!.id,
     };
   });
-
+  // if newest body is an empty object, return the new recipe
+  if (newestBody.length === 0) {
+    return NextResponse.json({ newRecipe: newRecipe });
+  }
+  // if newest body is not an empty object, insert the tasting notes
   await insertTastingNoteTable(newestBody);
 
   return NextResponse.json({ newRecipe: newRecipe });

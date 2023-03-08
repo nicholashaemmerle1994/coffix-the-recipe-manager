@@ -11,7 +11,6 @@ type Params = {
 
 export default async function NewPostPage({ params }: Params) {
   const categoryID = Number(params.newpostId);
-  console.log(typeof categoryID);
   const sessionTokenCookie = cookies().get('sessionToken');
   const user =
     sessionTokenCookie &&
@@ -28,7 +27,7 @@ export default async function NewPostPage({ params }: Params) {
   return (
     <div>
       {/* giving the form the props so i can give the api the category name */}
-      <Form id={params.newpostId} userId={userId} />
+      <Form id={categoryID} userId={userId} />
     </div>
   );
 }

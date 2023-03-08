@@ -3,24 +3,23 @@ import { sql } from './connect';
 
 type RecipeSQL = {
   id: number;
-  userId: number | null;
-  categoryId: number | null;
+  userId: number;
+  categoryId: number;
   createdAt: Date;
   coffee: string;
   roaster: string;
   amountIn: number;
   amountOut: number;
   grindSize: number;
-  brewTemperature: number | null;
-  brewTimeMinutes: number | null;
-  brewTimeSeconds: number | null;
-  notes: string | null;
-  pictureUrl: string | null;
-  comments: string | null;
+  brewTemperature: number;
+  brewTimeMinutes: number;
+  brewTimeSeconds: number;
+  notes: string;
+  pictureUrl: string;
+  comments: string;
 };
 
 type Recipe = {
-  id: number;
   userId: number;
   categoryId: number;
   coffee: string;
@@ -83,15 +82,16 @@ export const getRecipeWithLimit = cache(async (limit: number) => {
 });
 
 // Get recipes with offset AND limit
-export const getRecipeWithOffsetAndLimit = cache(
-  async (offset: number, limit: number) => {
+export const getRecipeWithLimitAndOffset = cache(
+  async (limit: number, offset: number) => {
     const recipes = await sql<RecipeSQL[]>`
     SELECT
     *
     FROM
     recipes
+    LIMIT ${limit}
     OFFSET ${offset}
-    LIMIT ${limit}`;
+    `;
     return recipes;
   },
 );
@@ -102,11 +102,11 @@ export const getRecipeWithOffsetAndLimit = cache(
 export const createFullRecipe = cache(async (recipe: Recipe) => {
   const newRecipe = await sql<RecipeSQL[]>`
       INSERT INTO recipes
-        (category_id, coffee, roaster, amount_in,
+        (user_id, category_id, coffee, roaster, amount_in,
         amount_out, grind_size, brew_temperature, brew_time_minutes,
         brew_time_seconds, notes)
       VALUES
-        (${recipe.categoryId}, ${recipe.coffee}, ${recipe.roaster},
+        (${recipe.userId}, ${recipe.categoryId}, ${recipe.coffee}, ${recipe.roaster},
         ${recipe.amountIn}, ${recipe.amountOut}, ${recipe.grindSize},
         ${recipe.brewTemperature}, ${recipe.brewTimeMinutes}, ${recipe.brewTimeSeconds},
         ${recipe.notes})
@@ -151,6 +151,7 @@ export const updateFullRecipeById = cache(
         WHERE id = ${id}
       RETURNING *
     `;
+
     return updatedRecipe;
   },
 );

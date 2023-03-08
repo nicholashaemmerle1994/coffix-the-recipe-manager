@@ -53,17 +53,14 @@ const spice: TastingNote = tastingNotes.filter(
 export default function Form(props: { id: number; userId: number }) {
   const router = useRouter();
   const category = props.id;
-  const userID = props.userId;
-  // console.log('catergory: ', typeof category);
-  // console.log('userID: ', typeof userID);
-
+  const userId = props.userId;
   // setting minutes and seconds for the timer
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const apiTaste: ApiTaste = [];
   // setting the state for the coffee object will be sent to the api
   const [coffee, setCoffee] = useState<Coffee>({
-    userId: userID,
+    userId: userId,
     category: category,
     name: '',
     roaster: '',
@@ -385,7 +382,7 @@ export default function Form(props: { id: number; userId: number }) {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({
-                userID: userID,
+                userId: userId,
                 categoryId: coffee.category,
                 coffee: coffee.name,
                 roaster: coffee.roaster,
@@ -402,7 +399,7 @@ export default function Form(props: { id: number; userId: number }) {
 
             setMinutes(0);
             setSeconds(0);
-            router.push('/');
+            // router.push('/');
           }}
         >
           Save
