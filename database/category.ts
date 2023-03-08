@@ -7,9 +7,24 @@ type Category = {
   icon: string;
   siteName: string;
 };
+type CategoryName = {
+  name: string;
+};
 
 // Get all categories
 export const getCategory = cache(async () => {
   const categories = await sql<Category[]>`SELECT * FROM categories`;
   return categories;
+});
+
+// Ger category_name by id of catergoryId of the recipes
+export const getCategoryName = cache(async (categoryId: number) => {
+  const categoryName = await sql<CategoryName[]>`
+  SELECT
+    name
+  FROM
+  categories
+  WHERE
+  id = ${categoryId}`;
+  return categoryName;
 });

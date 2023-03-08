@@ -3,10 +3,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
-import { RegisterResponseBody } from '../../api/(auth)/register/route';
+import { RegisterResponseBody } from './api/(auth)/register/route';
 import styles from './login.module.scss';
 
-export default function Registerform() {
+export default function LoginForm() {
   const router = useRouter();
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');

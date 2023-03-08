@@ -1,12 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { insertTastingNoteTable } from '../../../database/recepisTastingNotes';
-import {
-  createFullRecipe,
-  getAllRecipes,
-  getRecipeWithLimit,
-  getRecipeWithLimitAndOffset,
-  getRecipeWithOffsetAndLimit,
-} from '../../../database/recipes';
+import { createFullRecipe } from '../../../database/recipes';
 
 type FormBody = {
   userId: number;
@@ -26,19 +20,6 @@ type FormBody = {
     tasting_note_name: string;
   }[];
 };
-
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const limit = searchParams.get('limit');
-  const offset = searchParams.get('offset');
-
-  if (!limit || !offset) {
-    return NextResponse.json({ error: 'No limit and offset' }, { status: 400 });
-  }
-
-  const recipes = await getRecipeWithLimitAndOffset(limit, offset);
-  return NextResponse.json({ recipes: recipes });
-}
 
 export async function POST(request: NextRequest) {
   const body: FormBody = await request.json();

@@ -14,7 +14,7 @@ export default async function CategoryPage() {
     (await getValidSessionByToken(sessionTokenCookie.value));
   // if there is, redirect to home page
   if (!session) {
-    redirect('/login');
+    redirect('/');
   }
   // if not, render login form
   const category = await getCategory();
