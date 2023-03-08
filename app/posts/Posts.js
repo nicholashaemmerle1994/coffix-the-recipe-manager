@@ -26,7 +26,11 @@ export default function Posts(props) {
                 <div>
                   <h3>{recipe.categoryName}</h3>
                   <p>{recipe.coffee}</p>
-                  <p>{recipe.roaster}</p>
+                  <div>
+                    {recipe.tastingNotes.map((note) => {
+                      return <p key={`note-id-${note}`}>{note}</p>;
+                    })}
+                  </div>
                 </div>
               </Link>
             </div>

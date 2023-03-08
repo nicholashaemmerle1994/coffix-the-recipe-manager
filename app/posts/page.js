@@ -1,8 +1,10 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { getCategoryName } from '../../database/category';
+import { getTastingNotesFromRecipe } from '../../database/recepisTastingNotes';
 import { getAllRecipes } from '../../database/recipes';
 import { getValidSessionByToken } from '../../database/sessions';
+import { tastingNotes } from '../../database/tastingnotes';
 import Posts from './Posts';
 
 export const metadata = {
@@ -11,6 +13,7 @@ export const metadata = {
 };
 
 export default async function PostsPage() {
+  const recipes = await getAllRecipes();
   // check if there is a valid session
   const sessionTokenCookie = cookies().get('sessionToken');
   const session =
@@ -20,8 +23,6 @@ export default async function PostsPage() {
   if (!session) {
     redirect('/');
   }
-
-  const recipes = await getAllRecipes();
 
   // Create an array with recipes array but the date object is translated to a string but still call it createdAt
   const recipesWithDate = recipes.map((recipe) => {
@@ -41,10 +42,36 @@ export default async function PostsPage() {
       };
     }),
   );
+  // now insert the tasting notes into the recipe object with the matching id
+  const recipesWithTastingNotes = await Promise.all(
+    recipesWithCategoryName.map(async (recipe) => {
+      const tastingNotesFromRecipe = await getTastingNotesFromRecipe(recipe.id);
+      const tastingNote = tastingNotesFromRecipe.map((note) => {
+        return note.tastingNoteId;
+      });
+      return { ...recipe, tastingNotes: tastingNote };
+    }),
+  );
+
+  // now compare the tastingNotes array with the tastingNotes array from the database and change the id to the name of the tasting note
+  const recipesWithTastingNotesAndName = recipesWithTastingNotes.map(
+    (recipe) => {
+      const finalTastingNotes = recipe.tastingNotes.map((note) => {
+        return tastingNotes.find((tastingNote) => {
+          return tastingNote.id === note;
+        });
+      });
+      const tastingNotesName = finalTastingNotes.map((note) => {
+        return note.name;
+      });
+      return { ...recipe, tastingNotes: tastingNotesName };
+    },
+  );
+
   return (
     <>
       <div>{/* <AdvancedImage cldImg={myImage} /> */}</div>
-      <Posts recipe={recipesWithCategoryName} />
+      <Posts recipe={recipesWithTastingNotesAndName} />
     </>
   );
 }

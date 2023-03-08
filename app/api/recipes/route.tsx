@@ -15,7 +15,7 @@ type FormBody = {
   brewTimeSeconds: number;
   notes: string;
   tastingNotes: {
-    id: number;
+    tasting_note_id: number;
     category: string;
     tasting_note_name: string;
   }[];
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
   // Create an array with all the tasting notes (id, tasting_note_name, category, recipe_id)
   const newestBody = body.tastingNotes.map((tastingNote) => {
     return {
-      id: tastingNote.id,
+      tasting_note_id: tastingNote.tasting_note_id,
       tasting_note_name: tastingNote.tasting_note_name,
       category: tastingNote.category,
       recipe_id: newRecipe[0]!.id,
@@ -52,6 +52,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ newRecipe: newRecipe });
   }
   // if newest body is not an empty object, insert the tasting notes
+
   await insertTastingNoteTable(newestBody);
 
   return NextResponse.json({ newRecipe: newRecipe });

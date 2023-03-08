@@ -371,7 +371,7 @@ export default function Form(props: { id: number; userId: number }) {
             event.preventDefault();
             const finalApiTaste = apiTaste.map((taste) => {
               return {
-                id: taste.id,
+                tasting_note_id: taste.id,
                 category: taste.category,
                 tasting_note_name: taste.name,
               };
@@ -396,7 +396,6 @@ export default function Form(props: { id: number; userId: number }) {
                 notes: coffee.notes,
               }),
             });
-
             setMinutes(0);
             setSeconds(0);
             // router.push('/');
