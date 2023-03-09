@@ -12,6 +12,6 @@ export async function up(sql) {
 
 export async function down(sql) {
   await sql`
-  DROP TABLE posts;
+  DROP TABLE comments;
 `;
 }

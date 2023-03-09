@@ -1,8 +1,23 @@
+import { cookies } from 'next/headers';
+import { notFound } from 'next/navigation';
 import { getSingleRecipeWithTastingNotes } from '../../../database/recepisTastingNotes';
+import { getValidSessionByToken } from '../../../database/sessions';
 import { tastingNotes } from '../../../database/tastingnotes';
+import SinglePostPage from './SinglePost';
 
-export default async function SinglePostPage(props: Props) {
-  const all = await getSingleRecipeWithTastingNotes(props.postID);
+export const dynamic = 'force-dynamic';
+export default async function SinglePostPAge({ params }) {
+  // get the user id from the current session
+  const sessionTokenCookie = cookies().get('sessionToken');
+  const session =
+    sessionTokenCookie &&
+    (await getValidSessionByToken(sessionTokenCookie.value));
+  const userId = session.userId;
+
+  const singleRecipe = await getSingleRecipeWithTastingNotes(params.postID);
+  if (singleRecipe.length === 0) return notFound();
+
+  const all = await getSingleRecipeWithTastingNotes(params.postID);
 
   const singleRecipeArray = all.reduce((accumulator, currentValue) => {
     // check if a recipe with the same id already exists in the accumulator array
@@ -40,46 +55,23 @@ export default async function SinglePostPage(props: Props) {
   // Map over singleRecipeArray compare the tastingNoteId with the tastingNotes array and replace the id with the name
   const finalRecipe = singleRecipeArray.map((recipe) => {
     const tastingNotesWithNames = recipe.tastingNotes.map((tastingNote) => {
-      const tastingNoteName = tastingNotes.find((tastingNoteName) => {
-        if (tastingNoteName.id === tastingNote.id) {
-          return tastingNoteName.name;
+      const tastingNoteName = tastingNotes.find((tastingNotess) => {
+        if (tastingNotess.id === tastingNote.id) {
+          return tastingNotess.name;
         }
       });
       return tastingNoteName?.name;
     });
     return { ...recipe, tastingNotes: tastingNotesWithNames };
   });
+  // map over finalRecipe and convert the Date object to a string
+  const finalRecipeWithDate = finalRecipe.map((recipe) => {
+    const date = new Date(recipe.createdAt);
+    const dateString = date.toDateString();
+    return { ...recipe, createdAt: dateString };
+  });
+  // console.log(finalRecipeWithDate);
 
-  return (
-    <div>
-      <h1>{finalRecipe[0].coffee}</h1>
-      <p>{finalRecipe[0].roaster}</p>
-      <p>Used: {finalRecipe[0].amountIn} g</p>
-      <p>I got {finalRecipe[0].amountOut} g out</p>
-      <p>With a grind-Size of: {finalRecipe[0].grindSize}</p>
-      <p>Water temperature of: {finalRecipe[0].brewTemperature}</p>
-      <div>
-        With a brewtime of:
-        <p>{finalRecipe[0].brewTimeMinutes}</p>
-        minutes
-        <p>{finalRecipe[0].brewTimeSeconds}</p>
-        and seconds
-      </div>
-      <p>{finalRecipe[0].notes}</p>
-      <p>{finalRecipe[0].pictureUrl}</p>
-      <p>With intense flavors of:</p>
-      <ul>
-        {finalRecipe[0].tastingNotes.map((tastingNote) => {
-          return <li key={`tastingNote-${tastingNote}`}>{tastingNote}</li>;
-        })}
-      </ul>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-    </div>
-  );
+  return <SinglePostPage post={finalRecipeWithDate} userId={userId} />;
+  // <div>hello</div>;
 }
