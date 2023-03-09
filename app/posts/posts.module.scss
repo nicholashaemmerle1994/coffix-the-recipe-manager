@@ -1,0 +1,50 @@
+.innerPostDiv {
+  display: flex;
+  flex-direction: column;
+
+  & h3 {
+    margin: 0;
+  }
+  & p {
+    margin: 0;
+  }
+}
+
+.tasteDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 0.8rem;
+}
+
+.outterPostDiv {
+  display: flex;
+  justify-content: center;
+  margin: 0.5rem 0;
+  background-color: tomato;
+  padding: 0.8rem 0.5rem;
+  & a {
+    text-decoration: none;
+    color: black;
+  }
+}
+
+.outterTasteDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  width: 100%;
+}
+
+.photoDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5rem 0.5rem;
+  background-color: tomato;
+  & a {
+    text-decoration: none;
+    color: black;
+  }
+}

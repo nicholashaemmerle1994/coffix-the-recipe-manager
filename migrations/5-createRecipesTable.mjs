@@ -14,8 +14,7 @@ export async function up(sql) {
     brew_time_minutes integer,
     brew_time_seconds integer,
     notes varchar(500),
-    picture_url varchar(200) DEFAULT '',
-    comments varchar(250) DEFAULT ''
+    picture_url varchar(200) DEFAULT ''
 )
 `;
 }

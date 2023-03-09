@@ -23,6 +23,8 @@ export default async function PostsPage() {
   if (!session) {
     redirect('/');
   }
+  // getting the user id from the session
+  const userId = session.userId;
 
   // Create an array with recipes array but the date object is translated to a string but still call it createdAt
   const recipesWithDate = recipes.map((recipe) => {
@@ -71,7 +73,7 @@ export default async function PostsPage() {
   return (
     <>
       <div>{/* <AdvancedImage cldImg={myImage} /> */}</div>
-      <Posts recipe={recipesWithTastingNotesAndName} />
+      <Posts recipe={recipesWithTastingNotesAndName} userId={userId} />
     </>
   );
 }

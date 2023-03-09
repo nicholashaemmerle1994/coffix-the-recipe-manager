@@ -1,6 +1,6 @@
 export async function up(sql) {
   await sql`
-  CREATE TABLE posts (
+  CREATE TABLE comments (
     id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     user_id integer REFERENCES users (id) ON DELETE CASCADE,
     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
