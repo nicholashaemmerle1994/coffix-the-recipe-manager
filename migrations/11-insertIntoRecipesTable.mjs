@@ -11,7 +11,7 @@ const recipes = [
     brew_time_minutes: 0,
     brew_time_seconds: 29,
     notes: '',
-    picture_url: '',
+    picture_url: '/lowcaf.png',
   },
   {
     user_id: 5,
@@ -25,7 +25,7 @@ const recipes = [
     brew_time_minutes: 4,
     brew_time_seconds: 30,
     notes: '',
-    picture_url: '',
+    picture_url: '/miscala.png',
   },
   {
     user_id: 4,
@@ -39,7 +39,7 @@ const recipes = [
     brew_time_minutes: 0,
     brew_time_seconds: 31,
     notes: '',
-    picture_url: '',
+    picture_url: '/Miscelaflor.png',
   },
   {
     user_id: 2,
@@ -53,7 +53,7 @@ const recipes = [
     brew_time_minutes: 3,
     brew_time_seconds: 30,
     notes: '',
-    picture_url: '',
+    picture_url: '/penelope.png',
   },
   {
     user_id: 15,
@@ -67,13 +67,13 @@ const recipes = [
     brew_time_minutes: 2,
     brew_time_seconds: 44,
     notes: '',
-    picture_url: '',
+    picture_url: '/kimbo.png',
   },
   {
     user_id: 4,
     category_id: 3,
     coffee: 'Aurelia',
-    roaster: 'Kazi Kaffee',
+    roaster: 'Kanzi Kaffee',
     amount_in: 15,
     amount_out: 220,
     grind_size: 3,
@@ -81,7 +81,7 @@ const recipes = [
     brew_time_minutes: 2,
     brew_time_seconds: 0,
     notes: 'This is a test note',
-    picture_url: 'https://www.google.com',
+    picture_url: 'kanzi.png',
   },
   {
     user_id: 1,
@@ -95,7 +95,7 @@ const recipes = [
     brew_time_minutes: 3,
     brew_time_seconds: 31,
     notes: '',
-    picture_url: '',
+    picture_url: '/Pridom.png',
   },
   {
     user_id: 6,
@@ -109,7 +109,7 @@ const recipes = [
     brew_time_minutes: 0,
     brew_time_seconds: 29,
     notes: '',
-    picture_url: '',
+    picture_url: '/harry.png',
   },
   {
     user_id: 8,
@@ -123,7 +123,7 @@ const recipes = [
     brew_time_minutes: 0,
     brew_time_seconds: 35,
     notes: '',
-    picture_url: '',
+    picture_url: '/lollo.png',
   },
   {
     user_id: 9,
@@ -137,7 +137,7 @@ const recipes = [
     brew_time_minutes: 0,
     brew_time_seconds: 26,
     notes: '',
-    picture_url: '',
+    picture_url: '/haiti.png',
   },
   {
     user_id: 15,
@@ -151,7 +151,7 @@ const recipes = [
     brew_time_minutes: 2,
     brew_time_seconds: 1,
     notes: 'Added about 50 ml of hot water, do dilute the coffee a bit',
-    picture_url: '',
+    picture_url: '/rosso.png',
   },
   {
     user_id: 1,
@@ -165,7 +165,7 @@ const recipes = [
     brew_time_minutes: 1,
     brew_time_seconds: 46,
     notes: 'Probably should have used a finer grind',
-    picture_url: '',
+    picture_url: '/Passalacqua.png',
   },
   {
     user_id: 11,
@@ -179,7 +179,7 @@ const recipes = [
     brew_time_minutes: 0,
     brew_time_seconds: 30,
     notes: 'Had the most chocolatey flavor of any espresso I have had',
-    picture_url: '',
+    picture_url: '/Robustoargento.png',
   },
   {
     user_id: 4,
@@ -193,7 +193,7 @@ const recipes = [
     brew_time_minutes: 0,
     brew_time_seconds: 30,
     notes: 'These are my great notes',
-    picture_url: '',
+    picture_url: '/brazil.png',
   },
   {
     user_id: 3,
@@ -207,7 +207,7 @@ const recipes = [
     brew_time_minutes: 0,
     brew_time_seconds: 30,
     notes: 'These are my great notes',
-    picture_url: '',
+    picture_url: '/Indonesiagyobenermeriah.png',
   },
   {
     user_id: 10,
@@ -221,12 +221,12 @@ const recipes = [
     brew_time_minutes: 0,
     brew_time_seconds: 30,
     notes: 'These are my great notes',
-    picture_url: '',
+    picture_url: '/schülmi.png',
   },
   {
     user_id: 11,
     category_id: 3,
-    coffee: 'Rocky MOuntains Blend',
+    coffee: 'Rocky Mountains Blend',
     roaster: 'Grizzly Speciality Coffee',
     amount_in: 18,
     amount_out: 36,
@@ -235,7 +235,7 @@ const recipes = [
     brew_time_minutes: 0,
     brew_time_seconds: 30,
     notes: 'These are my great notes',
-    picture_url: '',
+    picture_url: '/Rockymountainsblend.png',
   },
   {
     user_id: 7,
@@ -249,7 +249,7 @@ const recipes = [
     brew_time_minutes: 0,
     brew_time_seconds: 30,
     notes: 'These are my great notes',
-    picture_url: '',
+    picture_url: '/inpetto.png',
   },
   {
     user_id: 4,
@@ -263,7 +263,7 @@ const recipes = [
     brew_time_minutes: 0,
     brew_time_seconds: 30,
     notes: 'These are my great notes',
-    picture_url: '',
+    picture_url: '/100.png',
   },
   {
     user_id: 1,
@@ -277,7 +277,7 @@ const recipes = [
     brew_time_minutes: 0,
     brew_time_seconds: 30,
     notes: 'These are my great notes',
-    picture_url: '',
+    picture_url: '/densi.png',
   },
   {
     user_id: 13,
@@ -291,7 +291,7 @@ const recipes = [
     brew_time_minutes: 0,
     brew_time_seconds: 30,
     notes: 'These are my great notes',
-    picture_url: '',
+    picture_url: '/diemme.webp',
   },
 ];
 

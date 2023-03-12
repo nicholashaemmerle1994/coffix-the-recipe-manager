@@ -16,10 +16,10 @@ export default async function NewPostPage({ params }: Params) {
     sessionTokenCookie &&
     (await getValidSessionByToken(sessionTokenCookie.value));
   if (!user) {
-    redirect('/login');
+    redirect('/');
   }
   if (!user.userId) {
-    redirect('/login');
+    redirect('/');
   }
 
   const userId = user.userId;

@@ -16,7 +16,6 @@ export type RecipeSQL = {
   brewTimeSeconds: number;
   notes: string;
   pictureUrl: string;
-  comments: string;
 };
 
 type UserRecipe = {
@@ -31,6 +30,7 @@ type UserRecipe = {
   brewTimeMinutes: number;
   brewTimeSeconds: number;
   notes: string;
+  pictureUrl: string;
 };
 
 // GET METHODS
@@ -104,12 +104,12 @@ export const createFullRecipe = cache(async (recipe: UserRecipe) => {
       INSERT INTO recipes
         (user_id, category_id, coffee, roaster, amount_in,
         amount_out, grind_size, brew_temperature, brew_time_minutes,
-        brew_time_seconds, notes)
+        brew_time_seconds, notes, picture_url)
       VALUES
         (${recipe.userId}, ${recipe.categoryId}, ${recipe.coffee}, ${recipe.roaster},
         ${recipe.amountIn}, ${recipe.amountOut}, ${recipe.grindSize},
         ${recipe.brewTemperature}, ${recipe.brewTimeMinutes}, ${recipe.brewTimeSeconds},
-        ${recipe.notes})
+        ${recipe.notes}, ${recipe.pictureUrl})
       RETURNING
         *
     `;

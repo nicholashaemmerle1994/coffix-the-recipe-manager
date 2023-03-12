@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { getCategoryName } from '../../database/category';
+import { getComments } from '../../database/comments';
 import { getTastingNotesFromRecipe } from '../../database/recepisTastingNotes';
 import { getAllRecipes } from '../../database/recipes';
 import { getValidSessionByToken } from '../../database/sessions';
@@ -14,6 +15,7 @@ export const metadata = {
 
 export default async function PostsPage() {
   const recipes = await getAllRecipes();
+
   // check if there is a valid session
   const sessionTokenCookie = cookies().get('sessionToken');
   const session =
@@ -26,7 +28,7 @@ export default async function PostsPage() {
   // getting the user id from the session
   const userId = session.userId;
 
-  // Create an array with recipes array but the date object is translated to a string but still call it createdAt
+  // Transform the date objects  to a string
   const recipesWithDate = recipes.map((recipe) => {
     const { createdAt, ...recipeWithoutDate } = recipe;
     const dateToString = createdAt.toISOString();
@@ -44,7 +46,7 @@ export default async function PostsPage() {
       };
     }),
   );
-  // now insert the tasting notes into the recipe object with the matching id
+  // inserting back the tastingNotes array into the recipe object
   const recipesWithTastingNotes = await Promise.all(
     recipesWithCategoryName.map(async (recipe) => {
       const tastingNotesFromRecipe = await getTastingNotesFromRecipe(recipe.id);
@@ -55,7 +57,7 @@ export default async function PostsPage() {
     }),
   );
 
-  // now compare the tastingNotes array with the tastingNotes array from the database and change the id to the name of the tasting note
+  // compare the tastingNotes array with the tastingNotes array from the database and change the id to the name of the tasting note
   const recipesWithTastingNotesAndName = recipesWithTastingNotes.map(
     (recipe) => {
       const finalTastingNotes = recipe.tastingNotes.map((note) => {

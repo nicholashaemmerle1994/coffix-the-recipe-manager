@@ -1,6 +1,8 @@
 .innerPostDiv {
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
+  margin-left: 50px;
 
   & h3 {
     margin: 0;
@@ -15,17 +17,19 @@
   flex-direction: row;
   justify-content: space-between;
   font-size: 0.8rem;
+
+  flex-wrap: wrap;
 }
 
 .outterPostDiv {
   display: flex;
   justify-content: center;
   margin: 0.5rem 0;
-  background-color: tomato;
+  background-color: #3c2a21;
   padding: 0.8rem 0.5rem;
   & a {
     text-decoration: none;
-    color: black;
+    color: #e5e5cb;
   }
 }
 
@@ -42,9 +46,19 @@
   align-items: center;
   justify-content: center;
   margin: 0.5rem 0.5rem;
-  background-color: tomato;
+  background-color: #3c2a21;
+  height: fit-content;
+  width: fit-content;
   & a {
     text-decoration: none;
-    color: black;
+    color: #e5e5cb;
   }
+  & img {
+    width: 50%;
+    height: 100%;
+  }
+}
+
+.page {
+  padding-bottom: 80px;
 }

@@ -35,6 +35,7 @@ export async function POST(request: NextRequest) {
     brewTimeMinutes: body.brewTimeMinutes,
     brewTimeSeconds: body.brewTimeSeconds,
     notes: body.notes,
+    pictureUrl: body.pictureUrl,
   };
   const newRecipe = await createFullRecipe(recipeBody);
 

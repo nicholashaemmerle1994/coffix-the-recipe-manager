@@ -1,6 +1,8 @@
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
+import { getComments } from '../../../database/comments';
 import { getSingleRecipeWithTastingNotes } from '../../../database/recepisTastingNotes';
+import { getRecipeById } from '../../../database/recipes';
 import { getValidSessionByToken } from '../../../database/sessions';
 import { tastingNotes } from '../../../database/tastingnotes';
 import SinglePostPage from './SinglePost';
@@ -15,11 +17,29 @@ export default async function SinglePostPAge({ params }) {
   const userId = session.userId;
 
   const singleRecipe = await getSingleRecipeWithTastingNotes(params.postID);
-  if (singleRecipe.length === 0) return notFound();
+  console.log('singleRecipe', singleRecipe);
+  if (singleRecipe.length === 0) {
+    const recipe = await getRecipeById(params.postID);
+    if (recipe.length === 0) {
+      return notFound();
+    } else {
+      const comments = await getComments(recipe[0].id);
+      const finalRecipeWithDate = recipe.map((recipe) => {
+        const date = new Date(recipe.createdAt);
+        const dateString = date.toDateString();
+        return { ...recipe, createdAt: dateString };
+      });
+      return (
+        <SinglePostPage
+          post={finalRecipeWithDate}
+          userId={userId}
+          comments={comments}
+        />
+      );
+    }
+  }
 
-  const all = await getSingleRecipeWithTastingNotes(params.postID);
-
-  const singleRecipeArray = all.reduce((accumulator, currentValue) => {
+  const singleRecipeArray = singleRecipe.reduce((accumulator, currentValue) => {
     // check if a recipe with the same id already exists in the accumulator array
     const recipeIndex = accumulator.findIndex(
       (recipe) => recipe.id === currentValue.id,
@@ -53,6 +73,7 @@ export default async function SinglePostPAge({ params }) {
     return accumulator;
   }, []);
   // Map over singleRecipeArray compare the tastingNoteId with the tastingNotes array and replace the id with the name
+
   const finalRecipe = singleRecipeArray.map((recipe) => {
     const tastingNotesWithNames = recipe.tastingNotes.map((tastingNote) => {
       const tastingNoteName = tastingNotes.find((tastingNotess) => {
@@ -70,8 +91,15 @@ export default async function SinglePostPAge({ params }) {
     const dateString = date.toDateString();
     return { ...recipe, createdAt: dateString };
   });
-  // console.log(finalRecipeWithDate);
 
-  return <SinglePostPage post={finalRecipeWithDate} userId={userId} />;
+  const comments = await getComments(finalRecipeWithDate[0].id);
+
+  return (
+    <SinglePostPage
+      post={finalRecipeWithDate}
+      userId={userId}
+      comments={comments}
+    />
+  );
   // <div>hello</div>;
 }

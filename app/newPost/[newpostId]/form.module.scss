@@ -8,9 +8,27 @@
 .item {
   flex-shrink: 0;
 }
-
-.form {
+.form2 {
   padding-bottom: 100px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  margin: 10px 20px 0px;
+  gap: 5px;
+
+  & .buttonDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  & .uploadDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+}
+.form {
   text-align: left;
   display: flex;
   flex-direction: column;
@@ -40,6 +58,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  & .form2 {
+    padding-bottom: 100px;
   }
 }
 .div {

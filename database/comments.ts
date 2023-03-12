@@ -29,6 +29,7 @@ export const getComments = cache(async (recipeId: number) => {
       SELECT * FROM comments
       WHERE recipe_id = ${recipeId}
     `;
+
   return comments;
 });
 
@@ -54,3 +55,5 @@ export const updateComment = cache(
     return comment[0];
   },
 );
+
+// Get

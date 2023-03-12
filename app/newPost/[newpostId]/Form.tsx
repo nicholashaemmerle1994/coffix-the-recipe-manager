@@ -72,6 +72,68 @@ export default function Form(props: { id: number; userId: number }) {
     brewTimeSeconds: 0,
     notes: '',
   });
+  const [imageSrc, setImageSrc] = useState();
+
+  async function handleOnSubmit(event) {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    console.log(event.currentTarget);
+    const fileInput = Array.from(form.elements).find(
+      ({ name }) => name === 'file',
+    );
+
+    const formData = new FormData();
+
+    for (const file of fileInput.files) {
+      formData.append('file', file);
+    }
+
+    formData.append('upload_preset', 'coffix-imgs');
+
+    const data = await fetch(
+      'https://api.cloudinary.com/v1_1/dtxtj5v8n/image/upload',
+      {
+        method: 'POST',
+        body: formData,
+      },
+    ).then((r) => r.json());
+
+    setImageSrc(data.secure_url);
+    console.log(data.secure_url);
+    const finalApiTaste = apiTaste.map((taste) => {
+      return {
+        tasting_note_id: taste.id,
+        category: taste.category,
+        tasting_note_name: taste.name,
+      };
+    });
+    await fetch('/api/recipes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId: userId,
+        categoryId: coffee.category,
+        coffee: coffee.name,
+        roaster: coffee.roaster,
+        amountIn: coffee.amountIn,
+        amountOut: coffee.amountOut,
+        grindSize: coffee.grindSize,
+        brewTemperature: coffee.temperature,
+        brewTimeMinutes: coffee.brewTimeMinutes,
+        brewTimeSeconds: coffee.brewTimeSeconds,
+        tastingNotes: finalApiTaste,
+        notes: coffee.notes,
+        pictureUrl: data.secure_url,
+      }),
+    });
+    setMinutes(0);
+    setSeconds(0);
+
+    router.push('/');
+  }
 
   // creating the handler function for the timer
   const handleMinutesChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -104,306 +166,278 @@ export default function Form(props: { id: number; userId: number }) {
   ));
 
   return (
-    <form className={styles.form}>
-      <h3>Setup</h3>
-      <div className={styles.category}>
-        <input
-          placeholder="Coffee Name"
-          onChange={(event) => {
-            setCoffee({
-              ...coffee,
-              name: event.target.value,
-            });
-          }}
-        />
-        <input
-          placeholder="Roaster"
-          onChange={(event) => {
-            setCoffee({
-              ...coffee,
-              roaster: event.target.value,
-            });
-          }}
-        />
-      </div>
-      <h3>Brew</h3>
-      <div className={styles.category}>
-        <input
-          placeholder="Amount in grams"
-          type="number"
-          onChange={(event) => {
-            setCoffee({
-              ...coffee,
-              amountIn: parseInt(event.target.value),
-            });
-          }}
-        />
-        <input
-          placeholder="Amount out in grams"
-          onChange={(event) => {
-            setCoffee({
-              ...coffee,
-              amountOut: parseInt(event.target.value),
-            });
-          }}
-        />
-        <input
-          placeholder="Grind size"
-          onChange={(event) => {
-            setCoffee({
-              ...coffee,
-              grindSize: parseInt(event.target.value),
-            });
-          }}
-        />
-        <select
-          title="brew temperature"
-          placeholder="Brew temperature"
-          onChange={(event) => {
-            setCoffee({
-              ...coffee,
-              temperature: parseInt(event.target.value),
-            });
-          }}
-        >
-          <option defaultValue="Choose the brewing temperature">
-            Choose the brewing temperature
-          </option>
-          <option>89</option>
-          <option>90</option>
-          <option>91</option>
-          <option>92</option>
-          <option>93</option>
-          <option>94</option>
-          <option>95</option>
-          <option>96</option>
-          <option>97</option>
-        </select>
-        <label htmlFor="brew-time-select">
-          <div id="brew-time-select" aria-label="Select brew time">
-            {/* set brew time minutes */}
-            <div className={styles.div}>
-              Brew Time:
-              <select
-                title="minutes"
-                name="minutes"
-                onChange={handleMinutesChange}
-              >
-                {minuteOptions}
-              </select>
-              <span>:</span>
-              {/* set brew time seconds */}
-              <select
-                title="seconds"
-                name="seconds"
-                onChange={handleSecondsChange}
-              >
-                {secondOptions}
-              </select>
+    <>
+      <form className={styles.form}>
+        <h3>Setup</h3>
+        <div className={styles.category}>
+          <input
+            placeholder="Coffee Name"
+            onChange={(event) => {
+              setCoffee({
+                ...coffee,
+                name: event.target.value,
+              });
+            }}
+          />
+          <input
+            placeholder="Roaster"
+            onChange={(event) => {
+              setCoffee({
+                ...coffee,
+                roaster: event.target.value,
+              });
+            }}
+          />
+        </div>
+        <h3>Brew</h3>
+        <div className={styles.category}>
+          <input
+            placeholder="Amount in grams"
+            type="number"
+            onChange={(event) => {
+              setCoffee({
+                ...coffee,
+                amountIn: parseInt(event.target.value),
+              });
+            }}
+          />
+          <input
+            placeholder="Amount out in grams"
+            onChange={(event) => {
+              setCoffee({
+                ...coffee,
+                amountOut: parseInt(event.target.value),
+              });
+            }}
+          />
+          <input
+            placeholder="Grind size"
+            onChange={(event) => {
+              setCoffee({
+                ...coffee,
+                grindSize: parseInt(event.target.value),
+              });
+            }}
+          />
+          <select
+            title="brew temperature"
+            placeholder="Brew temperature"
+            onChange={(event) => {
+              setCoffee({
+                ...coffee,
+                temperature: parseInt(event.target.value),
+              });
+            }}
+          >
+            <option defaultValue="Choose the brewing temperature">
+              Choose the brewing temperature
+            </option>
+            <option>89</option>
+            <option>90</option>
+            <option>91</option>
+            <option>92</option>
+            <option>93</option>
+            <option>94</option>
+            <option>95</option>
+            <option>96</option>
+            <option>97</option>
+          </select>
+          <label htmlFor="brew-time-select">
+            <div id="brew-time-select" aria-label="Select brew time">
+              {/* set brew time minutes */}
+              <div className={styles.div}>
+                Brew Time:
+                <select
+                  title="minutes"
+                  name="minutes"
+                  onChange={handleMinutesChange}
+                >
+                  {minuteOptions}
+                </select>
+                <span>:</span>
+                {/* set brew time seconds */}
+                <select
+                  title="seconds"
+                  name="seconds"
+                  onChange={handleSecondsChange}
+                >
+                  {secondOptions}
+                </select>
+              </div>
             </div>
+          </label>
+        </div>
+        <h3>Tasting Notes</h3>
+        {/* mapping over the chocolatey array to display every possiple choice for the user */}
+        <div>
+          <h4>Chocolatey</h4>
+          <div className={styles.categoryTaste}>
+            {chocolatey.map((note) => (
+              <label key={`option-${note.name}`} className={styles.label}>
+                <input
+                  className={styles.item}
+                  type="checkbox"
+                  value={note.name}
+                  onChange={(event) => {
+                    if (event.target.checked) {
+                      apiTaste.push(note);
+                    }
+                    // if the checkbox is unchecked, remove the value from the array
+                    else {
+                      const index = apiTaste.indexOf(note);
+                      apiTaste.splice(index, 1);
+                    }
+                  }}
+                />
+                {note.name}
+              </label>
+            ))}
           </div>
-        </label>
-      </div>
-      <h3>Tasting Notes</h3>
-      {/* mapping over the chocolatey array to display every possiple choice for the user */}
-      <div>
-        <h4>Chocolatey</h4>
-        <div className={styles.categoryTaste}>
-          {chocolatey.map((note) => (
-            <label key={`option-${note.name}`} className={styles.label}>
-              <input
-                className={styles.item}
-                type="checkbox"
-                value={note.name}
-                onChange={(event) => {
-                  if (event.target.checked) {
-                    apiTaste.push(note);
-                  }
-                  // if the checkbox is unchecked, remove the value from the array
-                  else {
-                    const index = apiTaste.indexOf(note);
-                    apiTaste.splice(index, 1);
-                  }
-                }}
-              />
-              {note.name}
-            </label>
-          ))}
         </div>
-      </div>
-      {/* Mapping over the Fruity array to display all choices for the user */}
-      <div>
-        <h4>Fruity</h4>
-        <div className={styles.categoryTaste}>
-          {fruity.map((note) => (
-            <label key={`option-${note.name}`} className={styles.label}>
-              <input
-                className={styles.item}
-                type="checkbox"
-                value={note.name}
-                onChange={(event) => {
-                  if (event.target.checked) {
-                    apiTaste.push(note);
-                  }
-                  // if the checkbox is unchecked, remove the value from the array
-                  else {
-                    const index = apiTaste.indexOf(note);
-                    apiTaste.splice(index, 1);
-                  }
-                }}
-              />
-              {note.name}
-            </label>
-          ))}
+        {/* Mapping over the Fruity array to display all choices for the user */}
+        <div>
+          <h4>Fruity</h4>
+          <div className={styles.categoryTaste}>
+            {fruity.map((note) => (
+              <label key={`option-${note.name}`} className={styles.label}>
+                <input
+                  className={styles.item}
+                  type="checkbox"
+                  value={note.name}
+                  onChange={(event) => {
+                    if (event.target.checked) {
+                      apiTaste.push(note);
+                    }
+                    // if the checkbox is unchecked, remove the value from the array
+                    else {
+                      const index = apiTaste.indexOf(note);
+                      apiTaste.splice(index, 1);
+                    }
+                  }}
+                />
+                {note.name}
+              </label>
+            ))}
+          </div>
         </div>
-      </div>
-      {/* Mapping over the Nutty array to display all choices for the user */}
-      <div>
-        <h4>Nutty</h4>
-        <div className={styles.categoryTaste}>
-          {nutty.map((note) => (
-            <label key={`option-${note.name}`} className={styles.label}>
-              <input
-                className={styles.item}
-                type="checkbox"
-                value={note.name}
-                onChange={(event) => {
-                  if (event.target.checked) {
-                    apiTaste.push(note);
-                  }
-                  // if the checkbox is unchecked, remove the value from the array
-                  else {
-                    const index = apiTaste.indexOf(note);
-                    apiTaste.splice(index, 1);
-                  }
-                }}
-              />
-              {note.name}
-            </label>
-          ))}
+        {/* Mapping over the Nutty array to display all choices for the user */}
+        <div>
+          <h4>Nutty</h4>
+          <div className={styles.categoryTaste}>
+            {nutty.map((note) => (
+              <label key={`option-${note.name}`} className={styles.label}>
+                <input
+                  className={styles.item}
+                  type="checkbox"
+                  value={note.name}
+                  onChange={(event) => {
+                    if (event.target.checked) {
+                      apiTaste.push(note);
+                    }
+                    // if the checkbox is unchecked, remove the value from the array
+                    else {
+                      const index = apiTaste.indexOf(note);
+                      apiTaste.splice(index, 1);
+                    }
+                  }}
+                />
+                {note.name}
+              </label>
+            ))}
+          </div>
         </div>
-      </div>
-      {/* Mapping over the Sweet array to display all choices for the user */}
-      <div>
-        <h4>Sweet</h4>
-        <div className={styles.categoryTaste}>
-          {sweet.map((note) => (
-            <label key={`option-${note.name}`} className={styles.label}>
-              <input
-                className={styles.item}
-                type="checkbox"
-                value={note.name}
-                onChange={(event) => {
-                  if (event.target.checked) {
-                    apiTaste.push(note);
-                  }
-                  // if the checkbox is unchecked, remove the value from the array
-                  else {
-                    const index = apiTaste.indexOf(note);
-                    apiTaste.splice(index, 1);
-                  }
-                }}
-              />
-              {note.name}
-            </label>
-          ))}
+        {/* Mapping over the Sweet array to display all choices for the user */}
+        <div>
+          <h4>Sweet</h4>
+          <div className={styles.categoryTaste}>
+            {sweet.map((note) => (
+              <label key={`option-${note.name}`} className={styles.label}>
+                <input
+                  className={styles.item}
+                  type="checkbox"
+                  value={note.name}
+                  onChange={(event) => {
+                    if (event.target.checked) {
+                      apiTaste.push(note);
+                    }
+                    // if the checkbox is unchecked, remove the value from the array
+                    else {
+                      const index = apiTaste.indexOf(note);
+                      apiTaste.splice(index, 1);
+                    }
+                  }}
+                />
+                {note.name}
+              </label>
+            ))}
+          </div>
         </div>
-      </div>
-      {/* Mapping over the Floral array to display all choices for the user */}
-      <div>
-        <h4>Floral</h4>
-        <div className={styles.categoryTaste}>
-          {floral.map((note) => (
-            <label key={`option-${note.name}`} className={styles.label}>
-              <input
-                className={styles.item}
-                type="checkbox"
-                value={note.name}
-                onChange={(event) => {
-                  if (event.target.checked) {
-                    apiTaste.push(note);
-                  }
-                  // if the checkbox is unchecked, remove the value from the array
-                  else {
-                    const index = apiTaste.indexOf(note);
-                    apiTaste.splice(index, 1);
-                  }
-                }}
-              />
-              {note.name}
-            </label>
-          ))}
+        {/* Mapping over the Floral array to display all choices for the user */}
+        <div>
+          <h4>Floral</h4>
+          <div className={styles.categoryTaste}>
+            {floral.map((note) => (
+              <label key={`option-${note.name}`} className={styles.label}>
+                <input
+                  className={styles.item}
+                  type="checkbox"
+                  value={note.name}
+                  onChange={(event) => {
+                    if (event.target.checked) {
+                      apiTaste.push(note);
+                    }
+                    // if the checkbox is unchecked, remove the value from the array
+                    else {
+                      const index = apiTaste.indexOf(note);
+                      apiTaste.splice(index, 1);
+                    }
+                  }}
+                />
+                {note.name}
+              </label>
+            ))}
+          </div>
         </div>
-      </div>
-      {/* Mapping over the Spicy array to display all choices for the user */}
-      <div>
-        <h4>Spices</h4>
-        <div className={styles.categoryTaste}>
-          {spice.map((note) => (
-            <label key={`option-${note.name}`} className={styles.label}>
-              <input
-                className={styles.item}
-                type="checkbox"
-                value={note.name}
-                onChange={(event) => {
-                  if (event.target.checked) {
-                    apiTaste.push(note);
-                  }
-                  // if the checkbox is unchecked, remove the value from the array
-                  else {
-                    const index = apiTaste.indexOf(note);
-                    apiTaste.splice(index, 1);
-                  }
-                }}
-              />
-              {note.name}
-            </label>
-          ))}
+        {/* Mapping over the Spicy array to display all choices for the user */}
+        <div>
+          <h4>Spices</h4>
+          <div className={styles.categoryTaste}>
+            {spice.map((note) => (
+              <label key={`option-${note.name}`} className={styles.label}>
+                <input
+                  className={styles.item}
+                  type="checkbox"
+                  value={note.name}
+                  onChange={(event) => {
+                    if (event.target.checked) {
+                      apiTaste.push(note);
+                    }
+                    // if the checkbox is unchecked, remove the value from the array
+                    else {
+                      const index = apiTaste.indexOf(note);
+                      apiTaste.splice(index, 1);
+                    }
+                  }}
+                />
+                {note.name}
+              </label>
+            ))}
+          </div>
         </div>
-      </div>
-      <h3>Notes</h3>
-      <div>
-        <textarea name="notes" title="notes" />
-      </div>
-      <div className={styles.buttonDiv}>
-        <button
-          onClick={async (event) => {
-            event.preventDefault();
-            const finalApiTaste = apiTaste.map((taste) => {
-              return {
-                tasting_note_id: taste.id,
-                category: taste.category,
-                tasting_note_name: taste.name,
-              };
-            });
-            await fetch('/api/recipes', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                userId: userId,
-                categoryId: coffee.category,
-                coffee: coffee.name,
-                roaster: coffee.roaster,
-                amountIn: coffee.amountIn,
-                amountOut: coffee.amountOut,
-                grindSize: coffee.grindSize,
-                brewTemperature: coffee.temperature,
-                brewTimeMinutes: coffee.brewTimeMinutes,
-                brewTimeSeconds: coffee.brewTimeSeconds,
-                tastingNotes: finalApiTaste,
-                notes: coffee.notes,
-              }),
-            });
-            setMinutes(0);
-            setSeconds(0);
-            // router.push('/');
-          }}
-        >
-          Save
-        </button>
-      </div>
-    </form>
+        <h3>Notes</h3>
+        <div>
+          <textarea name="notes" title="notes" />
+        </div>
+      </form>
+      <form className={styles.form2} method="post" onSubmit={handleOnSubmit}>
+        <div className={styles.uploadDiv}>
+          <input type="file" name="file" />
+        </div>
+
+        <div className={styles.buttonDiv}>
+          <button>Save</button>
+        </div>
+      </form>
+    </>
   );
 }

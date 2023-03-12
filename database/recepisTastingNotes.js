@@ -27,7 +27,8 @@ export const getTastingNotesFromRecipe = cache(async (recipeId) => {
 // select all tasting notes for the single recipe_id and give them back in an single object
 
 export const getSingleRecipeWithTastingNotes = cache(async (recipeId) => {
-  return await sql`
+  const recipe = await sql`
+
   SELECT
     recipes.user_id,
     recipes.category_id,
@@ -50,4 +51,5 @@ export const getSingleRecipeWithTastingNotes = cache(async (recipeId) => {
   WHERE
     recipes.id = ${recipeId}
 `;
+  return recipe;
 });
