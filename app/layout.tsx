@@ -37,6 +37,7 @@ export default async function RootLayout({
         <meta name="description" content={metadata.description} />
         <title>{metadata.title}</title>
         <link rel="icon" href="/favicon.ico" />
+        <link href="/dist/output.css" rel="stylesheet" />
       </head>
       <body>
         {children}
