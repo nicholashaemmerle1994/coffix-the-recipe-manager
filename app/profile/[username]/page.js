@@ -4,9 +4,7 @@ import { getValidSessionByToken } from '../../../database/sessions';
 import { getUserByUsername } from '../../../database/users';
 import Profile from './Profile';
 
-type Props = { params: { username: string } };
-
-export default async function ProfilePage(props: Props) {
+export default async function ProfilePage(props) {
   // check if there is a valid session
   const sessionTokenCookie = cookies().get('sessionToken');
   const session =
@@ -18,8 +16,7 @@ export default async function ProfilePage(props: Props) {
   }
   // if not, render login form
 
-  const user: { id: number; userName: string } | undefined =
-    await getUserByUsername(props.params.username);
+  const user = await getUserByUsername(props.params.username);
 
   if (!user) {
     return notFound();

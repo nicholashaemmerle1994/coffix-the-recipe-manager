@@ -21,6 +21,7 @@ export default function Registerform() {
         firstName: firstName.trim(),
         lastName: lastName.trim(),
         password: password.trim(),
+        pictureUrl: '/user.png',
       }),
     });
     const data: RegisterResponseBody = await response.json();

@@ -11,6 +11,7 @@ const userSchema = z.object({
   firstName: z.string(),
   lastName: z.string(),
   password: z.string(),
+  pictureUrl: z.string(),
 });
 export type RegisterResponseBody =
   | { errors: { message: string }[] }
@@ -64,6 +65,7 @@ export const POST = async (request: NextRequest) => {
     result.data.firstName,
     result.data.lastName,
     passwordHash,
+    result.data.pictureUrl,
   );
   if (!newUser) {
     return NextResponse.json(

@@ -23,7 +23,6 @@ export default function Posts(props) {
     <div className={styles.page}>
       <div>
         {recipesWithDate.map((recipe) => {
-          console.log(recipe.pictureUrl);
           return (
             <div key={`recipe-${recipe.id}`} className={styles.outterPostDiv}>
               <div className={styles.photoDiv}>

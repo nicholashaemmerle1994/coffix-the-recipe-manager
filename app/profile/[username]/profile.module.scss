@@ -4,9 +4,10 @@
   align-items: center;
   background-color: #3c2a21;
   padding: 20px;
-  & img {
-    width: auto;
-    height: auto;
-    border-radius: 10px;
-  }
+}
+
+.img {
+  width: auto;
+  height: auto;
+  border-radius: 10px;
 }

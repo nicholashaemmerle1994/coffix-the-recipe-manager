@@ -17,7 +17,6 @@ export default async function SinglePostPAge({ params }) {
   const userId = session.userId;
 
   const singleRecipe = await getSingleRecipeWithTastingNotes(params.postID);
-  console.log('singleRecipe', singleRecipe);
   if (singleRecipe.length === 0) {
     const recipe = await getRecipeById(params.postID);
     if (recipe.length === 0) {

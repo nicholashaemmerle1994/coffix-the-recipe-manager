@@ -7,11 +7,17 @@ type User = {
   firstName: string;
   lastName: string;
   passwordHash: string;
+  bio: string | null;
+  pictureUrl: string | null;
 };
 
 export type GetUser = {
   id: number;
   userName: string;
+  firstName: string;
+  lastName: string;
+  pictureUrl: string | null;
+  bio: string | null;
 };
 
 type CreateUser = {
@@ -25,7 +31,11 @@ export const getUserByUsername = cache(async (username: string) => {
   const [user] = await sql<GetUser[]>`
     SELECT
       id,
-      user_name
+      user_name,
+      first_name,
+      last_name,
+      picture_url,
+      bio
     FROM
       users
     WHERE
@@ -43,10 +53,11 @@ export const createUser = cache(
     firstName: string,
     lastName: string,
     passwordHash: string,
+    pictureUrl: string,
   ) => {
     const [user] = await sql<{ id: number; userName: string }[]>`
-    INSERT INTO users (user_name, first_name, last_name, password_hash)
-    VALUES (${userName}, ${firstName}, ${lastName}, ${passwordHash})
+    INSERT INTO users (user_name, first_name, last_name, password_hash, picture_url)
+    VALUES (${userName}, ${firstName}, ${lastName}, ${passwordHash}, ${pictureUrl})
     RETURNING id, user_name;
   `;
     return user;
@@ -87,3 +98,20 @@ export const getUserBySessionToken = cache(async (token: string) => {
   `;
   return user;
 });
+export const updateUser = cache(
+  async (
+    userId: number,
+    firstName: string,
+    lastName: string,
+    bio: string,
+    pictureUrl: string,
+  ) => {
+    const [user] = await sql<{ id: number; userName: string }[]>`
+    UPDATE users
+    SET first_name = ${firstName}, last_name = ${lastName}, bio = ${bio}, picture_url = ${pictureUrl}
+    WHERE id = ${userId}
+    RETURNING id, user_name;
+  `;
+    return user;
+  },
+);

@@ -4,62 +4,52 @@ import { useState } from 'react';
 import { tastingNotes } from '../../../database/tastingnotes';
 import styles from './form.module.scss';
 
-export type Coffee = {
-  userId: number;
-  category: number;
-  name: string;
-  roaster: string;
-  amountIn: number;
-  amountOut: number;
-  grindSize: number;
-  temperature: number;
-  brewTimeMinutes: number;
-  brewTimeSeconds: number;
-  notes: string;
-};
+// export type Coffee = {
+//   userId: number,
+//   category: number,
+//   name: string,
+//   roaster: string,
+//   amountIn: number,
+//   amountOut: number,
+//   grindSize: number,
+//   temperature: number,
+//   brewTimeMinutes: number,
+//   brewTimeSeconds: number,
+//   notes: string,
+// };
 
-type ApiTaste = {
-  id: number;
-  category: string;
-  name: string;
-}[];
+// type ApiTaste = {
+//   id: number,
+//   category: string,
+//   name: string,
+// }[];
 
-type TastingNote = {
-  id: number;
-  category: string;
-  name: string;
-}[];
+// type TastingNote = {
+//   id: number,
+//   category: string,
+//   name: string,
+// }[];
 
 // Filter the whole tasting notes database into categories
-const chocolatey: TastingNote = tastingNotes.filter(
+const chocolatey = tastingNotes.filter(
   (note) => note.category === 'Chocolatey',
 );
-const fruity: TastingNote = tastingNotes.filter(
-  (note) => note.category === 'Fruity',
-);
-const nutty: TastingNote = tastingNotes.filter(
-  (note) => note.category === 'Nutty',
-);
-const sweet: TastingNote = tastingNotes.filter(
-  (note) => note.category === 'Sweet',
-);
-const floral: TastingNote = tastingNotes.filter(
-  (note) => note.category === 'Floral',
-);
-const spice: TastingNote = tastingNotes.filter(
-  (note) => note.category === 'Spice',
-);
+const fruity = tastingNotes.filter((note) => note.category === 'Fruity');
+const nutty = tastingNotes.filter((note) => note.category === 'Nutty');
+const sweet = tastingNotes.filter((note) => note.category === 'Sweet');
+const floral = tastingNotes.filter((note) => note.category === 'Floral');
+const spice = tastingNotes.filter((note) => note.category === 'Spice');
 
-export default function Form(props: { id: number; userId: number }) {
+export default function Form(props) {
   const router = useRouter();
   const category = props.id;
   const userId = props.userId;
   // setting minutes and seconds for the timer
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
-  const apiTaste: ApiTaste = [];
+  const apiTaste = [];
   // setting the state for the coffee object will be sent to the api
-  const [coffee, setCoffee] = useState<Coffee>({
+  const [coffee, setCoffee] = useState({
     userId: userId,
     category: category,
     name: '',
@@ -72,13 +62,11 @@ export default function Form(props: { id: number; userId: number }) {
     brewTimeSeconds: 0,
     notes: '',
   });
-  const [imageSrc, setImageSrc] = useState();
 
   async function handleOnSubmit(event) {
     event.preventDefault();
 
     const form = event.currentTarget;
-    console.log(event.currentTarget);
     const fileInput = Array.from(form.elements).find(
       ({ name }) => name === 'file',
     );
@@ -98,9 +86,6 @@ export default function Form(props: { id: number; userId: number }) {
         body: formData,
       },
     ).then((r) => r.json());
-
-    setImageSrc(data.secure_url);
-    console.log(data.secure_url);
     const finalApiTaste = apiTaste.map((taste) => {
       return {
         tasting_note_id: taste.id,
@@ -136,7 +121,7 @@ export default function Form(props: { id: number; userId: number }) {
   }
 
   // creating the handler function for the timer
-  const handleMinutesChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleMinutesChange = (event) => {
     setMinutes(parseInt(event.target.value));
     setCoffee({
       ...coffee,
@@ -145,7 +130,7 @@ export default function Form(props: { id: number; userId: number }) {
     router.refresh();
   };
 
-  const handleSecondsChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleSecondsChange = (event) => {
     setSeconds(parseInt(event.target.value));
     setCoffee({
       ...coffee,
