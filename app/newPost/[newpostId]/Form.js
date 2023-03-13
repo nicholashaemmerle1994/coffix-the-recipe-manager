@@ -4,32 +4,6 @@ import { useState } from 'react';
 import { tastingNotes } from '../../../database/tastingnotes';
 import styles from './form.module.scss';
 
-// export type Coffee = {
-//   userId: number,
-//   category: number,
-//   name: string,
-//   roaster: string,
-//   amountIn: number,
-//   amountOut: number,
-//   grindSize: number,
-//   temperature: number,
-//   brewTimeMinutes: number,
-//   brewTimeSeconds: number,
-//   notes: string,
-// };
-
-// type ApiTaste = {
-//   id: number,
-//   category: string,
-//   name: string,
-// }[];
-
-// type TastingNote = {
-//   id: number,
-//   category: string,
-//   name: string,
-// }[];
-
 // Filter the whole tasting notes database into categories
 const chocolatey = tastingNotes.filter(
   (note) => note.category === 'Chocolatey',
@@ -205,6 +179,7 @@ export default function Form(props) {
             }}
           />
           <select
+            className="select select-primary w-full max-w-xs"
             title="brew temperature"
             placeholder="Brew temperature"
             onChange={(event) => {
