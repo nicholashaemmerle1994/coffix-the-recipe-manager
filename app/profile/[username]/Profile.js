@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import styles from './profile.module.scss';
 
-export default function Profile({ user }) {
+export default function Profile({ user, loggedUser }) {
   const [updateUser, setUpdateUser] = useState(false);
   const [updateBio, setUpdateBio] = useState('');
   const [updateFirstName, setUpdateFirstName] = useState('');
@@ -35,7 +35,7 @@ export default function Profile({ user }) {
       },
     ).then((r) => r.json());
 
-    const response = await fetch(`/api/profille/${user.id}`, {
+    await fetch(`/api/profille/${user.id}`, {
       method: 'PUT',
       body: JSON.stringify({
         userId: user.id,
@@ -45,8 +45,32 @@ export default function Profile({ user }) {
         pictureUrl: data.secure_url,
       }),
     });
-    console.log(response);
     setUpdateUser(!updateUser);
+  }
+  if (user.id !== loggedUser) {
+    return (
+      <div>
+        <div className={styles.upperPart}>
+          <div>
+            <img
+              src={user.pictureUrl}
+              alt="nices foto"
+              width={120}
+              height={150}
+            />
+          </div>
+          <div>
+            <p>Posts:</p>
+            <div>
+              <h5>
+                {user.firstName} {user.lastName}
+              </h5>
+              <p>{user.bio}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
   if (updateUser === true) {
     return (

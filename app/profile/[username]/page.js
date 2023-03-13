@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers';
-import { notFound, redirect, useRouter } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { getValidSessionByToken } from '../../../database/sessions';
 import { getUserByUsername } from '../../../database/users';
 import Profile from './Profile';
@@ -17,13 +17,12 @@ export default async function ProfilePage(props) {
   // if not, render login form
 
   const user = await getUserByUsername(props.params.username);
-
   if (!user) {
     return notFound();
   }
   return (
     <div>
-      <Profile user={user} />
+      <Profile user={user} loggedUser={session.userId} />
     </div>
   );
 }

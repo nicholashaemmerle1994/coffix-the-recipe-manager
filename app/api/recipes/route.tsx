@@ -24,7 +24,7 @@ type FormBody = {
 
 export async function POST(request: NextRequest) {
   const body: FormBody = await request.json();
-  console.log(body);
+
   const recipeBody = {
     userId: body.userId,
     categoryId: body.categoryId,
