@@ -130,6 +130,7 @@ export default function Form(props) {
         <h3>Setup</h3>
         <div className={styles.category}>
           <input
+            className="input input-bordered input-sm w-full max-w-xs"
             placeholder="Coffee Name"
             onChange={(event) => {
               setCoffee({
@@ -139,6 +140,7 @@ export default function Form(props) {
             }}
           />
           <input
+            className="input input-bordered input-sm w-full max-w-xs"
             placeholder="Roaster"
             onChange={(event) => {
               setCoffee({
@@ -151,6 +153,7 @@ export default function Form(props) {
         <h3>Brew</h3>
         <div className={styles.category}>
           <input
+            className="input input-bordered input-sm w-full max-w-xs"
             placeholder="Amount in grams"
             type="number"
             onChange={(event) => {
@@ -161,6 +164,7 @@ export default function Form(props) {
             }}
           />
           <input
+            className="input input-bordered input-sm w-full max-w-xs"
             placeholder="Amount out in grams"
             onChange={(event) => {
               setCoffee({
@@ -170,6 +174,7 @@ export default function Form(props) {
             }}
           />
           <input
+            className="input input-bordered input-sm w-full max-w-xs"
             placeholder="Grind size"
             onChange={(event) => {
               setCoffee({
@@ -179,7 +184,7 @@ export default function Form(props) {
             }}
           />
           <select
-            className="select select-primary w-full max-w-xs"
+            className="select select-bordered w-full max-w-xs select-sm"
             title="brew temperature"
             placeholder="Brew temperature"
             onChange={(event) => {
@@ -208,6 +213,7 @@ export default function Form(props) {
               <div className={styles.div}>
                 Brew Time:
                 <select
+                  className="select select-bordered select-xs"
                   title="minutes"
                   name="minutes"
                   onChange={handleMinutesChange}
@@ -217,6 +223,7 @@ export default function Form(props) {
                 <span>:</span>
                 {/* set brew time seconds */}
                 <select
+                  className="select select-bordered select-xs"
                   title="seconds"
                   name="seconds"
                   onChange={handleSecondsChange}
@@ -235,8 +242,8 @@ export default function Form(props) {
             {chocolatey.map((note) => (
               <label key={`option-${note.name}`} className={styles.label}>
                 <input
-                  className={styles.item}
                   type="checkbox"
+                  className="checkbox checkbox-sm"
                   value={note.name}
                   onChange={(event) => {
                     if (event.target.checked) {
@@ -261,8 +268,8 @@ export default function Form(props) {
             {fruity.map((note) => (
               <label key={`option-${note.name}`} className={styles.label}>
                 <input
-                  className={styles.item}
                   type="checkbox"
+                  className="checkbox checkbox-sm"
                   value={note.name}
                   onChange={(event) => {
                     if (event.target.checked) {
@@ -287,8 +294,8 @@ export default function Form(props) {
             {nutty.map((note) => (
               <label key={`option-${note.name}`} className={styles.label}>
                 <input
-                  className={styles.item}
                   type="checkbox"
+                  className="checkbox checkbox-sm"
                   value={note.name}
                   onChange={(event) => {
                     if (event.target.checked) {
@@ -313,8 +320,8 @@ export default function Form(props) {
             {sweet.map((note) => (
               <label key={`option-${note.name}`} className={styles.label}>
                 <input
-                  className={styles.item}
                   type="checkbox"
+                  className="checkbox checkbox-sm"
                   value={note.name}
                   onChange={(event) => {
                     if (event.target.checked) {
@@ -339,8 +346,8 @@ export default function Form(props) {
             {floral.map((note) => (
               <label key={`option-${note.name}`} className={styles.label}>
                 <input
-                  className={styles.item}
                   type="checkbox"
+                  className="checkbox checkbox-sm"
                   value={note.name}
                   onChange={(event) => {
                     if (event.target.checked) {
@@ -365,8 +372,8 @@ export default function Form(props) {
             {spice.map((note) => (
               <label key={`option-${note.name}`} className={styles.label}>
                 <input
-                  className={styles.item}
                   type="checkbox"
+                  className="checkbox checkbox-sm"
                   value={note.name}
                   onChange={(event) => {
                     if (event.target.checked) {
@@ -386,16 +393,24 @@ export default function Form(props) {
         </div>
         <h3>Notes</h3>
         <div>
-          <textarea name="notes" title="notes" />
+          <textarea
+            name="notes"
+            title="notes"
+            className="textarea textarea-bordered"
+          />
         </div>
       </form>
       <form className={styles.form2} method="post" onSubmit={handleOnSubmit}>
         <div className={styles.uploadDiv}>
-          <input type="file" name="file" />
+          <input
+            type="file"
+            name="file"
+            className="file-input file-input-bordered w-full max-w-xs"
+          />
         </div>
 
         <div className={styles.buttonDiv}>
-          <button>Save</button>
+          <button className="btn btn-outline btn-success">Save</button>
         </div>
       </form>
     </>

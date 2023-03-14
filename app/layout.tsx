@@ -1,5 +1,5 @@
-import './global.scss';
-// import './globals.css';
+// import './global.scss';
+import './globals.css';
 import { cookies } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';

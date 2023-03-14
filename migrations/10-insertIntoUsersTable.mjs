@@ -5,6 +5,7 @@ const users = [
     first_name: 'Stephanie',
     last_name: 'Pahr',
     password_hash: 'a',
+    picture_url: '/user.png',
   },
   {
     id: 2,
@@ -12,6 +13,7 @@ const users = [
     first_name: 'Nicholas',
     last_name: 'Hämmerle',
     password_hash: 'b',
+    picture_url: '/user.png',
   },
   {
     id: 3,
@@ -19,6 +21,7 @@ const users = [
     first_name: 'Johannes',
     last_name: 'Luckas',
     password_hash: 'c',
+    picture_url: '/user.png',
   },
   {
     id: 4,
@@ -26,6 +29,7 @@ const users = [
     first_name: 'Chris',
     last_name: 'Bumstead',
     password_hash: 'd',
+    picture_url: '/user.png',
   },
   {
     id: 5,
@@ -33,6 +37,7 @@ const users = [
     first_name: 'Ronnie',
     last_name: 'Coleman',
     password_hash: 'e',
+    picture_url: '/user.png',
   },
   {
     id: 6,
@@ -40,6 +45,7 @@ const users = [
     first_name: 'James',
     last_name: 'Hoffmann',
     password_hash: 'f',
+    picture_url: '/user.png',
   },
   {
     id: 7,
@@ -47,6 +53,7 @@ const users = [
     first_name: 'Lance',
     last_name: 'Hedrick',
     password_hash: 'g',
+    picture_url: '/user.png',
   },
   {
     id: 8,
@@ -54,6 +61,7 @@ const users = [
     first_name: 'Peter',
     last_name: 'McKinnon',
     password_hash: 'h',
+    picture_url: '/user.png',
   },
   {
     id: 9,
@@ -61,6 +69,7 @@ const users = [
     first_name: 'Daniel',
     last_name: 'Koller',
     password_hash: 'i',
+    picture_url: '/user.png',
   },
   {
     id: 10,
@@ -68,6 +77,7 @@ const users = [
     first_name: 'David',
     last_name: 'Schmidt',
     password_hash: 'j',
+    picture_url: '/user.png',
   },
   {
     id: 11,
@@ -75,6 +85,7 @@ const users = [
     first_name: 'Lara',
     last_name: 'Hämmerle',
     password_hash: 'k',
+    picture_url: '/user.png',
   },
   {
     id: 12,
@@ -82,6 +93,7 @@ const users = [
     first_name: 'Marc',
     last_name: 'Peternell',
     password_hash: 'l',
+    picture_url: '/user.png',
   },
   {
     id: 13,
@@ -89,6 +101,7 @@ const users = [
     first_name: 'Sandra',
     last_name: 'Eisenkölbl',
     password_hash: 'm',
+    picture_url: '/user.png',
   },
   {
     id: 14,
@@ -96,6 +109,7 @@ const users = [
     first_name: 'Sonja',
     last_name: 'Pahr',
     password_hash: 'n',
+    picture_url: '/user.png',
   },
   {
     id: 15,
@@ -103,6 +117,7 @@ const users = [
     first_name: 'Klaus',
     last_name: 'Heinrich',
     password_hash: 'o',
+    picture_url: '/user.png',
   },
   {
     id: 16,
@@ -110,6 +125,7 @@ const users = [
     first_name: 'Michael',
     last_name: 'Riegger',
     password_hash: 'p',
+    picture_url: '/user.png',
   },
   {
     id: 17,
@@ -117,6 +133,7 @@ const users = [
     first_name: 'Andreas',
     last_name: 'Riegger',
     password_hash: 'q',
+    picture_url: '/user.png',
   },
   {
     id: 18,
@@ -124,6 +141,7 @@ const users = [
     first_name: 'Florin',
     last_name: 'Pfund',
     password_hash: 'r',
+    picture_url: '/user.png',
   },
 ];
 
@@ -135,6 +153,7 @@ export async function up(sql) {
     'first_name',
     'last_name',
     'password_hash',
+    'picture_url',
   )}
   `;
 }

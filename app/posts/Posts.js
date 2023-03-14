@@ -23,11 +23,13 @@ export default function Posts(props) {
     <div className={styles.page}>
       <div>
         {recipesWithDate.map((recipe) => {
+          console.log(recipe.pictureUrl);
           return (
             <div key={`recipe-${recipe.id}`} className={styles.outterPostDiv}>
               <div className={styles.photoDiv}>
                 {' '}
-                <img
+                <Image
+                  className="mask mask-squircle"
                   src={recipe.pictureUrl}
                   width={100}
                   height={100}

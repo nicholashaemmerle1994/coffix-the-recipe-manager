@@ -51,7 +51,7 @@ export default function Profile({ user, loggedUser }) {
     return (
       <div>
         <div className={styles.upperPart}>
-          <div>
+          <div className="w-24 rounded-full">
             <img
               src={user.pictureUrl}
               alt="nices foto"
@@ -77,7 +77,7 @@ export default function Profile({ user, loggedUser }) {
       <form method="post" onSubmit={handleOnSubmit}>
         <div>
           <div className={styles.upperPart}>
-            <div>
+            <div className="w-24 rounded-full">
               <img
                 src={user.pictureUrl}
                 alt="nices foto"
@@ -87,13 +87,7 @@ export default function Profile({ user, loggedUser }) {
             </div>
             <div>
               <a href="http://localhost:3000/api/logout">
-                <Image
-                  src="/logout.png"
-                  width={30}
-                  height={30}
-                  alt="Logout"
-                  className={styles.img}
-                />
+                <Image src="/logout.png" width={30} height={30} alt="Logout" />
               </a>
 
               <p>Posts:</p>
@@ -133,13 +127,15 @@ export default function Profile({ user, loggedUser }) {
   return (
     <div>
       <div className={styles.upperPart}>
-        <div>
-          <img
-            src={user.pictureUrl}
-            alt="nices foto"
-            width={120}
-            height={150}
-          />
+        <div className="avatar">
+          <div className="w-24 rounded-full">
+            <img
+              src={user.pictureUrl}
+              alt="nices foto"
+              width={120}
+              height={150}
+            />
+          </div>
         </div>
         <div>
           <button
@@ -150,13 +146,7 @@ export default function Profile({ user, loggedUser }) {
             Edit Profile
           </button>
           <a href="http://localhost:3000/api/logout">
-            <Image
-              src="/logout.png"
-              width={30}
-              height={30}
-              alt="Logout"
-              className={styles.img}
-            />
+            <Image src="/logout.png" width={30} height={30} alt="Logout" />
           </a>
 
           <p>Posts:</p>

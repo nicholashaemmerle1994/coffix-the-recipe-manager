@@ -81,7 +81,7 @@ const recipes = [
     brew_time_minutes: 2,
     brew_time_seconds: 0,
     notes: 'This is a test note',
-    picture_url: 'kanzi.png',
+    picture_url: '/kanzi.png',
   },
   {
     user_id: 1,
