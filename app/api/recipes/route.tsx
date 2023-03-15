@@ -24,7 +24,6 @@ type FormBody = {
 
 export async function POST(request: NextRequest) {
   const body: FormBody = await request.json();
-
   const recipeBody = {
     userId: body.userId,
     categoryId: body.categoryId,
@@ -39,6 +38,7 @@ export async function POST(request: NextRequest) {
     notes: body.notes,
     pictureUrl: body.pictureUrl,
   };
+  console.log(recipeBody);
   const newRecipe = await createFullRecipe(recipeBody);
 
   // Create an array with all the tasting notes (id, tasting_note_name, category, recipe_id)

@@ -32,6 +32,7 @@ export default function Registerform() {
       });
       return;
     }
+
     toast.success('Registration successful');
     setTimeout(() => {
       router.refresh();

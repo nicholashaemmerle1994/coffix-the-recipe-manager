@@ -36,7 +36,6 @@ export async function PUT(
     body.firstName,
     body.lastName,
     body.bio,
-    body.pictureUrl,
   );
 
   return NextResponse.json({ user: freshUser });

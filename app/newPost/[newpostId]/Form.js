@@ -60,40 +60,74 @@ export default function Form(props) {
         body: formData,
       },
     ).then((r) => r.json());
-    const finalApiTaste = apiTaste.map((taste) => {
-      return {
-        tasting_note_id: taste.id,
-        category: taste.category,
-        tasting_note_name: taste.name,
-      };
-    });
-    await fetch('/api/recipes', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        userId: userId,
-        categoryId: coffee.category,
-        coffee: coffee.name,
-        roaster: coffee.roaster,
-        amountIn: coffee.amountIn,
-        amountOut: coffee.amountOut,
-        grindSize: coffee.grindSize,
-        brewTemperature: coffee.temperature,
-        brewTimeMinutes: coffee.brewTimeMinutes,
-        brewTimeSeconds: coffee.brewTimeSeconds,
-        tastingNotes: finalApiTaste,
-        notes: coffee.notes,
-        pictureUrl: data.secure_url,
-      }),
-    });
-    setMinutes(0);
-    setSeconds(0);
+    if (data.secure_url === undefined) {
+      const finalApiTaste = apiTaste.map((taste) => {
+        return {
+          tasting_note_id: taste.id,
+          category: taste.category,
+          tasting_note_name: taste.name,
+        };
+      });
+      await fetch('/api/recipes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: userId,
+          categoryId: coffee.category,
+          coffee: coffee.name,
+          roaster: coffee.roaster,
+          amountIn: coffee.amountIn,
+          amountOut: coffee.amountOut,
+          grindSize: coffee.grindSize,
+          brewTemperature: coffee.temperature,
+          brewTimeMinutes: coffee.brewTimeMinutes,
+          brewTimeSeconds: coffee.brewTimeSeconds,
+          tastingNotes: finalApiTaste,
+          notes: coffee.notes,
+          pictureUrl: '/beans.png',
+        }),
+      });
+      setMinutes(0);
+      setSeconds(0);
 
-    router.push('/');
+      // router.push('/');
+    } else {
+      const finalApiTaste = apiTaste.map((taste) => {
+        return {
+          tasting_note_id: taste.id,
+          category: taste.category,
+          tasting_note_name: taste.name,
+        };
+      });
+      await fetch('/api/recipes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: userId,
+          categoryId: coffee.category,
+          coffee: coffee.name,
+          roaster: coffee.roaster,
+          amountIn: coffee.amountIn,
+          amountOut: coffee.amountOut,
+          grindSize: coffee.grindSize,
+          brewTemperature: coffee.temperature,
+          brewTimeMinutes: coffee.brewTimeMinutes,
+          brewTimeSeconds: coffee.brewTimeSeconds,
+          tastingNotes: finalApiTaste,
+          notes: coffee.notes,
+          pictureUrl: data.secure_url,
+        }),
+      });
+      setMinutes(0);
+      setSeconds(0);
+
+      // router.push('/');
+    }
   }
-
   // creating the handler function for the timer
   const handleMinutesChange = (event) => {
     setMinutes(parseInt(event.target.value));
@@ -112,13 +146,13 @@ export default function Form(props) {
     });
   };
   // creating the options for the timer
-  const minuteOptions = Array.from({ length: 6 }, (unuseParam, i) => (
+  const minuteOptions = Array.from({ length: 6 }, (unusedParam, i) => (
     <option key={`second-${i}`} value={i}>
       {i.toString().padStart(2, '0')}
     </option>
   ));
 
-  const secondOptions = Array.from({ length: 60 }, (unuseParam, i) => (
+  const secondOptions = Array.from({ length: 60 }, (unusedParam, i) => (
     <option key={`second-${i}`} value={i}>
       {i.toString().padStart(2, '0')}
     </option>

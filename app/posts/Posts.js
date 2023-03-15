@@ -20,41 +20,42 @@ export default function Posts(props) {
   // router.refresh();
 
   return (
-    <div className={styles.page}>
-      <div>
-        {recipesWithDate.map((recipe) => {
-          console.log(recipe.pictureUrl);
-          return (
-            <div key={`recipe-${recipe.id}`} className={styles.outterPostDiv}>
-              <div className={styles.photoDiv}>
-                {' '}
-                <Image
-                  className="mask mask-squircle"
-                  src={recipe.pictureUrl}
-                  width={100}
-                  height={100}
-                  alt="user pic"
-                />
-              </div>
+    <>
+      <div className="card card-side bg-base-100 shadow-xl" />
+      {recipesWithDate.map((recipe) => {
+        return (
+          <div
+            key={`recipe-${recipe.id}`}
+            className="card card-side bg-base-100 shadow-xl m-2.5 bg-primary"
+          >
+            <figure>
+              <Image
+                className="w-100 h-full"
+                src={recipe.pictureUrl}
+                width={100}
+                height={100}
+                alt="user pic"
+              />
+            </figure>
 
-              <div className={styles.innerPostDiv}>
-                <Link href={`/posts/${recipe.id}`}>
-                  <h3>{recipe.categoryName}</h3>
-                  <p>{recipe.coffee}</p>
-                  <div className={styles.tasteDiv}>
-                    <div className={styles.outterTasteDiv}>
-                      {recipe.tastingNotes.map((note, index) => {
-                        const noteId = `recipe-id-${recipe.id}-note-${index}`;
-                        return <p key={`noteId-${noteId}`}>{note}</p>;
-                      })}
-                    </div>
-                  </div>
-                </Link>
+            <div className="card-body">
+              <Link href={`/posts/${recipe.id}`}>
+                <h2 className="card-title">{recipe.categoryName}</h2>
+                <p>{recipe.coffee}</p>
+                <div>
+                  {recipe.tastingNotes.map((note, index) => {
+                    const noteId = `recipe-id-${recipe.id}-note-${index}`;
+                    return <p key={`noteId-${noteId}`}>{note}</p>;
+                  })}
+                </div>
+              </Link>
+              <div className="card-actions justify-end">
+                <button className="btn btn-primary">Open</button>
               </div>
             </div>
-          );
-        })}
-      </div>
-    </div>
+          </div>
+        );
+      })}
+    </>
   );
 }

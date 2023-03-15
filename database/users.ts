@@ -99,16 +99,24 @@ export const getUserBySessionToken = cache(async (token: string) => {
   return user;
 });
 export const updateUser = cache(
-  async (
-    userId: number,
-    firstName: string,
-    lastName: string,
-    bio: string,
-    pictureUrl: string,
-  ) => {
+  async (userId: number, firstName: string, lastName: string, bio: string) => {
     const [user] = await sql<{ id: number; userName: string }[]>`
     UPDATE users
-    SET first_name = ${firstName}, last_name = ${lastName}, bio = ${bio}, picture_url = ${pictureUrl}
+    SET first_name = ${firstName}, last_name = ${lastName}, bio = ${bio}
+    WHERE id = ${userId}
+    RETURNING id, user_name;
+  `;
+    return user;
+  },
+);
+
+// Update user profile picture
+
+export const updateUserPicture = cache(
+  async (userId: number, pictureUrl: string) => {
+    const [user] = await sql<{ id: number; userName: string }[]>`
+    UPDATE users
+    SET picture_url = ${pictureUrl}
     WHERE id = ${userId}
     RETURNING id, user_name;
   `;

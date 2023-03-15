@@ -20,7 +20,7 @@ export default async function CategoryPage() {
   const category = await getCategory();
   return (
     <div className={styles.wholePage}>
-      <h2 className="my-5 text-4xl text-primary">Choose your brew method</h2>
+      <h2 className="font-semibold">Choose your brew method</h2>
       {category.map((brew) => {
         return (
           <Link href={`/newpost/${brew.id}`} key={`brew-method-${brew.name}`}>
