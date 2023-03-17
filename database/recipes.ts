@@ -3,19 +3,19 @@ import { sql } from './connect';
 
 export type RecipeSQL = {
   id: number;
-  userId: number;
-  categoryId: number;
+  userId: number | null;
+  categoryId: number | null;
   createdAt: Date;
   coffee: string;
   roaster: string;
   amountIn: number;
   amountOut: number;
   grindSize: number;
-  brewTemperature: number;
-  brewTimeMinutes: number;
-  brewTimeSeconds: number;
-  notes: string;
-  pictureUrl: string;
+  brewTemperature: number | null;
+  brewTimeMinutes: number | null;
+  brewTimeSeconds: number | null;
+  notes: string | null;
+  pictureUrl: string | null;
 };
 
 type UserRecipe = {
@@ -55,6 +55,18 @@ export const getRecipeById = cache(async (id: number) => {
   WHERE
   id = ${id}`;
   return recipe;
+});
+
+//  Get recipes by user id
+export const getRecipeByUserId = cache(async (userId: number) => {
+  const recipes = await sql<RecipeSQL[]>`
+  SELECT
+  *
+  FROM
+  recipes
+  WHERE
+  user_id = ${userId}`;
+  return recipes;
 });
 
 // Get recipes by category

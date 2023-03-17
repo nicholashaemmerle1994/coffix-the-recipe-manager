@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getCategory } from '../../database/category';
 import { getValidSessionByToken } from '../../database/sessions';
-import styles from './category.module.scss';
 
 export default async function CategoryPage() {
   // check if there is a valid session
@@ -19,18 +18,30 @@ export default async function CategoryPage() {
   // if not, render login form
   const category = await getCategory();
   return (
-    <div className={styles.wholePage}>
-      <h2 className="font-semibold">Choose your brew method</h2>
-      {category.map((brew) => {
-        return (
-          <Link href={`/newpost/${brew.id}`} key={`brew-method-${brew.name}`}>
-            <div className={styles.methoddiv}>
-              <Image src={brew.icon} alt={brew.name} width={50} height={50} />
-              <p>{brew.name}</p>
-            </div>
-          </Link>
-        );
-      })}
+    <div className="w-auto h-full max-w-lg mx-auto lg:mt-12 sm:mb-20 sm:mt-12 md:mb-20 bg-default rounded-lg  justify-center align-center flex-col flex text-center ">
+      <h2 className="text-4xl my-12 font-black">Choose your brew method</h2>
+      <div className="flex flex-wrap justify-center align-center text-gray-50">
+        {category.map((brew) => {
+          return (
+            <Link
+              href={`/newpost/${brew.id}`}
+              key={`brew-method-${brew.name}`}
+              className="w-40 bg-primary rounded-lg p-2 m-2 justify-center align-center flex-row flex text-center"
+            >
+              <div className="align-center justify-center m-0 content-center">
+                <Image
+                  src={brew.icon}
+                  alt={brew.name}
+                  width={50}
+                  height={50}
+                  className="w-14 h-14 mx-auto my-2 rounded-lg"
+                />
+                <p>{brew.name}</p>
+              </div>
+            </Link>
+          );
+        })}
+      </div>
     </div>
   );
 }

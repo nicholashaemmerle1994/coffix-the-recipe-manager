@@ -1,7 +1,6 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { getCategoryName } from '../../database/category';
-import { getComments } from '../../database/comments';
+import { getCategoryNameById } from '../../database/category';
 import { getTastingNotesFromRecipe } from '../../database/recepisTastingNotes';
 import { getAllRecipes } from '../../database/recipes';
 import { getValidSessionByToken } from '../../database/sessions';
@@ -37,7 +36,7 @@ export default async function PostsPage() {
   // function that uses getCategoryName to get the name of the category and then replaces the categoryId with the categoryName in every recipe
   const recipesWithCategoryName = await Promise.all(
     recipesWithDate.map(async (recipe) => {
-      const categoryName = await getCategoryName(recipe.categoryId);
+      const categoryName = await getCategoryNameById(recipe.categoryId);
 
       const { categoryId, ...recipeWithoutCategory } = recipe;
       return {

@@ -1,10 +1,8 @@
-// import './global.scss';
-import './globals.css';
+import './globals.scss';
 import { cookies } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getUserBySessionToken } from '../database/users';
-import styles from './layout.module.scss';
 
 export const metadata = {
   title: 'Coffix - The recipe Manager',
@@ -39,18 +37,36 @@ export default async function RootLayout({
         <title>{metadata.title}</title>
         <link rel="icon" href="/favicon.ico" />
       </head>
-      <body>
+      <body className="mb-24">
         {children}
-        <footer className={styles.footer}>
-          <nav>
+        <footer className="w-full bg-secondary fixed bottom-0 border-solid border-t border-gray-400">
+          <nav className="flex flex-row justify-around w-full h-16 ">
             <Link href="/posts">
-              <Image src="/home1.png" alt="home" width={30} height={30} />
+              <Image
+                src="/home.png"
+                alt="home"
+                width={30}
+                height={30}
+                className="py-4"
+              />
             </Link>
             <Link href="/newpost">
-              <Image src="/newPost1.png" alt="home" width={30} height={30} />
+              <Image
+                src="/newPost.png"
+                alt="home"
+                width={30}
+                height={30}
+                className="py-4"
+              />
             </Link>
-            <Link href={`profile/${user?.userName}`}>
-              <Image src="/profile1.png" alt="home" width={30} height={30} />
+            <Link href={`/profile/${user?.userName}`}>
+              <Image
+                src="/profile.png"
+                alt="home"
+                width={30}
+                height={30}
+                className="py-4"
+              />
             </Link>
           </nav>
         </footer>

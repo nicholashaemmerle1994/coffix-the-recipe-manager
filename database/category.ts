@@ -18,7 +18,7 @@ export const getCategory = cache(async () => {
 });
 
 // Ger category_name by id of catergoryId of the recipes
-export const getCategoryName = cache(async (categoryId: number) => {
+export const getCategoryNameById = cache(async (categoryId: number) => {
   const categoryName = await sql<CategoryName[]>`
   SELECT
     name

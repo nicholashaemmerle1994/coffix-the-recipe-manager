@@ -2,7 +2,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import styles from './posts.module.scss';
 
 export default function Posts(props) {
   const router = useRouter();
@@ -26,11 +25,11 @@ export default function Posts(props) {
         return (
           <div
             key={`recipe-${recipe.id}`}
-            className="card card-side bg-base-100 shadow-xl m-2.5 bg-primary"
+            className="card card-side shadow-xl m-2.5 bg-secondary"
           >
             <figure>
               <Image
-                className="w-100 h-full"
+                className="w-100 h-full border rounded-l-2xl border-t border-l border-b border-gray-500"
                 src={recipe.pictureUrl}
                 width={100}
                 height={100}
@@ -38,20 +37,24 @@ export default function Posts(props) {
               />
             </figure>
 
-            <div className="card-body">
+            <div className="card-body bg-secondary text-yellow-900 rounded-r-2xl border-t border-r border-b border-gray-500">
               <Link href={`/posts/${recipe.id}`}>
-                <h2 className="card-title">{recipe.categoryName}</h2>
-                <p>{recipe.coffee}</p>
+                <h2 className="card-title text-gray-800 font-bold">
+                  {recipe.categoryName}
+                </h2>
+                <p className="font-medium">{recipe.coffee}</p>
                 <div>
                   {recipe.tastingNotes.map((note, index) => {
                     const noteId = `recipe-id-${recipe.id}-note-${index}`;
                     return <p key={`noteId-${noteId}`}>{note}</p>;
                   })}
                 </div>
+                <div className="card-actions justify-end">
+                  <button className="btn btn-xs btn-secondary border border-gray-500">
+                    Open
+                  </button>
+                </div>
               </Link>
-              <div className="card-actions justify-end">
-                <button className="btn btn-primary">Open</button>
-              </div>
             </div>
           </div>
         );

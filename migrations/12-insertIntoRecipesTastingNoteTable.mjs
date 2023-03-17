@@ -113,7 +113,7 @@ const notes = [
   },
   {
     tasting_note_id: 31,
-    recipe_id: 20,
+    recipe_id: 17,
   },
 ];
 

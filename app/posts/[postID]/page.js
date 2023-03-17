@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
+import { getCategoryNameById } from '../../../database/category';
 import { getComments } from '../../../database/comments';
 import { getSingleRecipeWithTastingNotes } from '../../../database/recepisTastingNotes';
 import { getRecipeById } from '../../../database/recipes';
@@ -92,13 +93,22 @@ export default async function SinglePostPAge({ params }) {
   });
 
   const comments = await getComments(finalRecipeWithDate[0].id);
+  // convert the Date object form the comments to a string
+  const commentsWithDate = comments.map((comment) => {
+    const date = new Date(comment.createdAt);
+    const dateString = date.toDateString();
+    return { ...comment, createdAt: dateString };
+  });
+
+  const category = await getCategoryNameById(finalRecipeWithDate[0].categoryId);
+  const categoryName = category[0].name;
 
   return (
     <SinglePostPage
       post={finalRecipeWithDate}
       userId={userId}
-      comments={comments}
+      comments={commentsWithDate}
+      categoryName={categoryName}
     />
   );
-  // <div>hello</div>;
 }

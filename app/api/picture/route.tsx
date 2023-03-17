@@ -5,8 +5,6 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: Record<string, string[]> },
 ) {
-  console.log(params);
-
   const body = await request.json();
 
   const newPic = updateUserPicture(body.userId, body.pictureUrl);

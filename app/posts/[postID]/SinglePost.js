@@ -3,14 +3,12 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import styles from './singlepost.module.scss';
 
 // import { deleteRecipeById } from '../../../database/recipes';
 
 export default function SinglePostPage(props) {
   const [comment, setComment] = useState('');
   const router = useRouter();
-  console.log('props', props.post);
 
   // Converting the date string to a date object and inserting it back to the props object
 
@@ -21,372 +19,524 @@ export default function SinglePostPage(props) {
     // Version if the post has no tasting notes
     if (props.post[0].tastingNotes === undefined) {
       return (
-        <div className={styles.page}>
-          <h1>{props.post[0].coffee}</h1>
-          <p>{props.post[0].roaster}</p>
-          <p>Used: {props.post[0].amountIn} g</p>
-          <p>I got {props.post[0].amountOut} g out</p>
-          <p>With a grind-Size of: {props.post[0].grindSize}</p>
-          <p>Water temperature of: {props.post[0].brewTemperature}</p>
-          <div>
-            With a brewtime of:
-            <p>{props.post[0].brewTimeMinutes}</p>
-            minutes
-            <p>{props.post[0].brewTimeSeconds}</p>
-            and seconds
-          </div>
-          <p>{props.post[0].notes}</p>
-          <p>{props.post[0].pictureUrl}</p>
-          <button
-            onClick={async () => {
-              await fetch(`/api/recipes/${props.post[0].id}`, {
-                method: 'DELETE',
-              });
-
-              router.push('/posts');
-              router.refresh();
-            }}
-          >
-            Delete
-          </button>
-          <br />
-          <h3>Comments</h3>
-
-          {props.comments.map((userComment) => {
-            if (userComment.userId === props.userId) {
-              return (
-                <div key={`comment-${userComment.id}`}>
-                  <p>{userComment.comment}</p>
-                  <button
-                    onClick={async () => {
-                      await fetch(`/api/comment/${userComment.id}`, {
-                        method: 'DELETE',
-                      });
-                      router.refresh();
-                    }}
-                  >
-                    Delete Comment
-                  </button>
-                </div>
-              );
-            }
-            return (
-              <div key={`comment-${userComment.id}`}>
-                <p>{userComment.comment}</p>
+        <>
+          <div className="card card-side bg-base-100 shadow-xl " />
+          <div className="card card-side  shadow-xl m-2.5 bg-secondary flex flex-col max-w-md container mx-auto text-gray-900-50">
+            <figure className="rounded-t-xl rounded-b-none mb-6">
+              <Image
+                src={props.post[0].pictureUrl}
+                className="w-100 h-full"
+                width={100}
+                height={100}
+                alt="user pic"
+              />
+            </figure>
+            <div className="card-body">
+              <p className="text-4xl font-bold text-gray-900">
+                {props.post[0].coffee}
+                <span className="text-2xl"> {props.post[0].roaster}</span>
+              </p>
+            </div>
+            <div className="card-body pt-0 pb-0">
+              <h2 className="text-2xl font-bold text-gray-900">How to: </h2>
+              <p>Method: {props.categoryName}</p>
+              <p>Coffee: {props.post[0].amountIn}g</p>
+              <p>Water: {props.post[0].amountOut}g out</p>
+              <p>Grind-size: {props.post[0].grindSize}</p>
+              <p>Water temperature: {props.post[0].brewTemperature}°C</p>
+              <div>
+                <p> With a brewtime of:</p>
+                <p>
+                  {props.post[0].brewTimeMinutes} :{' '}
+                  {props.post[0].brewTimeSeconds} mins
+                </p>
               </div>
-            );
-          })}
-          <input
-            placeholder="comment"
-            aria-label="comment"
-            value={comment}
-            onChange={(event) => {
-              setComment(event.target.value);
-            }}
-          />
-          <button
-            onClick={async () => {
-              const response = await fetch(`/api/comment`, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  userId: props.userId,
-                  recipeId: props.post[0]['id'],
-                  content: comment,
-                }),
-              });
-              if (response.ok) {
-                setComment('');
-                router.refresh();
-              }
-            }}
-          >
-            Post Comment
-          </button>
-        </div>
+              <p>{props.post[0].notes}</p>
+            </div>
+            <br />
+            <div className="card-body">
+              <h2 className="text-2xl font-bold mb-3 text-gray-900">
+                Comments
+              </h2>
+              {props.comments.map((userComment) => {
+                if (userComment.userId === props.userId) {
+                  return (
+                    <div
+                      key={`comment-${userComment.id}`}
+                      className="bg-secondary rounded-md p-2 border border-gray-500"
+                    >
+                      <p>{userComment.comment}</p>
+                      <div className="flex justify-end">
+                        <button
+                          // className="btn btn-danger border border-red-500"
+                          onClick={async () => {
+                            await fetch(`/api/comment/${userComment.id}`, {
+                              method: 'DELETE',
+                            });
+                            router.refresh();
+                          }}
+                        >
+                          <Image
+                            src="/delete.png"
+                            height={20}
+                            width={20}
+                            alt="delete"
+                          />
+                        </button>
+                      </div>
+                    </div>
+                  );
+                }
+                return (
+                  <div
+                    key={`comment-${userComment.id}`}
+                    className="bg-secondary"
+                  >
+                    <p>{userComment.comment}</p>
+                  </div>
+                );
+              })}
+              <div className="flex flex-wrap">
+                <textarea
+                  rows="3"
+                  className="textarea w-9/12 h-8 resize-none"
+                  placeholder="Comment..."
+                  aria-label="comment"
+                  value={comment}
+                  onChange={(event) => {
+                    setComment(event.target.value);
+                  }}
+                />
+                <button
+                  className="w-3/12 border bg-success text-white rounded-md"
+                  onClick={async () => {
+                    const response = await fetch(`/api/comment`, {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({
+                        userId: props.userId,
+                        recipeId: props.post[0]['id'],
+                        content: comment,
+                      }),
+                    });
+                    if (response.ok) {
+                      setComment('');
+                      router.refresh();
+                    }
+                  }}
+                >
+                  Post
+                </button>
+              </div>
+            </div>
+            <div className="flex flex-wrap justify-center m-3">
+              <button
+                className="btn bg-error w-32 text-white justify-center"
+                onClick={async () => {
+                  await fetch(`/api/recipes/${props.post[0].id}`, {
+                    method: 'DELETE',
+                  });
+
+                  router.push('/posts');
+                  router.refresh();
+                }}
+              >
+                Delete recipe
+              </button>
+            </div>
+          </div>
+        </>
       );
     }
     // Version if the post has tasting notes
     return (
-      <div className={styles.page}>
-        <h1>{props.post[0].coffee}</h1>
-        <p>{props.post[0].roaster}</p>
-        <p>Used: {props.post[0].amountIn} g</p>
-        <p>I got {props.post[0].amountOut} g out</p>
-        <p>With a grind-Size of: {props.post[0].grindSize}</p>
-        <p>Water temperature of: {props.post[0].brewTemperature}</p>
-        <div>
-          With a brewtime of:
-          <p>{props.post[0].brewTimeMinutes}</p>
-          minutes
-          <p>{props.post[0].brewTimeSeconds}</p>
-          and seconds
-        </div>
-        <p>{props.post[0].notes}</p>
-        <p>{props.post[0].pictureUrl}</p>
-        <p>With intense flavors of:</p>
-        <ul>
-          {props.post[0].tastingNotes.map((tastingNote) => {
-            return <li key={`tastingNote-${tastingNote}`}>{tastingNote}</li>;
-          })}
-        </ul>
-
-        <button
-          onClick={async () => {
-            await fetch(`/api/recipes/${props.post[0].id}`, {
-              method: 'DELETE',
-            });
-
-            router.push('/posts');
-            router.refresh();
-          }}
-        >
-          Delete
-        </button>
-        <br />
-        <h3>Comments</h3>
-
-        {props.comments.map((userComment) => {
-          if (userComment.userId === props.userId) {
-            return (
-              <div key={`comment-${userComment.id}`}>
-                <p>{userComment.comment}</p>
-                <button
-                  onClick={async () => {
-                    await fetch(`/api/comment/${userComment.id}`, {
-                      method: 'DELETE',
-                    });
-                    router.refresh();
-                  }}
-                >
-                  Delete Comment
-                </button>
-              </div>
-            );
-          }
-          return (
-            <div key={`comment-${userComment.id}`}>
-              <p>{userComment.comment}</p>
+      <>
+        <div className="card card-side bg-base-100 shadow-xl" />
+        <div className="card card-side  shadow-xl m-2.5 bg-secondary flex flex-col max-w-md container mx-auto text-gray-900-50">
+          <figure className="rounded-t-xl rounded-b-none mb-6">
+            <Image
+              src={props.post[0].pictureUrl}
+              className="w-100 h-full"
+              width={100}
+              height={100}
+              alt="user pic"
+            />
+          </figure>
+          <div className="card-body">
+            <p className="text-4xl font-bold text-gray-900">
+              {props.post[0].coffee}
+              <span className="text-2xl"> {props.post[0].roaster}</span>
+            </p>
+          </div>
+          <div className="card-body pt-0 pb-0">
+            <h2 className="text-2xl font-bold text-gray-900">How to: </h2>
+            <p>Method: {props.categoryName}</p>
+            <p>Coffee: {props.post[0].amountIn}g</p>
+            <p>Water: {props.post[0].amountOut}g out</p>
+            <p>Grind-size: {props.post[0].grindSize}</p>
+            <p>Water temperature: {props.post[0].brewTemperature}°C</p>
+            <div>
+              <p> With a brewtime of:</p>
+              <p>
+                {props.post[0].brewTimeMinutes} :{' '}
+                {props.post[0].brewTimeSeconds} mins
+              </p>
             </div>
-          );
-        })}
-        <input
-          placeholder="comment"
-          aria-label="comment"
-          value={comment}
-          onChange={(event) => {
-            setComment(event.target.value);
-          }}
-        />
-        <button
-          onClick={async () => {
-            const response = await fetch(`/api/comment`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                userId: props.userId,
-                recipeId: props.post[0]['id'],
-                content: comment,
-              }),
-            });
-            if (response.ok) {
-              setComment('');
-              router.refresh();
-            }
-          }}
-        >
-          Post Comment
-        </button>
-      </div>
+            <p>{props.post[0].notes}</p>
+          </div>
+          <div className="card-body">
+            <h2 className="text-2xl font-bold">With intense flavors: </h2>
+            <ul className="flex flex-col flex-wrap w-fit list-disc ml-4">
+              {props.post[0].tastingNotes.map((tastingNote) => {
+                return (
+                  <li
+                    key={`tastingNote-${tastingNote}`}
+                    className="mr-2 list-item"
+                  >
+                    {tastingNote}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          <br />
+          <div className="card-body">
+            <h2 className="text-2xl font-bold text-gray-900">Comments</h2>
+            {props.comments.map((userComment) => {
+              if (userComment.userId === props.userId) {
+                return (
+                  <div
+                    key={`comment-${userComment.id}`}
+                    className="bg-secondary rounded-md p-2 border border-gray-500"
+                  >
+                    <p>{userComment.comment}</p>
+                    <div className="flex justify-end">
+                      <button
+                        // className="btn btn-danger border border-red-500"
+                        onClick={async () => {
+                          await fetch(`/api/comment/${userComment.id}`, {
+                            method: 'DELETE',
+                          });
+                          router.refresh();
+                        }}
+                      >
+                        <Image
+                          src="/delete.png"
+                          height={20}
+                          width={20}
+                          alt="delete"
+                        />
+                      </button>
+                    </div>
+                  </div>
+                );
+              }
+              return (
+                <div key={`comment-${userComment.id}`} className="bg-secondary">
+                  <p>{userComment.comment}</p>
+                </div>
+              );
+            })}
+            <div className="flex flex-wrap">
+              <textarea
+                rows="3"
+                className="textarea w-9/12 h-8 resize-none"
+                placeholder="Comment..."
+                aria-label="comment"
+                value={comment}
+                onChange={(event) => {
+                  setComment(event.target.value);
+                }}
+              />
+              <button
+                className="w-3/12 border bg-success text-white rounded-md"
+                onClick={async () => {
+                  const response = await fetch(`/api/comment`, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      userId: props.userId,
+                      recipeId: props.post[0]['id'],
+                      content: comment,
+                    }),
+                  });
+                  if (response.ok) {
+                    setComment('');
+                    router.refresh();
+                  }
+                }}
+              >
+                Post
+              </button>
+            </div>
+          </div>
+          <div className="flex flex-wrap justify-center m-3">
+            <button
+              className="btn bg-error w-20 text-white justify-center"
+              onClick={async () => {
+                await fetch(`/api/recipes/${props.post[0].id}`, {
+                  method: 'DELETE',
+                });
+
+                router.push('/posts');
+                router.refresh();
+              }}
+            >
+              Delete recipe
+            </button>
+          </div>
+        </div>
+      </>
     );
   }
   // Version if the Post is not from the logged in user and has no tasting notes
   else if (props.post[0].tastingNotes === undefined) {
     return (
-      <div className={styles.page}>
-        <h1>{props.post[0].coffee}</h1>
-        <p>{props.post[0].roaster}</p>
-        <p>Used: {props.post[0].amountIn} g</p>
-        <p>I got {props.post[0].amountOut} g out</p>
-        <p>With a grind-Size of: {props.post[0].grindSize}</p>
-        <p>Water temperature of: {props.post[0].brewTemperature}</p>
-        <div>
-          With a brewtime of:
-          <p>{props.post[0].brewTimeMinutes}</p>
-          minutes
-          <p>{props.post[0].brewTimeSeconds}</p>
-          and seconds
-        </div>
-        <p>{props.post[0].notes}</p>
-        <p>{props.post[0].pictureUrl}</p>
-        <button
-          onClick={async () => {
-            await fetch(`/api/recipes/${props.post[0].id}`, {
-              method: 'DELETE',
-            });
-
-            router.push('/posts');
-            router.refresh();
-          }}
-        >
-          Delete
-        </button>
-        <br />
-        <h3>Comments</h3>
-
-        {props.comments.map((userComment) => {
-          if (userComment.userId === props.userId) {
-            return (
-              <div key={`comment-${userComment.id}`}>
-                <p>{userComment.comment}</p>
-                <button
-                  onClick={async () => {
-                    await fetch(`/api/comment/${userComment.id}`, {
-                      method: 'DELETE',
-                    });
-                    router.refresh();
-                  }}
-                >
-                  Delete Comment
-                </button>
-              </div>
-            );
-          }
-          return (
-            <div key={`comment-${userComment.id}`}>
-              <p>{userComment.comment}</p>
+      <>
+        <div className="card card-side bg-base-100 shadow-xl" />
+        <div className="card card-side shadow-xl m-2.5 bg-secondary flex flex-col max-w-md container mx-auto text-gray-900-50">
+          <figure className="rounded-t-xl rounded-b-none mb-6">
+            <Image
+              src={props.post[0].pictureUrl}
+              className="w-100 h-full"
+              width={100}
+              height={100}
+              alt="user pic"
+            />
+          </figure>
+          <div className="card-body">
+            <p className="text-4xl font-bold text-gray-900">
+              {props.post[0].coffee}
+              <span className="text-2xl text-gray-900">
+                {' '}
+                {props.post[0].roaster}
+              </span>
+            </p>
+          </div>
+          <div className="card-body pt-0 pb-0">
+            <h2 className="text-2xl font-bold text-gray-900">How to: </h2>
+            <p>Method: {props.categoryName}</p>
+            <p>Coffee: {props.post[0].amountIn}g</p>
+            <p>Water: {props.post[0].amountOut}g out</p>
+            <p>Grind-size: {props.post[0].grindSize}</p>
+            <p>Water temperature: {props.post[0].brewTemperature}°C</p>
+            <div>
+              <p> With a brewtime of:</p>
+              <p>
+                {props.post[0].brewTimeMinutes} :{' '}
+                {props.post[0].brewTimeSeconds} mins
+              </p>
             </div>
-          );
-        })}
-        <input
-          placeholder="comment"
-          aria-label="comment"
-          value={comment}
-          onChange={(event) => {
-            setComment(event.target.value);
-          }}
-        />
-        <button
-          onClick={async () => {
-            const response = await fetch(`/api/comment`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                userId: props.userId,
-                recipeId: props.post[0]['id'],
-                content: comment,
-              }),
-            });
-            if (response.ok) {
-              setComment('');
-              router.refresh();
-            }
-          }}
-        >
-          Post Comment
-        </button>
-      </div>
+            <p>{props.post[0].notes}</p>
+          </div>
+          <br />
+          <div className="card-body">
+            <h2 className="text-2xl font-bold">Comments</h2>
+            {props.comments.map((userComment) => {
+              if (userComment.userId === props.userId) {
+                return (
+                  <div
+                    key={`comment-${userComment.id}`}
+                    className="bg-secondary rounded-md p-2 border border-gray-500"
+                  >
+                    <p>{userComment.comment}</p>
+                    <div className="flex justify-end">
+                      <button
+                        // className="btn btn-danger border border-red-500"
+                        onClick={async () => {
+                          await fetch(`/api/comment/${userComment.id}`, {
+                            method: 'DELETE',
+                          });
+                          router.refresh();
+                        }}
+                      >
+                        <Image
+                          src="/delete.png"
+                          height={20}
+                          width={20}
+                          alt="delete"
+                        />
+                      </button>
+                    </div>
+                  </div>
+                );
+              }
+              return (
+                <div key={`comment-${userComment.id}`} className="bg-secondary">
+                  <p>{userComment.comment}</p>
+                </div>
+              );
+            })}
+            <div className="flex flex-wrap">
+              <textarea
+                rows="3"
+                className="textarea w-9/12 h-8 resize-none"
+                placeholder="Comment..."
+                aria-label="comment"
+                value={comment}
+                onChange={(event) => {
+                  setComment(event.target.value);
+                }}
+              />
+              <button
+                className="w-3/12 border bg-success text-white rounded-md"
+                onClick={async () => {
+                  const response = await fetch(`/api/comment`, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      userId: props.userId,
+                      recipeId: props.post[0]['id'],
+                      content: comment,
+                    }),
+                  });
+                  if (response.ok) {
+                    setComment('');
+                    router.refresh();
+                  }
+                }}
+              >
+                Post
+              </button>
+            </div>
+          </div>
+        </div>
+      </>
     );
   }
-  // Version if the Post is from the logged in user and has tasting notes
+  // Version if the Post is not from the logged in user and has tasting notes
   return (
     <>
       <div className="card card-side bg-base-100 shadow-xl" />
-      <div className="card card-side bg-base-100 shadow-xl m-2.5 bg-primary flex flex-col max-w-md container mx-auto">
+      <div className="card card-side  shadow-xl m-2.5 bg-secondary flex flex-col max-w-md container mx-auto text-gray-900-50">
         <figure className="rounded-t-xl rounded-b-none mb-6">
           <Image
             src={props.post[0].pictureUrl}
-            className="w-100 h-full "
+            className="w-100 h-full"
             width={100}
             height={100}
             alt="user pic"
           />
         </figure>
-        <div className="card-body">
-          <h1 className="card-title text-4xl">{props.post[0].coffee}</h1>
-          <p className="text-2xl">{props.post[0].roaster}</p>
-          <p>Used: {props.post[0].amountIn} g</p>
-          <p>I got {props.post[0].amountOut} g out</p>
-          <p>With a grind-Size of: {props.post[0].grindSize}</p>
-          <p>Water temperature of: {props.post[0].brewTemperature}</p>
+        <div className="card-body ">
+          <p className="text-4xl font-bold text-gray-900">
+            {props.post[0].coffee}
+            <span className="text-2xl text-gray-900">
+              {' '}
+              {props.post[0].roaster}
+            </span>
+          </p>
+        </div>
+        <div className="card-body pt-0 pb-0">
+          <h2 className="text-2xl font-bold text-gray-900">How to: </h2>
+          <p>Method: {props.categoryName}</p>
+          <p>Coffee: {props.post[0].amountIn}g</p>
+          <p>Water: {props.post[0].amountOut}g out</p>
+          <p>Grind-size: {props.post[0].grindSize}</p>
+          <p>Water temperature: {props.post[0].brewTemperature}°C</p>
           <div>
             <p> With a brewtime of:</p>
             <p>
-              {props.post[0].brewTimeMinutes} : {props.post[0].brewTimeSeconds}
+              {props.post[0].brewTimeMinutes} : {props.post[0].brewTimeSeconds}{' '}
+              mins
             </p>
           </div>
           <p>{props.post[0].notes}</p>
         </div>
         <div className="card-body">
-          <p>With intense flavors of:</p>
-          <ul>
+          <h2 className="text-2xl font-bold">With intense flavors: </h2>
+          <ul className="flex flex-col flex-wrap w-fit list-disc ml-4">
             {props.post[0].tastingNotes.map((tastingNote) => {
-              return <li key={`tastingNote-${tastingNote}`}>{tastingNote}</li>;
+              return (
+                <li
+                  key={`tastingNote-${tastingNote}`}
+                  className="mr-2 list-item"
+                >
+                  {tastingNote}
+                </li>
+              );
             })}
           </ul>
         </div>
         <br />
-        <h3>Comments</h3>
-        {props.comments.map((userComment) => {
-          if (userComment.userId === props.userId) {
-            return (
-              <div key={`comment-${userComment.id}`}>
-                <p>{userComment.comment}</p>
-                <button
-                  onClick={async () => {
-                    await fetch(`/api/comment/${userComment.id}`, {
-                      method: 'DELETE',
-                    });
-                    router.refresh();
-                  }}
+        <div className="card-body">
+          <h2 className="text-2xl font-bold mb-3">Comments</h2>
+          {props.comments.map((userComment) => {
+            if (userComment.userId === props.userId) {
+              return (
+                <div
+                  key={`comment-${userComment.id}`}
+                  className="bg-secondary rounded-md p-2 border border-gray-500"
                 >
-                  Delete Comment
-                </button>
+                  <p>{userComment.comment}</p>
+                  <div className="flex justify-end">
+                    <button
+                      // className="btn btn-danger border border-red-500"
+                      onClick={async () => {
+                        await fetch(`/api/comment/${userComment.id}`, {
+                          method: 'DELETE',
+                        });
+                        router.refresh();
+                      }}
+                    >
+                      <Image
+                        src="/delete.png"
+                        height={20}
+                        width={20}
+                        alt="delete"
+                      />
+                    </button>
+                  </div>
+                </div>
+              );
+            }
+            return (
+              <div key={`comment-${userComment.id}`} className="bg-secondary">
+                <p>{userComment.comment}</p>
               </div>
             );
-          }
-          return (
-            <div key={`comment-${userComment.id}`}>
-              <p>{userComment.comment}</p>
-            </div>
-          );
-        })}
-
-        <input
-          placeholder="comment"
-          aria-label="comment"
-          value={comment}
-          onChange={(event) => {
-            setComment(event.target.value);
-          }}
-        />
-        <button
-          onClick={async () => {
-            const response = await fetch(`/api/comment`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                userId: props.userId,
-                recipeId: props.post[0]['id'],
-                content: comment,
-              }),
-            });
-            if (response.ok) {
-              setComment('');
-              router.refresh();
-            }
-          }}
-        >
-          Post Comment
-        </button>
+          })}
+          <div className="flex flex-wrap">
+            <textarea
+              rows="3"
+              className="textarea w-9/12 h-8 resize-none"
+              placeholder="Comment..."
+              aria-label="comment"
+              value={comment}
+              onChange={(event) => {
+                setComment(event.target.value);
+              }}
+            />
+            <button
+              className="w-3/12 border bg-success text-white rounded-md"
+              onClick={async () => {
+                const response = await fetch(`/api/comment`, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    userId: props.userId,
+                    recipeId: props.post[0]['id'],
+                    content: comment,
+                  }),
+                });
+                if (response.ok) {
+                  setComment('');
+                  router.refresh();
+                }
+              }}
+            >
+              Post
+            </button>
+          </div>
+        </div>
       </div>
     </>
   );

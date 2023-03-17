@@ -1,9 +1,10 @@
 'use client';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-export default function Profile({ user, loggedUser }) {
+export default function Profile({ user, loggedUser, posts, category }) {
   const [updateUser, setUpdateUser] = useState(false);
   const [updateBio, setUpdateBio] = useState('');
   const [updateFirstName, setUpdateFirstName] = useState('');
@@ -85,9 +86,43 @@ export default function Profile({ user, loggedUser }) {
               <h2 className="card-title ">{user.firstName}</h2>
               <h2 className="card-title "> {user.lastName}</h2>
               <p>{user.bio}</p>
-              <p>Posts: </p>
+              <p>Posts: {posts.length}</p>
             </div>
           </div>
+        </div>
+        <div className="flex flex-wrap gap-2 mx-2 ">
+          {posts.map((post) => {
+            return (
+              <Link href={`/posts/${post.id}`} key={`post-id-${post.id}`}>
+                <div className="card w-28 h-40 bg-base-100 shadow-xl py-2 m-0 bg-primary">
+                  <figure className="rounded-l-xl h-full">
+                    <Image
+                      src={post.pictureUrl}
+                      alt="coffee"
+                      className="rounded-xl h-28 w-20"
+                      height={70}
+                      width={30}
+                    />
+                  </figure>
+                  <div className="card-body items-center text-center p-0 m-0">
+                    {/* compare the post.categoryName the all categories an return the whole category */}
+                    {category.map((cat) => {
+                      if (cat.name === post.categoryName) {
+                        return (
+                          <div
+                            key={`category-${cat.id}`}
+                            className="flex flex-row"
+                          >
+                            <p className="my-2">{cat.name}</p>
+                          </div>
+                        );
+                      }
+                    })}
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </>
     );
@@ -205,20 +240,17 @@ export default function Profile({ user, loggedUser }) {
           </figure>
         </div>
         <div className="flex flex-col w-2/4">
-          <div className="flex flex-row justify-end">
+          <div className="flex flex-row justify-end h-10 align-center">
             <div className="dropdown dropdown-end m-2">
-              <label tabIndex={0} className="btn-circle" htmlFor="dropdown">
+              <button tabIndex={0} htmlFor="dropdown">
                 <Image
                   src="/setting.png"
                   height={20}
                   width={20}
                   alt="settings"
                 />
-              </label>
-              <ul
-                // tabIndex={0}
-                className="dropdown-content menu p-2 shadow bg-base-100 rounded-box "
-              >
+              </button>
+              <ul className="dropdown-content menu p-2 shadow bg-base-100 rounded-box ">
                 <li>
                   <button
                     onClick={() => {
@@ -232,7 +264,6 @@ export default function Profile({ user, loggedUser }) {
                   <button
                     onClick={() => {
                       setUpdatePicture(!updatePicture);
-                      console.log(updatePicture);
                     }}
                   >
                     Edit Picture
@@ -253,6 +284,40 @@ export default function Profile({ user, loggedUser }) {
             <p>Posts: </p>
           </div>
         </div>
+      </div>
+      <div className="flex flex-wrap gap-2 mx-2 ">
+        {posts.map((post) => {
+          return (
+            <Link href={`/posts/${post.id}`} key={`post-id-${post.id}`}>
+              <div className="card w-28 h-40 bg-base-100 shadow-xl py-2 m-0 bg-primary">
+                <figure className="rounded-l-xl h-full">
+                  <Image
+                    src={post.pictureUrl}
+                    alt="coffee"
+                    className="rounded-xl h-28 w-20"
+                    height={70}
+                    width={30}
+                  />
+                </figure>
+                <div className="card-body items-center text-center p-0 m-0">
+                  {/* compare the post.categoryName the all categories an return the whole category */}
+                  {category.map((cat) => {
+                    if (cat.name === post.categoryName) {
+                      return (
+                        <div
+                          key={`category-${cat.id}`}
+                          className="flex flex-row"
+                        >
+                          <p className="my-2">{cat.name}</p>
+                        </div>
+                      );
+                    }
+                  })}
+                </div>
+              </div>
+            </Link>
+          );
+        })}
       </div>
     </>
   );

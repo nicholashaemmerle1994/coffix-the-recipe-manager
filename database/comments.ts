@@ -23,13 +23,13 @@ export const createComment = cache(async (comment: Comment) => {
   return newComment;
 });
 
-// Get all comments for a recipe
+// Get all comments for a recipe ordered by date
 export const getComments = cache(async (recipeId: number) => {
   const comments = await sql`
-      SELECT * FROM comments
-      WHERE recipe_id = ${recipeId}
-    `;
-
+    SELECT * FROM comments
+    WHERE recipe_id = ${recipeId}
+    ORDER BY created_at DESC
+  `;
   return comments;
 });
 
