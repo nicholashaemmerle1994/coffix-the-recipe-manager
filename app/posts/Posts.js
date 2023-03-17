@@ -1,10 +1,8 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 export default function Posts(props) {
-  const router = useRouter();
   // Now take the recipes from the props and translate the createdAt string back to a date object
   const recipesWithDate = props.recipe.map((recipe) => {
     const { createdAt, ...recipeWithoutDate } = recipe;

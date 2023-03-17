@@ -3,7 +3,7 @@
   text-transform: uppercase;
   letter-spacing: 2px;
   display: block;
-  font-weight: bold;
+  font-weight: 900;
   font-size: x-large;
   margin-top: 1.5em;
 }
@@ -17,7 +17,7 @@
   flex-direction: column;
   gap: 35px;
   border-radius: 15px;
-  background: #c2abaf;
+  background: #f6f2e8;
   box-shadow: 16px 16px 32px #c8c8c8, -16px -16px 32px #fefefe;
 }
 
@@ -63,6 +63,7 @@
 .inputBox input:focus ~ span {
   transform: translateX(113px) translateY(-15px);
   font-size: 0.8em;
+  font-weight: 900;
   padding: 5px 10px;
   background: #000;
   letter-spacing: 0.2em;

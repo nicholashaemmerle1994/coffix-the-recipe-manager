@@ -26,7 +26,7 @@ export default async function CategoryPage() {
             <Link
               href={`/newpost/${brew.id}`}
               key={`brew-method-${brew.name}`}
-              className="w-40 bg-primary rounded-lg p-2 m-2 justify-center align-center flex-row flex text-center"
+              className="w-40 bg-secondary rounded-lg p-2 m-2 justify-center align-center flex-row flex text-center border-gray-500 border"
             >
               <div className="align-center justify-center m-0 content-center">
                 <Image
@@ -36,11 +36,20 @@ export default async function CategoryPage() {
                   height={50}
                   className="w-14 h-14 mx-auto my-2 rounded-lg"
                 />
-                <p>{brew.name}</p>
+                <p className="text-gray-800 font-bold">{brew.name}</p>
               </div>
             </Link>
           );
         })}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          xmlnsXlink="http://www.w3.org/1999/xlink"
+          width="700pt"
+          height="700pt"
+          viewBox="0 0 700 700"
+        >
+          {' '}
+        </svg>
       </div>
     </div>
   );

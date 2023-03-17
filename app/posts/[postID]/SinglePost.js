@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -10,10 +11,20 @@ export default function SinglePostPage(props) {
   const [comment, setComment] = useState('');
   const router = useRouter();
 
-  // Converting the date string to a date object and inserting it back to the props object
+  // mapping over the comments and translating the createdAt string back to a date object
+  const commentsWithDate = props.comments.map((com) => {
+    const date = new Date(com.createdAt);
+    const dateString = date.toLocaleDateString('de-De', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+    const timeString = date.toLocaleTimeString('de-DE', { hour12: false });
 
-  const date = new Date(props.post[0].created_at);
-  props.post[0].created_at = date;
+    const formattedDate = `${dateString} ${timeString}`;
+    return { ...com, createdAt: formattedDate };
+  });
+  console.log('commentsWithDate', commentsWithDate);
   // Version if the id of the user who created the post is the same as the id of the user who is logged in
   if (props.userId === props.post[0].userId) {
     // Version if the post has no tasting notes
@@ -55,34 +66,49 @@ export default function SinglePostPage(props) {
             </div>
             <br />
             <div className="card-body">
-              <h2 className="text-2xl font-bold mb-3 text-gray-900">
-                Comments
-              </h2>
-              {props.comments.map((userComment) => {
+              <h2 className="text-2xl font-bold mb-3">Comments</h2>
+              {commentsWithDate.map((userComment) => {
                 if (userComment.userId === props.userId) {
                   return (
                     <div
                       key={`comment-${userComment.id}`}
-                      className="bg-secondary rounded-md p-2 border border-gray-500"
+                      className="bg-secondary rounded-md p-2 border border-gray-500 flex flex-row"
                     >
-                      <p>{userComment.comment}</p>
-                      <div className="flex justify-end">
-                        <button
-                          // className="btn btn-danger border border-red-500"
-                          onClick={async () => {
-                            await fetch(`/api/comment/${userComment.id}`, {
-                              method: 'DELETE',
-                            });
-                            router.refresh();
-                          }}
-                        >
-                          <Image
-                            src="/delete.png"
-                            height={20}
-                            width={20}
-                            alt="delete"
-                          />
-                        </button>
+                      <div className="flex w-1/6 flex-col">
+                        <Link href={`/profile/${userComment.userName}`}>
+                          <div>
+                            <Image
+                              className="rounded-full w-6"
+                              src={userComment.pictureUrl}
+                              width={10}
+                              height={10}
+                              alt="user pic"
+                            />
+                          </div>
+                        </Link>
+                        <div className="" />
+                      </div>
+                      <div className="flex flex-col w-5/6">
+                        <p>{userComment.comment}</p>
+                        <div className="flex justify-between">
+                          <p className="text-xs">{userComment.createdAt}</p>
+                          <button
+                            // className="btn btn-danger border border-red-500"
+                            onClick={async () => {
+                              await fetch(`/api/comment/${userComment.id}`, {
+                                method: 'DELETE',
+                              });
+                              router.refresh();
+                            }}
+                          >
+                            <Image
+                              src="/delete.png"
+                              height={20}
+                              width={20}
+                              alt="delete"
+                            />
+                          </button>
+                        </div>
                       </div>
                     </div>
                   );
@@ -90,9 +116,28 @@ export default function SinglePostPage(props) {
                 return (
                   <div
                     key={`comment-${userComment.id}`}
-                    className="bg-secondary"
+                    className="bg-secondary rounded-md p-2 border border-gray-500 flex flex-row"
                   >
-                    <p>{userComment.comment}</p>
+                    <div className="flex w-1/6 flex-col">
+                      <Link href={`/profile/${userComment.userName}`}>
+                        <div>
+                          <Image
+                            className="rounded-full w-6"
+                            src={userComment.pictureUrl}
+                            width={10}
+                            height={10}
+                            alt="user pic"
+                          />
+                        </div>
+                      </Link>
+                      <div className="" />
+                    </div>
+                    <div className="flex flex-col w-5/6">
+                      <p>{userComment.comment}</p>
+                      <div className="flex justify-between">
+                        <p className="text-xs">{userComment.createdAt}</p>
+                      </div>
+                    </div>
                   </div>
                 );
               })}
@@ -203,39 +248,78 @@ export default function SinglePostPage(props) {
           </div>
           <br />
           <div className="card-body">
-            <h2 className="text-2xl font-bold text-gray-900">Comments</h2>
-            {props.comments.map((userComment) => {
+            <h2 className="text-2xl font-bold mb-3">Comments</h2>
+            {commentsWithDate.map((userComment) => {
               if (userComment.userId === props.userId) {
                 return (
                   <div
                     key={`comment-${userComment.id}`}
-                    className="bg-secondary rounded-md p-2 border border-gray-500"
+                    className="bg-secondary rounded-md p-2 border border-gray-500 flex flex-row"
                   >
-                    <p>{userComment.comment}</p>
-                    <div className="flex justify-end">
-                      <button
-                        // className="btn btn-danger border border-red-500"
-                        onClick={async () => {
-                          await fetch(`/api/comment/${userComment.id}`, {
-                            method: 'DELETE',
-                          });
-                          router.refresh();
-                        }}
-                      >
-                        <Image
-                          src="/delete.png"
-                          height={20}
-                          width={20}
-                          alt="delete"
-                        />
-                      </button>
+                    <div className="flex w-1/6 flex-col">
+                      <Link href={`/profile/${userComment.userName}`}>
+                        <div>
+                          <Image
+                            className="rounded-full w-6"
+                            src={userComment.pictureUrl}
+                            width={10}
+                            height={10}
+                            alt="user pic"
+                          />
+                        </div>
+                      </Link>
+                      <div className="" />
+                    </div>
+                    <div className="flex flex-col w-5/6">
+                      <p>{userComment.comment}</p>
+                      <div className="flex justify-between">
+                        <p className="text-xs">{userComment.createdAt}</p>
+                        <button
+                          // className="btn btn-danger border border-red-500"
+                          onClick={async () => {
+                            await fetch(`/api/comment/${userComment.id}`, {
+                              method: 'DELETE',
+                            });
+                            router.refresh();
+                          }}
+                        >
+                          <Image
+                            src="/delete.png"
+                            height={20}
+                            width={20}
+                            alt="delete"
+                          />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 );
               }
               return (
-                <div key={`comment-${userComment.id}`} className="bg-secondary">
-                  <p>{userComment.comment}</p>
+                <div
+                  key={`comment-${userComment.id}`}
+                  className="bg-secondary rounded-md p-2 border border-gray-500 flex flex-row"
+                >
+                  <div className="flex w-1/6 flex-col">
+                    <Link href={`/profile/${userComment.userName}`}>
+                      <div>
+                        <Image
+                          className="rounded-full w-6"
+                          src={userComment.pictureUrl}
+                          width={10}
+                          height={10}
+                          alt="user pic"
+                        />
+                      </div>
+                    </Link>
+                    <div className="" />
+                  </div>
+                  <div className="flex flex-col w-5/6">
+                    <p>{userComment.comment}</p>
+                    <div className="flex justify-between">
+                      <p className="text-xs">{userComment.createdAt}</p>
+                    </div>
+                  </div>
                 </div>
               );
             })}
@@ -335,39 +419,78 @@ export default function SinglePostPage(props) {
           </div>
           <br />
           <div className="card-body">
-            <h2 className="text-2xl font-bold">Comments</h2>
-            {props.comments.map((userComment) => {
+            <h2 className="text-2xl font-bold mb-3">Comments</h2>
+            {commentsWithDate.map((userComment) => {
               if (userComment.userId === props.userId) {
                 return (
                   <div
                     key={`comment-${userComment.id}`}
-                    className="bg-secondary rounded-md p-2 border border-gray-500"
+                    className="bg-secondary rounded-md p-2 border border-gray-500 flex flex-row"
                   >
-                    <p>{userComment.comment}</p>
-                    <div className="flex justify-end">
-                      <button
-                        // className="btn btn-danger border border-red-500"
-                        onClick={async () => {
-                          await fetch(`/api/comment/${userComment.id}`, {
-                            method: 'DELETE',
-                          });
-                          router.refresh();
-                        }}
-                      >
-                        <Image
-                          src="/delete.png"
-                          height={20}
-                          width={20}
-                          alt="delete"
-                        />
-                      </button>
+                    <div className="flex w-1/6 flex-col">
+                      <Link href={`/profile/${userComment.userName}`}>
+                        <div>
+                          <Image
+                            className="rounded-full w-6"
+                            src={userComment.pictureUrl}
+                            width={10}
+                            height={10}
+                            alt="user pic"
+                          />
+                        </div>
+                      </Link>
+                      <div className="" />
+                    </div>
+                    <div className="flex flex-col w-5/6">
+                      <p>{userComment.comment}</p>
+                      <div className="flex justify-between">
+                        <p className="text-xs">{userComment.createdAt}</p>
+                        <button
+                          // className="btn btn-danger border border-red-500"
+                          onClick={async () => {
+                            await fetch(`/api/comment/${userComment.id}`, {
+                              method: 'DELETE',
+                            });
+                            router.refresh();
+                          }}
+                        >
+                          <Image
+                            src="/delete.png"
+                            height={20}
+                            width={20}
+                            alt="delete"
+                          />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 );
               }
               return (
-                <div key={`comment-${userComment.id}`} className="bg-secondary">
-                  <p>{userComment.comment}</p>
+                <div
+                  key={`comment-${userComment.id}`}
+                  className="bg-secondary rounded-md p-2 border border-gray-500 flex flex-row"
+                >
+                  <div className="flex w-1/6 flex-col">
+                    <Link href={`/profile/${userComment.userName}`}>
+                      <div>
+                        <Image
+                          className="rounded-full w-6"
+                          src={userComment.pictureUrl}
+                          width={10}
+                          height={10}
+                          alt="user pic"
+                        />
+                      </div>
+                    </Link>
+                    <div className="" />
+                  </div>
+                  <div className="flex flex-col w-5/6">
+                    <p>{userComment.comment}</p>
+                    <div className="flex justify-between">
+                      <p className="text-xs">{userComment.createdAt}</p>
+                    </div>
+                  </div>
                 </div>
               );
             })}
@@ -467,38 +590,77 @@ export default function SinglePostPage(props) {
         <br />
         <div className="card-body">
           <h2 className="text-2xl font-bold mb-3">Comments</h2>
-          {props.comments.map((userComment) => {
+          {commentsWithDate.map((userComment) => {
             if (userComment.userId === props.userId) {
               return (
                 <div
                   key={`comment-${userComment.id}`}
-                  className="bg-secondary rounded-md p-2 border border-gray-500"
+                  className="bg-secondary rounded-md p-2 border border-gray-500 flex flex-row"
                 >
-                  <p>{userComment.comment}</p>
-                  <div className="flex justify-end">
-                    <button
-                      // className="btn btn-danger border border-red-500"
-                      onClick={async () => {
-                        await fetch(`/api/comment/${userComment.id}`, {
-                          method: 'DELETE',
-                        });
-                        router.refresh();
-                      }}
-                    >
-                      <Image
-                        src="/delete.png"
-                        height={20}
-                        width={20}
-                        alt="delete"
-                      />
-                    </button>
+                  <div className="flex w-1/6 flex-col">
+                    <Link href={`/profile/${userComment.userName}`}>
+                      <div>
+                        <Image
+                          className="rounded-full w-6"
+                          src={userComment.pictureUrl}
+                          width={10}
+                          height={10}
+                          alt="user pic"
+                        />
+                      </div>
+                    </Link>
+                    <div className="" />
+                  </div>
+                  <div className="flex flex-col w-5/6">
+                    <p>{userComment.comment}</p>
+                    <div className="flex justify-between">
+                      <p className="text-xs">{userComment.createdAt}</p>
+                      <button
+                        // className="btn btn-danger border border-red-500"
+                        onClick={async () => {
+                          await fetch(`/api/comment/${userComment.id}`, {
+                            method: 'DELETE',
+                          });
+                          router.refresh();
+                        }}
+                      >
+                        <Image
+                          src="/delete.png"
+                          height={20}
+                          width={20}
+                          alt="delete"
+                        />
+                      </button>
+                    </div>
                   </div>
                 </div>
               );
             }
             return (
-              <div key={`comment-${userComment.id}`} className="bg-secondary">
-                <p>{userComment.comment}</p>
+              <div
+                key={`comment-${userComment.id}`}
+                className="bg-secondary rounded-md p-2 border border-gray-500 flex flex-row"
+              >
+                <div className="flex w-1/6 flex-col">
+                  <Link href={`/profile/${userComment.userName}`}>
+                    <div>
+                      <Image
+                        className="rounded-full w-6"
+                        src={userComment.pictureUrl}
+                        width={10}
+                        height={10}
+                        alt="user pic"
+                      />
+                    </div>
+                  </Link>
+                  <div className="" />
+                </div>
+                <div className="flex flex-col w-5/6">
+                  <p>{userComment.comment}</p>
+                  <div className="flex justify-between">
+                    <p className="text-xs">{userComment.createdAt}</p>
+                  </div>
+                </div>
               </div>
             );
           })}

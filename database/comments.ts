@@ -56,4 +56,13 @@ export const updateComment = cache(
   },
 );
 
-// Get
+// Get all comments for a single post ordered by date and firstName, LastName and pictureUrl from users who made the comments
+export const getCommentsWithUsers = cache(async (recipeId: number) => {
+  const comments = await sql`
+    SELECT comments.*, users.user_name, users.first_name, users.last_name, users.picture_url FROM comments
+    JOIN users ON comments.user_id = users.id
+    WHERE recipe_id = ${recipeId}
+    ORDER BY created_at DESC
+  `;
+  return comments;
+});

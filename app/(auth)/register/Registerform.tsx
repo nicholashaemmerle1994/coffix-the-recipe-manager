@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
@@ -91,8 +92,12 @@ export default function Registerform() {
             />
             <span>Password</span>
           </div>
-
-          <button className={styles.enter}>Enter</button>
+          <div className="flex gap-2">
+            <button className={styles.enter}>Enter</button>
+            <Link href="/">
+              <button className={styles.enter}>Login</button>
+            </Link>
+          </div>
         </div>
       </form>
     </>

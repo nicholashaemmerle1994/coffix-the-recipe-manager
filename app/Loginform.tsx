@@ -1,4 +1,5 @@
 'use client';
+
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
@@ -33,7 +34,6 @@ export default function LoginForm() {
     // }, 3000);
     router.refresh();
   };
-
   return (
     <>
       <Toaster

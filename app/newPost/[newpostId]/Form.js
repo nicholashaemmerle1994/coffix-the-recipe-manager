@@ -159,9 +159,9 @@ export default function Form(props) {
 
   return (
     <>
-      <form className="flex flex-col justify-center align-center text-center gap-3 mx-3 text-gray-50">
-        <h3>Setup</h3>
-        <div className="flex flex-col bg-primary justify-self-center gap-3 rounded-xl ">
+      <form className="flex flex-col justify-center align-center text-center gap-3 mx-3 text-gray-50 mt-3">
+        <h3 className="text-gray-800 font-bold">Setup</h3>
+        <div className="flex flex-col bg-secondary justify-self-center gap-3 rounded-xl ">
           <input
             className="input input-bordered input-sm w-full max-w-xs self-center mt-3 border-gray-400 text-black"
             placeholder="Coffee Name"
@@ -183,8 +183,8 @@ export default function Form(props) {
             }}
           />
         </div>
-        <h3>Brew</h3>
-        <div className="flex flex-col bg-primary gap-3 rounded-xl">
+        <h3 className="text-gray-800 font-bold">Brew</h3>
+        <div className="flex flex-col bg-secondary gap-3 rounded-xl">
           <input
             className="input input-bordered input-sm w-full max-w-xs self-center mt-3 text-black"
             placeholder="Amount in grams"
@@ -227,7 +227,10 @@ export default function Form(props) {
               });
             }}
           >
-            <option defaultValue="Choose the brewing temperature self-center">
+            <option
+              defaultValue="Choose the brewing temperature self-center"
+              className='className="text-gray-800 font-bold"'
+            >
               Choose the brewing temperature
             </option>
             <option>89</option>
@@ -244,9 +247,9 @@ export default function Form(props) {
             <div id="brew-time-select" aria-label="Select brew time">
               {/* set brew time minutes */}
               <div className="mb-3">
-                Brew Time:{' '}
+                <p className="text-gray-800 font-bold"> Brew Time: </p>
                 <select
-                  className="select select-bordered select-xs"
+                  className="select select-bordered select-xs text-gray-800"
                   title="minutes"
                   name="minutes"
                   onChange={handleMinutesChange}
@@ -256,7 +259,7 @@ export default function Form(props) {
                 <span> : </span>
                 {/* set brew time seconds */}
                 <select
-                  className="select select-bordered select-xs"
+                  className="select select-bordered select-xs text-gray-800"
                   title="seconds"
                   name="seconds"
                   onChange={handleSecondsChange}
@@ -267,19 +270,19 @@ export default function Form(props) {
             </div>
           </label>
         </div>
-        <h3>Tasting Notes</h3>
+        <h3 className="text-gray-800 font-bold"> Tasting Notes</h3>
         {/* mapping over the chocolatey array to display every possiple choice for the user */}
-        <h4>Chocolatey</h4>
-        <div className="flex flex-row bg-primary rounded-xl mx-2 rounded-xl">
-          <div className="flex justify-center flex-wrap m-3">
+        <h4 className="text-gray-800 font-semibold">Chocolatey</h4>
+        <div className="flex  bg-secondary rounded-xl justify-center">
+          <div className="flex bg-secondary rounded-xl m-3">
             {chocolatey.map((note) => (
               <label
                 key={`option-${note.name}`}
-                className="text-center align-center justify-center m-2 "
+                className="text-center align-center justify-center m-2 text-gray-800"
               >
                 <input
                   type="checkbox"
-                  className="checkbox checkbox-sm mx-3 bg-default border-2 border-secondary"
+                  className="checkbox checkbox-sm mx-3 bg-default border-2 border-primary"
                   value={note.name}
                   onChange={(event) => {
                     if (event.target.checked) {
@@ -298,17 +301,17 @@ export default function Form(props) {
           </div>
         </div>
         {/* Mapping over the Fruity array to display all choices for the user */}
-        <h4>Fruity</h4>
-        <div className="flex flex-row bg-primary rounded-xl">
+        <h4 className="text-gray-800 font-semibold">Fruity</h4>
+        <div className="flex flex-row bg-secondary rounded-xl">
           <div className="flex justify-center flex-wrap m-3">
             {fruity.map((note) => (
               <label
                 key={`option-${note.name}`}
-                className="text-center align-center justify-center m-2"
+                className="text-center align-center justify-center m-2 text-gray-800"
               >
                 <input
                   type="checkbox"
-                  className="checkbox checkbox-sm mx-3 bg-default border-2 border-secondary"
+                  className="checkbox checkbox-sm mx-3 bg-default border-2 border-primary"
                   value={note.name}
                   onChange={(event) => {
                     if (event.target.checked) {
@@ -327,17 +330,17 @@ export default function Form(props) {
           </div>
         </div>
         {/* Mapping over the Nutty array to display all choices for the user */}
-        <h4>Nutty</h4>
-        <div className="flex flex-col bg-primary rounded-xl">
+        <h4 className="text-gray-800 font-semibold">Nutty</h4>
+        <div className="flex flex-col bg-secondary rounded-xl">
           <div className="flex justify-center flex-wrap m-3">
             {nutty.map((note) => (
               <label
                 key={`option-${note.name}`}
-                className="text-center align-center justify-center m-2"
+                className="text-center align-center justify-center m-2 text-gray-800"
               >
                 <input
                   type="checkbox"
-                  className="checkbox checkbox-sm mx-3 bg-default border-2 border-secondary"
+                  className="checkbox checkbox-sm mx-3 bg-default border-2 border-primary"
                   value={note.name}
                   onChange={(event) => {
                     if (event.target.checked) {
@@ -356,17 +359,17 @@ export default function Form(props) {
           </div>
         </div>
         {/* Mapping over the Sweet array to display all choices for the user */}
-        <h4>Sweet</h4>
-        <div className="flex flex-col bg-primary rounded-xl">
+        <h4 className="text-gray-800 font-semibold">Sweet</h4>
+        <div className="flex flex-col bg-secondary rounded-xl">
           <div className="flex justify-center flex-wrap m-3">
             {sweet.map((note) => (
               <label
                 key={`option-${note.name}`}
-                className="text-center align-center justify-center m-2"
+                className="text-center align-center justify-center m-2 text-gray-800"
               >
                 <input
                   type="checkbox"
-                  className="checkbox checkbox-sm mx-3 bg-default border-2 border-secondary"
+                  className="checkbox checkbox-sm mx-3 bg-default border-2 border-primary"
                   value={note.name}
                   onChange={(event) => {
                     if (event.target.checked) {
@@ -385,17 +388,17 @@ export default function Form(props) {
           </div>
         </div>
         {/* Mapping over the Floral array to display all choices for the user */}
-        <h4>Floral</h4>
-        <div className="flex flex-col bg-primary rounded-xl">
+        <h4 className="text-gray-800 font-semibold">Floral</h4>
+        <div className="flex flex-col bg-secondary rounded-xl">
           <div className="flex justify-center flex-wrap m-3">
             {floral.map((note) => (
               <label
                 key={`option-${note.name}`}
-                className="text-center align-center justify-center m-2"
+                className="text-center align-center justify-center m-2 text-gray-800"
               >
                 <input
                   type="checkbox"
-                  className="checkbox checkbox-sm mx-3 bg-default border-2 border-secondary"
+                  className="checkbox checkbox-sm mx-3 bg-default border-2 border-primary"
                   value={note.name}
                   onChange={(event) => {
                     if (event.target.checked) {
@@ -414,17 +417,17 @@ export default function Form(props) {
           </div>
         </div>
         {/* Mapping over the Spicy array to display all choices for the user */}
-        <h4>Spices</h4>
-        <div className="flex flex-col bg-primary rounded-xl">
+        <h4 className="text-gray-800 font-semibold">Spices</h4>
+        <div className="flex flex-col bg-secondary rounded-xl">
           <div className="flex justify-center flex-wrap m-3">
             {spice.map((note) => (
               <label
                 key={`option-${note.name}`}
-                className="text-center align-center justify-center m-2"
+                className="text-center align-center justify-center m-2 text-gray-800"
               >
                 <input
                   type="checkbox"
-                  className="checkbox checkbox-sm mx-3 bg-default border-2 border-secondary"
+                  className="checkbox checkbox-sm mx-3 bg-default border-2 border-primary text-gray-800"
                   value={note.name}
                   onChange={(event) => {
                     if (event.target.checked) {
@@ -442,19 +445,19 @@ export default function Form(props) {
             ))}
           </div>
         </div>
-        <h3>Notes</h3>
+        <h3 className="text-gray-800 font-semibold">Notes</h3>
         <div>
           <textarea
             name="notes"
             title="notes"
-            className="textarea textarea-bordered border-2 border-secondary"
+            className="textarea textarea-bordered border-2 border-primary text-gray-800"
           />
         </div>
       </form>
       <form
         method="post"
         onSubmit={handleOnSubmit}
-        className="flex flex-col rounded-xl my-3"
+        className="flex flex-col rounded-xl mb-2"
       >
         <div className="flex justify-center flex-wrap m-3">
           <input
