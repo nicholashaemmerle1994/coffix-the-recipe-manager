@@ -6,6 +6,7 @@ import { getRecipeByUserId } from '../../../database/recipes';
 import { getValidSessionByToken } from '../../../database/sessions';
 import { tastingNotes } from '../../../database/tastingnotes';
 import { getUserByUsername } from '../../../database/users';
+import { createCsrfToken } from '../../../utils/csrf';
 import Profile from './Profile';
 
 export default async function ProfilePage(props) {
@@ -69,6 +70,8 @@ export default async function ProfilePage(props) {
     return { ...recipe, tastingNotes: tastingNotesName };
   });
   const category = await getCategory();
+
+  const csrfToken = createCsrfToken(session.csrfSecret);
   return (
     <div>
       <Profile
@@ -76,6 +79,7 @@ export default async function ProfilePage(props) {
         loggedUser={session.userId}
         posts={finalPosts}
         category={category}
+        token={csrfToken}
       />
     </div>
   );

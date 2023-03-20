@@ -24,7 +24,6 @@ export default function SinglePostPage(props) {
     const formattedDate = `${dateString} ${timeString}`;
     return { ...com, createdAt: formattedDate };
   });
-  console.log('commentsWithDate', commentsWithDate);
   // Version if the id of the user who created the post is the same as the id of the user who is logged in
   if (props.userId === props.post[0].userId) {
     // Version if the post has no tasting notes
@@ -97,6 +96,13 @@ export default function SinglePostPage(props) {
                             onClick={async () => {
                               await fetch(`/api/comment/${userComment.id}`, {
                                 method: 'DELETE',
+                                headers: {
+                                  'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                  id: userComment.id,
+                                  csrfToken: props.token,
+                                }),
                               });
                               router.refresh();
                             }}
@@ -182,8 +188,14 @@ export default function SinglePostPage(props) {
                 onClick={async () => {
                   await fetch(`/api/recipes/${props.post[0].id}`, {
                     method: 'DELETE',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      id: props.post[0].id,
+                      csrfToken: props.token,
+                    }),
                   });
-
                   router.push('/posts');
                   router.refresh();
                 }}
@@ -279,6 +291,13 @@ export default function SinglePostPage(props) {
                           onClick={async () => {
                             await fetch(`/api/comment/${userComment.id}`, {
                               method: 'DELETE',
+                              headers: {
+                                'Content-Type': 'application/json',
+                              },
+                              body: JSON.stringify({
+                                id: userComment.id,
+                                csrfToken: props.token,
+                              }),
                             });
                             router.refresh();
                           }}
@@ -364,8 +383,14 @@ export default function SinglePostPage(props) {
               onClick={async () => {
                 await fetch(`/api/recipes/${props.post[0].id}`, {
                   method: 'DELETE',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    id: props.post[0].id,
+                    csrfToken: props.token,
+                  }),
                 });
-
                 router.push('/posts');
                 router.refresh();
               }}
@@ -450,6 +475,13 @@ export default function SinglePostPage(props) {
                           onClick={async () => {
                             await fetch(`/api/comment/${userComment.id}`, {
                               method: 'DELETE',
+                              headers: {
+                                'Content-Type': 'application/json',
+                              },
+                              body: JSON.stringify({
+                                id: userComment.id,
+                                csrfToken: props.token,
+                              }),
                             });
                             router.refresh();
                           }}
@@ -620,6 +652,13 @@ export default function SinglePostPage(props) {
                         onClick={async () => {
                           await fetch(`/api/comment/${userComment.id}`, {
                             method: 'DELETE',
+                            headers: {
+                              'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                              id: userComment.id,
+                              csrfToken: props.token,
+                            }),
                           });
                           router.refresh();
                         }}

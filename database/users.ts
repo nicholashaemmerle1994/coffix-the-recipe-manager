@@ -9,6 +9,7 @@ type User = {
   passwordHash: string;
   bio: string | null;
   pictureUrl: string | null;
+  csrfSecret: string;
 };
 
 export type GetUser = {
@@ -83,18 +84,21 @@ export const getUserWithPassword = cache(async (username: string) => {
 // get user with session token
 
 export const getUserBySessionToken = cache(async (token: string) => {
-  const [user] = await sql<{ id: number; userName: string }[]>`
-  SELECT
-    users.id,
-    users.user_name
-  FROM
-    users
-  INNER JOIN
-    sessions ON (
-      sessions.token = ${token} AND
-      sessions.user_id = users.id AND
-      sessions.expiry_timestamp > now()
-    )
+  const [user] = await sql<
+    { id: number; userName: string; csrfSecret: string }[]
+  >`
+    SELECT
+      users.id,
+      users.user_name,
+      sessions.csrf_secret
+    FROM
+      users
+    INNER JOIN
+      sessions ON (
+        sessions.token = ${token} AND
+        sessions.user_id = users.id AND
+        sessions.expiry_timestamp > now()
+      )
   `;
   return user;
 });

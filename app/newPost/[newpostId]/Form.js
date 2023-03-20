@@ -35,7 +35,6 @@ export default function Form(props) {
     brewTimeSeconds: 0,
     notes: '',
   });
-
   async function handleOnSubmit(event) {
     event.preventDefault();
 
@@ -67,6 +66,7 @@ export default function Form(props) {
           tasting_note_name: taste.name,
         };
       });
+
       await fetch('/api/recipes', {
         method: 'POST',
         headers: {
@@ -86,12 +86,13 @@ export default function Form(props) {
           tastingNotes: finalApiTaste,
           notes: coffee.notes,
           pictureUrl: '/beans.png',
+          csrfToken: props.token,
         }),
       });
       setMinutes(0);
       setSeconds(0);
 
-      // router.push('/');
+      router.push('/');
     } else {
       const finalApiTaste = apiTaste.map((taste) => {
         return {
@@ -119,6 +120,7 @@ export default function Form(props) {
           tastingNotes: finalApiTaste,
           notes: coffee.notes,
           pictureUrl: data.secure_url,
+          csrfToken: props.token,
         }),
       });
       setMinutes(0);
@@ -128,6 +130,7 @@ export default function Form(props) {
     }
   }
   // creating the handler function for the timer
+  // giving the event a type
   const handleMinutesChange = (event) => {
     setMinutes(parseInt(event.target.value));
     setCoffee({

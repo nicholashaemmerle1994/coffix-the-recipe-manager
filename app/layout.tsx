@@ -29,7 +29,7 @@ export default async function RootLayout({
   // if user is not undefined, the person is logged in
   // if user is undefined, the person is logged out
   return (
-    <html lang="en">
+    <html lang="en-US">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

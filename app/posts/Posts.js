@@ -37,7 +37,7 @@ export default function Posts(props) {
 
             <div className="card-body bg-secondary text-yellow-900 rounded-r-2xl border-t border-r border-b border-gray-500">
               <Link href={`/posts/${recipe.id}`}>
-                <h2 className="card-title text-gray-800 font-bold">
+                <h2 className="card-title text-gray-800 font-extrabold">
                   {recipe.categoryName}
                 </h2>
                 <p className="font-medium">{recipe.coffee}</p>

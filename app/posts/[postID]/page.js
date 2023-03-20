@@ -6,6 +6,7 @@ import { getSingleRecipeWithTastingNotes } from '../../../database/recepisTastin
 import { getRecipeById } from '../../../database/recipes';
 import { getValidSessionByToken } from '../../../database/sessions';
 import { tastingNotes } from '../../../database/tastingnotes';
+import { createCsrfToken } from '../../../utils/csrf';
 import SinglePostPage from './SinglePost';
 
 export const dynamic = 'force-dynamic';
@@ -16,24 +17,31 @@ export default async function SinglePostPAge({ params }) {
     sessionTokenCookie &&
     (await getValidSessionByToken(sessionTokenCookie.value));
   const userId = session.userId;
-
+  const csrfToken = createCsrfToken(session.csrfSecret);
   const singleRecipe = await getSingleRecipeWithTastingNotes(params.postID);
   if (singleRecipe.length === 0) {
     const recipe = await getRecipeById(params.postID);
     if (recipe.length === 0) {
       return notFound();
     } else {
-      const comments = await getComments(recipe[0].id);
       const finalRecipeWithDate = recipe.map((recipe) => {
         const date = new Date(recipe.createdAt);
         const dateString = date.toDateString();
         return { ...recipe, createdAt: dateString };
       });
+      const comments = await getCommentsWithUsers(finalRecipeWithDate[0].id);
+      // convert the Date object form the comments to a string
+      const commentsWithDate = comments.map((comment) => {
+        const date = new Date(comment.createdAt);
+        const dateString = date.toString();
+        return { ...comment, createdAt: dateString };
+      });
       return (
         <SinglePostPage
           post={finalRecipeWithDate}
           userId={userId}
-          comments={comments}
+          comments={commentsWithDate}
+          token={csrfToken}
         />
       );
     }
@@ -109,6 +117,7 @@ export default async function SinglePostPAge({ params }) {
       userId={userId}
       comments={commentsWithDate}
       categoryName={categoryName}
+      token={csrfToken}
     />
   );
 }

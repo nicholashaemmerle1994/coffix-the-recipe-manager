@@ -3,9 +3,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap');
-$font-stack: 'Nunito', sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Georgian:wght@100;200;300;400;500;600;700;800;900&family=Nunito:wght@300;400;500;600;700;800;900&display=swap');
+$font-stack: 'Noto Serif Georgian', serif;
 
 body {
-  font-family: $font-stack;
+  font-family: 'Noto Serif Georgian', serif;
 }

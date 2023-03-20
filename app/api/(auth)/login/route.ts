@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { createSession } from '../../../../database/sessions';
 import { getUserWithPassword } from '../../../../database/users';
 import { createSerializedCookie } from '../../../../utils/cookies';
+import { createCsrfSecret } from '../../../../utils/csrf';
 
 const userSchema = z.object({
   userName: z.string(),
@@ -74,19 +75,19 @@ export const POST = async (request: NextRequest) => {
   //  4.a create a session token
   const token = crypto.randomBytes(80).toString('base64');
 
-  //  4.b create the session
-  const session = await createSession(token, userWitchPassword.id);
-  //  4.c attach the new cookie to the  header of the response
+  const csrfSecret = createCsrfSecret();
+
+  // - create the session
+  const session = await createSession(token, userWitchPassword.id, csrfSecret);
 
   if (!session) {
     return NextResponse.json(
-      { errors: [{ message: 'Something went wrong' }] },
+      { errors: [{ message: 'session creation failed' }] },
       { status: 500 },
     );
   }
 
   const serializedCookie = createSerializedCookie(session.token);
-
   // 5. return the user
   return NextResponse.json(
     { user: { username: userWitchPassword.userName } },

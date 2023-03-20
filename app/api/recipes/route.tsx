@@ -1,6 +1,9 @@
+import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 import { insertTastingNoteTable } from '../../../database/recepisTastingNotes';
 import { createFullRecipe } from '../../../database/recipes';
+import { getUserBySessionToken } from '../../../database/users';
+import { validateCsrfToken } from '../../../utils/csrf';
 
 type FormBody = {
   userId: number;
@@ -20,9 +23,21 @@ type FormBody = {
     category: string;
     tasting_note_name: string;
   }[];
+  csrfToken: string;
 };
 
 export async function POST(request: NextRequest) {
+  const cookieStore = cookies();
+  const token = cookieStore.get('sessionToken');
+
+  // 2. validate that session
+  // 3. get the user profile matching the session
+  const user = token && (await getUserBySessionToken(token.value));
+
+  if (!user) {
+    return NextResponse.json({ error: 'session token is not valid' });
+  }
+
   const body: FormBody = await request.json();
   const recipeBody = {
     userId: body.userId,
@@ -38,6 +53,17 @@ export async function POST(request: NextRequest) {
     notes: body.notes,
     pictureUrl: body.pictureUrl,
   };
+
+  if (!validateCsrfToken(user.csrfSecret, body.csrfToken)) {
+    return NextResponse.json(
+      {
+        error: 'CSRF token is not valid',
+      },
+      { status: 400 },
+    );
+  }
+
+  // validate csrf token to male sure the request is coming from my server and not a hacker
 
   const newRecipe = await createFullRecipe(recipeBody);
 
