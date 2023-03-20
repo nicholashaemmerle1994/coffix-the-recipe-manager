@@ -226,7 +226,7 @@ export default function Profile({ user, loggedUser, posts, category, token }) {
             <div className="flex flex-col w-2/4 md:w-full">
               <div className="flex flex-row justify-end align-center">
                 <div className="m-2">
-                  <Link href="/logout">
+                  <Link href="/api/logout">
                     <Image
                       src="/logout1.png"
                       width={20}
@@ -379,7 +379,7 @@ export default function Profile({ user, loggedUser, posts, category, token }) {
                 </ul>
               </div>
               <div className="m-2">
-                <Link href="/logout">
+                <Link href="/api/logout">
                   <Image
                     src="/logout1.png"
                     width={20}
