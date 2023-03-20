@@ -29,9 +29,7 @@ export default function LoginForm() {
       });
       return;
     }
-    // setTimeout(() => {
     router.push('/');
-    // }, 3000);
     router.refresh();
   };
   return (

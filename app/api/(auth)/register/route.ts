@@ -91,7 +91,6 @@ export const POST = async (request: NextRequest) => {
   }
 
   const serializedCookie = createSerializedCookie(session.token);
-
   // 5. return the new username
   return NextResponse.json(
     { user: { username: newUser.userName } },

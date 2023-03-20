@@ -354,7 +354,7 @@ export default function Profile({ user, loggedUser, posts, category, token }) {
                     alt="settings"
                   />
                 </button>
-                <button
+                <ul
                   tabIndex={0}
                   className="dropdown-content menu p-2 shadow bg-base-100 rounded-box "
                 >
@@ -376,7 +376,7 @@ export default function Profile({ user, loggedUser, posts, category, token }) {
                       Edit Picture
                     </button>
                   </li>
-                </button>
+                </ul>
               </div>
               <div className="m-2">
                 <Link href="/logout">
