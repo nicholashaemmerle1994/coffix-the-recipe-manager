@@ -226,14 +226,14 @@ export default function Profile({ user, loggedUser, posts, category, token }) {
             <div className="flex flex-col w-2/4 md:w-full">
               <div className="flex flex-row justify-end align-center">
                 <div className="m-2">
-                  <a href="http://localhost:3000/api/logout">
+                  <Link href="/logout">
                     <Image
                       src="/logout1.png"
                       width={20}
                       height={20}
                       alt="Logout"
                     />
-                  </a>
+                  </Link>
                 </div>
               </div>
               <form
@@ -354,7 +354,10 @@ export default function Profile({ user, loggedUser, posts, category, token }) {
                     alt="settings"
                   />
                 </button>
-                <ul className="dropdown-content menu p-2 shadow bg-base-100 rounded-box ">
+                <button
+                  tabIndex={0}
+                  className="dropdown-content menu p-2 shadow bg-base-100 rounded-box "
+                >
                   <li>
                     <button
                       onClick={() => {
@@ -373,17 +376,17 @@ export default function Profile({ user, loggedUser, posts, category, token }) {
                       Edit Picture
                     </button>
                   </li>
-                </ul>
+                </button>
               </div>
               <div className="m-2">
-                <a href="http://localhost:3000/api/logout">
+                <Link href="/logout">
                   <Image
                     src="/logout1.png"
                     width={20}
                     height={20}
                     alt="Logout"
                   />
-                </a>
+                </Link>
               </div>
             </div>
             <div className="card-body p-0 m-2 flex flex-col md:flex-row md:flex-wrap md:items-center">
