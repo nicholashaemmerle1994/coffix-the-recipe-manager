@@ -150,6 +150,8 @@ export default function Profile({ user, loggedUser, posts, category, token }) {
                               <p className="my-2">{cat.name}</p>
                             </div>
                           );
+                        } else {
+                          return null;
                         }
                       })}
                     </div>
@@ -306,6 +308,8 @@ export default function Profile({ user, loggedUser, posts, category, token }) {
                               <p className="">{cat.name}</p>
                             </div>
                           );
+                        } else {
+                          return null;
                         }
                       })}
                       <div className="md:w-full hidden md:flex md:flex-col">
@@ -421,6 +425,8 @@ export default function Profile({ user, loggedUser, posts, category, token }) {
                             <p className="">{cat.name}</p>
                           </div>
                         );
+                      } else {
+                        return null;
                       }
                     })}
                     <div className="md:w-full hidden md:flex md:flex-col">
