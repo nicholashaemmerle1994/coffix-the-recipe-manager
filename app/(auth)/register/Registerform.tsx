@@ -37,7 +37,7 @@ export default function Registerform() {
     toast.success('Registration successful');
     setTimeout(() => {
       router.refresh();
-      router.push('/');
+      router.push('/posts');
     }, 1000);
   };
 

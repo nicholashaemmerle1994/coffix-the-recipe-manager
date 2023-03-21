@@ -344,8 +344,34 @@ export default function Profile({ user, loggedUser, posts, category, token }) {
             </figure>
           </div>
           <div className="flex flex-col w-2/4 md:w-full">
-            <div className="flex flex-row justify-end align-center">
-              <div className="dropdown dropdown-end m-2">
+            <div className="flex flex-row justify-end align-center ">
+              <button
+                className="m-2 xl:hidden"
+                onClick={() => {
+                  setUpdateUser(!updateUser);
+                }}
+              >
+                <Image
+                  src="/editinfo.png"
+                  width={20}
+                  height={20}
+                  alt="edit info"
+                />
+              </button>
+              <button
+                className="m-2 xl:hidden"
+                onClick={() => {
+                  setUpdatePicture(!updatePicture);
+                }}
+              >
+                <Image
+                  src="/editimg.png"
+                  width={20}
+                  height={20}
+                  alt="edit info"
+                />
+              </button>
+              <div className="dropdown dropdown-end m-2 hidden xl:flex">
                 <button tabIndex={0} htmlFor="dropdown">
                   <Image
                     src="/setting.png"
@@ -354,10 +380,7 @@ export default function Profile({ user, loggedUser, posts, category, token }) {
                     alt="settings"
                   />
                 </button>
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content menu p-2 shadow bg-base-100 rounded-box "
-                >
+                <ul className="dropdown-content menu p-2 shadow bg-base-100 rounded-box ">
                   <li>
                     <button
                       onClick={() => {
