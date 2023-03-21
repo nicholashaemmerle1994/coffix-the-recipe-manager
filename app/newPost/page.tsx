@@ -20,7 +20,7 @@ export default async function CategoryPage() {
   console.log(category);
   return (
     <div className="w-auto h-full max-w-lg mx-auto lg:mt-12 sm:mb-20 sm:mt-12 md:mb-20 bg-default rounded-lg  justify-center align-center flex-col flex text-center ">
-      <h2 className="text-4xl my-12 font-black">Choose your brew method</h2>
+      {/* <h2 className="text-4xl my-12 font-black">Choose your brew method</h2>
       <div className="flex flex-wrap justify-center align-center text-gray-50">
         {category.map((brew) => {
           return (
@@ -45,7 +45,8 @@ export default async function CategoryPage() {
             </Link>
           );
         })}
-      </div>
+      </div> */}
+      Hello
     </div>
   );
 }
