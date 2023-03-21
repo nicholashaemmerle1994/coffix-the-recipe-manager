@@ -1,23 +1,23 @@
-import { cookies } from 'next/headers';
-import Image from 'next/image';
-import Link from 'next/link';
-import { redirect } from 'next/navigation';
-import { getCategory } from '../../database/category';
-import { getValidSessionByToken } from '../../database/sessions';
+// import { cookies } from 'next/headers';
+// import Image from 'next/image';
+// import Link from 'next/link';
+// import { redirect } from 'next/navigation';
+// import { getCategory } from '../../database/category';
+// import { getValidSessionByToken } from '../../database/sessions';
 
-export default async function CategoryPage() {
-  // check if there is a valid session
-  const sessionTokenCookie = cookies().get('sessionToken');
-  const session =
-    sessionTokenCookie &&
-    (await getValidSessionByToken(sessionTokenCookie.value));
-  // if there is, redirect to home page
-  if (!session) {
-    redirect('/');
-  }
-  // if not, render login form
-  const category = await getCategory();
-  console.log(category);
+export default function CategoryPage() {
+  // // check if there is a valid session
+  // const sessionTokenCookie = cookies().get('sessionToken');
+  // const session =
+  //   sessionTokenCookie &&
+  //   (await getValidSessionByToken(sessionTokenCookie.value));
+  // // if there is, redirect to home page
+  // if (!session) {
+  //   redirect('/');
+  // }
+  // // if not, render login form
+  // const category = await getCategory();
+  // console.log(category);
   return (
     <div className="w-auto h-full max-w-lg mx-auto lg:mt-12 sm:mb-20 sm:mt-12 md:mb-20 bg-default rounded-lg  justify-center align-center flex-col flex text-center ">
       {/* <h2 className="text-4xl my-12 font-black">Choose your brew method</h2>
