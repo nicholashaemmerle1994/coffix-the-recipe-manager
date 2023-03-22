@@ -583,7 +583,6 @@ export default function SinglePostPage(props) {
           <p className="text-4xl font-bold text-gray-900">
             {props.post[0].coffee}
             <span className="text-2xl text-gray-900">
-              {' '}
               {props.post[0].roaster}
             </span>
           </p>

@@ -64,10 +64,16 @@ export default function LoginForm() {
             <span>Password</span>
           </div>
           <div>
-            <button className={styles.enter}>Enter</button>
-            <Link href="/register">
-              <button className={styles.enter}>Register</button>
-            </Link>
+            <button
+              className={styles.enter}
+              onClick={(event) => {
+                event.preventDefault();
+                router.push('/register');
+              }}
+            >
+              Register
+            </button>
+            <button className={styles.enter}>Log in</button>
           </div>
         </div>
       </form>

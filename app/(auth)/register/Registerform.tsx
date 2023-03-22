@@ -93,10 +93,16 @@ export default function Registerform() {
             <span>Password</span>
           </div>
           <div className="flex gap-2">
-            <button className={styles.enter}>Enter</button>
-            <Link href="/">
-              <button className={styles.enter}>Login</button>
-            </Link>
+            <button
+              className={styles.enter}
+              onClick={(event) => {
+                event.preventDefault();
+                router.push('/');
+              }}
+            >
+              Return
+            </button>
+            <button className={styles.enter}>Register</button>
           </div>
         </div>
       </form>
