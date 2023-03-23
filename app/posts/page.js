@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { getCategoryNameById } from '../../database/category';
+import { getFollows } from '../../database/follows';
 import { getTastingNotesFromRecipe } from '../../database/recepisTastingNotes';
 import { getAllRecipes } from '../../database/recipes';
 import { getValidSessionByToken } from '../../database/sessions';
@@ -70,11 +71,14 @@ export default async function PostsPage() {
       return { ...recipe, tastingNotes: tastingNotesName };
     },
   );
+  const getLoggedUserFollows = await getFollows(userId);
+  // map over recipesWithTastingNotesAndName and just return the recipes of the users that the logged user follows
 
   return (
-    <>
-      <div>{/* <AdvancedImage cldImg={myImage} /> */}</div>
-      <Posts recipe={recipesWithTastingNotesAndName} userId={userId} />
-    </>
+    <Posts
+      recipe={recipesWithTastingNotesAndName}
+      userId={userId}
+      yourFeed={getLoggedUserFollows}
+    />
   );
 }

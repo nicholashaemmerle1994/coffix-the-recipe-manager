@@ -4,7 +4,15 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-export default function Profile({ user, loggedUser, posts, category, token }) {
+export default function Profile({
+  user,
+  loggedUser,
+  posts,
+  category,
+  token,
+  followsOrNot,
+  followerCount,
+}) {
   const [updateUser, setUpdateUser] = useState(false);
   const [updateBio, setUpdateBio] = useState('');
   const [updateFirstName, setUpdateFirstName] = useState('');
@@ -99,8 +107,8 @@ export default function Profile({ user, loggedUser, posts, category, token }) {
         <div className="card card-side bg-base-100 shadow-xl" />
         <div className="card card-side shadow-xl m-2.5 bg-secondary h-screen flex flex-col  gap-3 md:flex-row">
           <div className="card card-side bg-secondary p-2  flex flex-row border border-gray-500 rounded-lg md:w-2/6 md:flex-col">
-            <div className="flex flex-row w-2/4 md:w-full ">
-              <figure className="rounded-l-xl md:w-full md:rounded-xl md:border border-gray-500 ">
+            <div className="flex flex-row w-2/4 md:w-full">
+              <figure className="rounded-l-xl md:w-full md:rounded-xl md:border border-gray-500">
                 <Image
                   className=" w-full h-full md:w-full"
                   src={user.pictureUrl}
@@ -118,9 +126,53 @@ export default function Profile({ user, loggedUser, posts, category, token }) {
                 </div>
                 <div className="md:flex md:flex-wrap md:items-start md:flex-col">
                   <p>{user.bio}</p>
-                  <p>Posts: {postsWithDate.length}</p>
+                  <div className="flex">
+                    <div className="mr-3 mt-2">
+                      <p>Posts</p>
+                      <p className="text-center">{posts.length}</p>
+                    </div>
+                    <div className="mt-2">
+                      <p>Follower</p>
+                      <p className="text-center">{followerCount.length}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
+              <button
+                className={followsOrNot ? 'bg-red-500' : 'bg-green-500'}
+                onClick={async (event) => {
+                  event.preventDefault();
+                  if (followsOrNot === false) {
+                    // POST request to follow user
+                    await fetch('/api/follow', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({
+                        userId: loggedUser,
+                        followedUserId: user.id,
+                      }),
+                    });
+                    router.refresh();
+                  } else {
+                    // DELETE request to unfollow user
+                    await fetch('/api/follow', {
+                      method: 'DELETE',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({
+                        userId: loggedUser,
+                        followedUserId: user.id,
+                      }),
+                    });
+                    router.refresh();
+                  }
+                }}
+              >
+                {followsOrNot ? 'Unfollow' : 'Follow'}
+              </button>
             </div>
           </div>
 
@@ -276,7 +328,16 @@ export default function Profile({ user, loggedUser, posts, category, token }) {
                 </button>
                 <div className="md:flex md:flex-wrap md:items-start md:flex-col">
                   <p>{user.bio}</p>
-                  <p className="mt-2">Posts: {postsWithDate.length}</p>
+                  <div className="flex">
+                    <div className="mr-3 mt-2">
+                      <p>Posts</p>
+                      <p className="text-center">{posts.length}</p>
+                    </div>
+                    <div className="mt-2">
+                      <p>Follower</p>
+                      <p className="text-center">{followerCount.length}</p>
+                    </div>
+                  </div>
                 </div>
               </form>
             </div>
@@ -419,7 +480,16 @@ export default function Profile({ user, loggedUser, posts, category, token }) {
               </div>
               <div className="md:flex md:flex-wrap md:items-start md:flex-col">
                 <p>{user.bio}</p>
-                <p className="mt-2">Posts: {postsWithDate.length}</p>
+                <div className="flex justify-center">
+                  <div className="mr-3 mt-10">
+                    <p>Posts</p>
+                    <p className="text-center">{posts.length}</p>
+                  </div>
+                  <div className="mt-10">
+                    <p>Follower</p>
+                    <p className="text-center">{followerCount.length}</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

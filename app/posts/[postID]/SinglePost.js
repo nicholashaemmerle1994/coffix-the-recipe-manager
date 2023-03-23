@@ -90,7 +90,12 @@ export default function SinglePostPage(props) {
                       <div className="flex flex-col w-5/6">
                         <p>{userComment.comment}</p>
                         <div className="flex justify-between">
-                          <p className="text-xs">{userComment.createdAt}</p>
+                          <p className="text-xs mt-2 max-w-min mr-2">
+                            {userComment.firstName}
+                          </p>
+                          <p className="text-xs mt-2 text-opacity-50 text-black">
+                            {userComment.createdAt}
+                          </p>
                           <button
                             // className="btn btn-danger border border-red-500"
                             onClick={async () => {
@@ -285,7 +290,12 @@ export default function SinglePostPage(props) {
                     <div className="flex flex-col w-5/6">
                       <p>{userComment.comment}</p>
                       <div className="flex justify-between">
-                        <p className="text-xs">{userComment.createdAt}</p>
+                        <p className="text-xs mt-2 max-w-min mr-2">
+                          {userComment.firstName}
+                        </p>
+                        <p className="text-xs mt-2 text-opacity-50 text-black">
+                          {userComment.createdAt}
+                        </p>
                         <button
                           // className="btn btn-danger border border-red-500"
                           onClick={async () => {
@@ -336,7 +346,12 @@ export default function SinglePostPage(props) {
                   <div className="flex flex-col w-5/6">
                     <p>{userComment.comment}</p>
                     <div className="flex justify-between">
-                      <p className="text-xs">{userComment.createdAt}</p>
+                      <p className="text-xs mt-2 max-w-min mr-2">
+                        {userComment.firstName}
+                      </p>
+                      <p className="text-xs mt-2 text-opacity-50 text-black">
+                        {userComment.createdAt}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -469,7 +484,12 @@ export default function SinglePostPage(props) {
                     <div className="flex flex-col w-5/6">
                       <p>{userComment.comment}</p>
                       <div className="flex justify-between">
-                        <p className="text-xs">{userComment.createdAt}</p>
+                        <p className="text-xs mt-2 max-w-min mr-2">
+                          {userComment.firstName}
+                        </p>
+                        <p className="text-xs mt-2 text-opacity-50 text-black">
+                          {userComment.createdAt}
+                        </p>
                         <button
                           // className="btn btn-danger border border-red-500"
                           onClick={async () => {
@@ -520,7 +540,12 @@ export default function SinglePostPage(props) {
                   <div className="flex flex-col w-5/6">
                     <p>{userComment.comment}</p>
                     <div className="flex justify-between">
-                      <p className="text-xs">{userComment.createdAt}</p>
+                      <p className="text-xs mt-2 max-w-min mr-2">
+                        {userComment.firstName}
+                      </p>
+                      <p className="text-xs mt-2 text-opacity-50 text-black">
+                        {userComment.createdAt}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -595,7 +620,7 @@ export default function SinglePostPage(props) {
           <p>Grind-size: {props.post[0].grindSize}</p>
           <p>Water temperature: {props.post[0].brewTemperature}°C</p>
           <div>
-            <p> With a brewtime of:</p>
+            <p> With a brew time of:</p>
             <p>
               {props.post[0].brewTimeMinutes} : {props.post[0].brewTimeSeconds}{' '}
               mins
@@ -628,7 +653,7 @@ export default function SinglePostPage(props) {
                   key={`comment-${userComment.id}`}
                   className="bg-secondary rounded-md p-2 border border-gray-500 flex flex-row"
                 >
-                  <div className="flex w-1/6 flex-col">
+                  <div className="flex w-1/6 flex-col justify-between">
                     <Link href={`/profile/${userComment.userName}`}>
                       <div>
                         <Image
@@ -640,12 +665,17 @@ export default function SinglePostPage(props) {
                         />
                       </div>
                     </Link>
-                    <div className="" />
+                    <div />
                   </div>
                   <div className="flex flex-col w-5/6">
                     <p>{userComment.comment}</p>
                     <div className="flex justify-between">
-                      <p className="text-xs">{userComment.createdAt}</p>
+                      <p className="text-xs mt-2 max-w-min mr-2">
+                        {userComment.firstName}
+                      </p>
+                      <p className="text-xs mt-2 text-opacity-50 text-black">
+                        {userComment.createdAt}
+                      </p>
                       <button
                         // className="btn btn-danger border border-red-500"
                         onClick={async () => {
@@ -696,7 +726,12 @@ export default function SinglePostPage(props) {
                 <div className="flex flex-col w-5/6">
                   <p>{userComment.comment}</p>
                   <div className="flex justify-between">
-                    <p className="text-xs">{userComment.createdAt}</p>
+                    <p className="text-xs mt-2 max-w-min mr-2">
+                      {userComment.firstName}
+                    </p>
+                    <p className="text-xs mt-2 text-opacity-50 text-black">
+                      {userComment.createdAt}
+                    </p>
                   </div>
                 </div>
               </div>

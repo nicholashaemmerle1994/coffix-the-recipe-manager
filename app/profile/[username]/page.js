@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
 import { getCategory, getCategoryNameById } from '../../../database/category';
+import { getFollows, isFollowing } from '../../../database/follows';
 import { getTastingNotesFromRecipe } from '../../../database/recepisTastingNotes';
 import { getRecipeByUserId } from '../../../database/recipes';
 import { getValidSessionByToken } from '../../../database/sessions';
@@ -72,6 +73,15 @@ export default async function ProfilePage(props) {
   const category = await getCategory();
 
   const csrfToken = createCsrfToken(session.csrfSecret);
+
+  const followsOrNot = await isFollowing(session.userId, user.id);
+  let followsOrNotValue;
+  if (followsOrNot.length === 0) {
+    followsOrNotValue = false;
+  } else {
+    followsOrNotValue = true;
+  }
+  const followerCount = await getFollows(user.id);
   return (
     <div>
       <Profile
@@ -80,6 +90,8 @@ export default async function ProfilePage(props) {
         posts={finalPosts}
         category={category}
         token={csrfToken}
+        followsOrNot={followsOrNotValue}
+        followerCount={followerCount}
       />
     </div>
   );
