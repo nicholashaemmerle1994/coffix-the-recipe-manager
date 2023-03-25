@@ -1,7 +1,13 @@
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { getCategoryNameById } from '../../../database/category';
-import { getComments, getCommentsWithUsers } from '../../../database/comments';
+import { getCommentsOnComment } from '../../../database/commentOnComment';
+import {
+  getCommentsWithCommentsOnComments,
+  getCommentsWithUsers,
+  getCommentsWithUsers2,
+  getCommentsWithUsersAndCommentsOnComments,
+} from '../../../database/comments';
 import { getSingleRecipeWithTastingNotes } from '../../../database/recepisTastingNotes';
 import { getRecipeById } from '../../../database/recipes';
 import { getValidSessionByToken } from '../../../database/sessions';
@@ -110,6 +116,24 @@ export default async function SinglePostPAge({ params }) {
 
   const category = await getCategoryNameById(finalRecipeWithDate[0].categoryId);
   const categoryName = category[0].name;
+  // const commentsOnComments = await getCommentsOnComment(params.postID);
+  // convert the Date object form the comments to a string
+  // const commentsOnCommentsWithDate = commentsOnComments.map((comment) => {
+  //   const date = new Date(comment.createdAt);
+  //   const dateString = date.toString();
+  //   return { ...comment, createdAt: dateString };
+  // });
+
+  const allComments = async () => {
+    const firstCommentsV = await getCommentsOnComment(params.postID);
+    const commentsOnCommentsWithDate = firstCommentsV.map((comment) => {
+      const date = new Date(comment.createdAt);
+      const dateString = date.toString();
+      return { ...comment, createdAt: dateString };
+    });
+    return commentsOnCommentsWithDate;
+  };
+  const finalComments = await allComments();
 
   return (
     <SinglePostPage
@@ -117,6 +141,7 @@ export default async function SinglePostPAge({ params }) {
       userId={userId}
       comments={commentsWithDate}
       categoryName={categoryName}
+      commentsOnComments={finalComments}
       token={csrfToken}
     />
   );

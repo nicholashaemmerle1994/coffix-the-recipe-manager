@@ -72,8 +72,8 @@ export default async function PostsPage() {
     },
   );
   const getLoggedUserFollows = await getFollows(userId);
-  // map over recipesWithTastingNotesAndName and just return the recipes of the users that the logged user follows
 
+  // map over recipesWithTastingNotesAndName and just return the recipes of the users that the logged user follows
   return (
     <Posts
       recipe={recipesWithTastingNotesAndName}

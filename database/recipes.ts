@@ -167,3 +167,45 @@ export const updateFullRecipeById = cache(
     return updatedRecipe;
   },
 );
+
+// Get single recipe by id, with tasting notes from recipes_tastingnotes related to the recipe, comments and comments on comments related to the comment id
+
+export const getRecipeWithTastingNotesAndComments = cache(
+  async (recipeId: number) => {
+    const recipe = await sql<RecipeSQL[]>`
+    SELECT
+    recipes.id as r_id,
+    recipes.user_id as r_user_id,
+    recipes.category_id as r_category_id,
+    recipes.created_at as r_created_at,
+    recipes.coffee as r_coffee,
+    recipes.roaster as r_roaster,
+    recipes.amount_in as r_amount_in,
+    recipes.amount_out  as r_amount_out,
+    recipes.grind_size as r_grind_size,
+    recipes.brew_temperature as r_brew_temperature,
+    recipes.brew_time_minutes as r_brew_time_minutes,
+    recipes.brew_time_seconds as r_brew_time_seconds,
+    recipes.notes as r_notes,
+    recipes.picture_url as r_picture_url,
+    recipes_tastingnotes.tasting_note_id as r_tasting_note_id,
+    recipes_tastingnotes.recipe_id as r_recipe_id,
+    comments.id as c_id,
+    comments.user_id as c_user_id,
+    comments.recipe_id as c_recipe_id,
+    comments.created_at as c_created_at,
+    comments.comment as c_comment,
+    comments_on_comments.id as coc_id,
+    comments_on_comments.user_id as coc_user_id,
+    comments_on_comments.comment_id as coc_comment_id,
+    comments_on_comments.comment as coc_comment
+    FROM
+    recipes
+    LEFT JOIN recipes_tastingnotes ON recipes.id = recipes_tastingnotes.recipe_id
+    LEFT JOIN comments ON recipes.id = comments.recipe_id
+    LEFT JOIN comments_on_comments ON comments.id = comments_on_comments.comment_id
+    WHERE
+    recipes.id = ${recipeId}`;
+    return recipe;
+  },
+);

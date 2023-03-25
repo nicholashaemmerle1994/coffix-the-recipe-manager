@@ -30,10 +30,8 @@ export default function Posts(props) {
     });
   });
 
-  // These are the Posts of the people the user follows
-  if (!showAllPosts) {
+  if (yourFeed.length === 0 && !showAllPosts) {
     return (
-      // <div>Hello</div>
       <>
         <header className="flex sticky top-0 z-10 bg-secondary border-solid border-b border-gray-400 w-screen justify-center">
           <nav>
@@ -51,50 +49,20 @@ export default function Posts(props) {
             </ul>
           </nav>
         </header>
-        <div className="card card-side bg-base-100 shadow-xl" />
-        {yourFeed.map((recipe) => {
-          return (
-            <div
-              key={`recipe-${recipe.id}`}
-              className="card card-side shadow-xl m-2.5 bg-secondary"
-            >
-              <figure>
-                <Image
-                  className="w-100 h-full border rounded-l-2xl"
-                  src={recipe.pictureUrl}
-                  width={100}
-                  height={100}
-                  alt="user pic"
-                />
-              </figure>
 
-              <div className="card-body bg-secondary text-yellow-900 rounded-r-2xl ">
-                <Link href={`/posts/${recipe.id}`}>
-                  <h2 className="card-title text-gray-800 font-extrabold">
-                    {recipe.categoryName}
-                  </h2>
-                  <p className="font-medium">{recipe.coffee}</p>
-                  <div>
-                    {recipe.tastingNotes.map((note, index) => {
-                      const noteId = `recipe-id-${recipe.id}-note-${index}`;
-                      return <p key={`noteId-${noteId}`}>{note}</p>;
-                    })}
-                  </div>
-                  <div className="card-actions justify-end">
-                    <button className="btn btn-xs btn-secondary border border-gray-500">
-                      Open
-                    </button>
-                  </div>
-                </Link>
-              </div>
-            </div>
-          );
-        })}
+        <div className="card card-side bg-base-100 drop-shadow-lg mt-36 bg-secondary mx-2">
+          <div className="card-body text-center">
+            <h2 className="text-xl font-extrabold text-center">
+              You don't follow anyone
+            </h2>
+            <p>Check out the newest Recipes and follow the creators</p>
+          </div>
+        </div>
       </>
     );
   }
 
-  // These are the Newest Posts
+  // These are the Posts of the people the user follows
   return (
     <>
       <header className="flex sticky top-0 z-10 bg-secondary border-solid border-b border-gray-400 w-screen justify-center">
@@ -114,44 +82,91 @@ export default function Posts(props) {
         </nav>
       </header>
       <div className="card card-side bg-base-100 shadow-xl" />
-      {recipesWithDate.map((recipe) => {
-        return (
-          <div
-            key={`recipe-${recipe.id}`}
-            className="card card-side shadow-xl m-2.5 bg-secondary"
-          >
-            <figure>
-              <Image
-                className="w-100 h-full border rounded-l-2xl"
-                src={recipe.pictureUrl}
-                width={100}
-                height={100}
-                alt="user pic"
-              />
-            </figure>
+      {showAllPosts
+        ? recipesWithDate.map((recipe) => {
+            return (
+              <div
+                key={`recipe-${recipe.id}`}
+                className="card card-side shadow-xl m-2.5 bg-secondary"
+              >
+                <figure>
+                  <Image
+                    className="w-100 h-full border rounded-l-2xl"
+                    src={recipe.pictureUrl}
+                    width={100}
+                    height={100}
+                    alt="user pic"
+                  />
+                </figure>
 
-            <div className="card-body bg-secondary text-yellow-900 rounded-r-2xl ">
-              <Link href={`/posts/${recipe.id}`}>
-                <h2 className="card-title text-gray-800 font-extrabold">
-                  {recipe.categoryName}
-                </h2>
-                <p className="font-medium">{recipe.coffee}</p>
-                <div>
-                  {recipe.tastingNotes.map((note, index) => {
-                    const noteId = `recipe-id-${recipe.id}-note-${index}`;
-                    return <p key={`noteId-${noteId}`}>{note}</p>;
-                  })}
+                <div className="card-body bg-secondary text-yellow-900 rounded-r-2xl ">
+                  <Link href={`/posts/${recipe.id}`}>
+                    <h2 className="card-title text-gray-800 font-extrabold">
+                      {recipe.categoryName}
+                    </h2>
+                    <p className="font-medium">{recipe.coffee}</p>
+                    <div>
+                      {recipe.tastingNotes.map((note, index) => {
+                        const noteId = `recipe-id-${recipe.id}-note-${index}`;
+                        return <p key={`noteId-${noteId}`}>{note}</p>;
+                      })}
+                    </div>
+                    <div className="card-actions justify-end">
+                      <button className="btn btn-xs btn-secondary border border-gray-500">
+                        Open
+                      </button>
+                    </div>
+                  </Link>
                 </div>
-                <div className="card-actions justify-end">
-                  <button className="btn btn-xs btn-secondary border border-gray-500">
-                    Open
-                  </button>
+              </div>
+            );
+          })
+        : yourFeed.map((recipe) => {
+            if (yourFeed.length === 0) {
+              return (
+                <div key={`your-feed-${yourFeed}`}>
+                  <p>You do not follow anyone...</p>
                 </div>
-              </Link>
-            </div>
-          </div>
-        );
-      })}
+              );
+            } else {
+              return (
+                <div
+                  key={`recipe-${recipe.id}`}
+                  className="card card-side shadow-xl m-2.5 bg-secondary"
+                >
+                  <figure>
+                    <Image
+                      className="w-100 h-full border rounded-l-2xl"
+                      src={recipe.pictureUrl}
+                      width={100}
+                      height={100}
+                      alt="user pic"
+                    />
+                  </figure>
+
+                  <div className="card-body bg-secondary text-yellow-900 rounded-r-2xl ">
+                    <Link href={`/posts/${recipe.id}`}>
+                      <h2 className="card-title text-gray-800 font-extrabold">
+                        {recipe.categoryName}
+                      </h2>
+                      <p className="font-medium">{recipe.coffee}</p>
+                      <div>
+                        {recipe.tastingNotes.map((note, index) => {
+                          const noteId = `recipe-id-${recipe.id}-note-${index}`;
+                          return <p key={`noteId-${noteId}`}>{note}</p>;
+                        })}
+                      </div>
+                      <div className="card-actions justify-end">
+                        <button className="btn btn-xs btn-secondary border border-gray-500">
+                          Open
+                        </button>
+                      </div>
+                    </Link>
+                  </div>
+                </div>
+              );
+            }
+          })}
     </>
   );
 }

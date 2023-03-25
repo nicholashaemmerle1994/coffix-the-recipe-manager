@@ -30,24 +30,14 @@ export const getSingleRecipeWithTastingNotes = cache(async (recipeId) => {
   const recipe = await sql`
 
   SELECT
-    recipes.user_id,
-    recipes.category_id,
-    recipes.created_at,
-    recipes.coffee,
-    recipes.roaster,
-    recipes.amount_in,
-    recipes.amount_out,
-    recipes.grind_size,
-    recipes.brew_temperature,
-    recipes.brew_time_minutes,
-    recipes.brew_time_seconds,
-    recipes.notes,
-    recipes.picture_url,
-    recipes.id,
-    recipes_tastingnotes.tasting_note_id
+    recipes.*,
+    recipes_tastingnotes.tasting_note_id,
+    users.first_name,
+    users.picture_url AS user_picture_url
   FROM
     recipes
   INNER JOIN recipes_tastingnotes ON recipes.id = recipes_tastingnotes.recipe_id
+  INNER JOIN users ON users.id = recipes.user_id
   WHERE
     recipes.id = ${recipeId}
 `;
