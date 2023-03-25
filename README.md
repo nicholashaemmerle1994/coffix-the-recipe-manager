@@ -20,7 +20,7 @@ Coffix is built using the following technologies:
 
 #### Login
 
-![Login](/login.jpg?raw=true)
+![Login](/login.png?raw=true)
 
 #### New Recipe
 
