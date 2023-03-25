@@ -57,10 +57,38 @@ To install Coffix, follow these steps:
    ```sudo -u postgres psql```
    
 3. Set up the database 
-  ````
+  
+  ```
    CREATE DATABASE <database name>;
    CREATE USER <user name> WITH ENCRYPTED PASSWORD <user password>;
    GRANT ALL PRIVILEGES ON DATABASE <database name> TO <user name>;
+   ```
+4. After queries are successfully ran, quit psql and connect to the database
+```
+\q
+   ```   
+On Windows & macOS
+```
+psql -U <user name> <database name>
+   ```
+On Linux
+```
+sudo -u <user name> psql -U <user name> <database name>
+```
+5. In the repository's directory, run migrations using ley:
+```
+yarn migrate up
+```
+
+6. Create a .env file:
+- Open the project in your code editor
+- Copy the content of the .env.example file into the .env file
+- Replace xxxxxxxx with the access information
+- add .env file to .gitignore
+
+7. (Optional) Start deployment server:
+```
+yarn dev
 ```
 
 ## Contributing
