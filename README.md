@@ -37,7 +37,7 @@ Coffix is built using the following technologies:
 
 #### Newest Posts
 
-<img src="/public/newestPostFeed.png" alt="Image description" width="300"/>
+<img src="/public/newestPostsFeed.png" alt="Image description" width="300"/>
 
 </div>
 
