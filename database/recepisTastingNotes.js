@@ -33,6 +33,7 @@ export const getSingleRecipeWithTastingNotes = cache(async (recipeId) => {
     recipes.*,
     recipes_tastingnotes.tasting_note_id,
     users.first_name,
+    users.user_name,
     users.picture_url AS user_picture_url
   FROM
     recipes

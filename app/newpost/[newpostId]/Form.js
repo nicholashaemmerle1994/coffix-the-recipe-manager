@@ -166,6 +166,7 @@ export default function Form(props) {
         <h3 className="text-gray-800 font-bold">Setup</h3>
         <div className="flex flex-col bg-secondary justify-self-center gap-3 rounded-xl ">
           <input
+            required
             className="input input-bordered input-sm w-full max-w-xs self-center mt-3 border-gray-400 text-black"
             placeholder="Coffee Name"
             onChange={(event) => {
@@ -176,6 +177,7 @@ export default function Form(props) {
             }}
           />
           <input
+            required
             className="input input-bordered input-sm w-full max-w-xs self-center mb-3 border-gray-400 text-black"
             placeholder="Roaster"
             onChange={(event) => {
@@ -189,6 +191,7 @@ export default function Form(props) {
         <h3 className="text-gray-800 font-bold">Brew</h3>
         <div className="flex flex-col bg-secondary gap-3 rounded-xl">
           <input
+            required
             className="input input-bordered input-sm w-full max-w-xs self-center mt-3 text-black"
             placeholder="Amount in grams"
             type="number"
@@ -200,6 +203,7 @@ export default function Form(props) {
             }}
           />
           <input
+            required
             className="input input-bordered input-sm w-full max-w-xs self-center text-black"
             placeholder="Amount out in grams"
             onChange={(event) => {
@@ -276,8 +280,8 @@ export default function Form(props) {
         <h3 className="text-gray-800 font-bold"> Tasting Notes</h3>
         {/* mapping over the chocolatey array to display every possiple choice for the user */}
         <h4 className="text-gray-800 font-semibold">Chocolatey</h4>
-        <div className="flex  bg-secondary rounded-xl justify-center">
-          <div className="flex bg-secondary rounded-xl m-3">
+        <div className="flex flex-col bg-secondary rounded-xl">
+          <div className="flex justify-center flex-wrap m-3">
             {chocolatey.map((note) => (
               <label
                 key={`option-${note.name}`}

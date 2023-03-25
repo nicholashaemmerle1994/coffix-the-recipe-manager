@@ -12,7 +12,6 @@ export default function SinglePostPage(props) {
   const router = useRouter();
   const [wantComment, setWantComment] = useState(false);
   const [commentOnComment, setCommentOnComment] = useState('');
-  const [hasCommentOnComment, setHasCommentOnComment] = useState(false);
 
   // mapping over the comments and translating the createdAt string back to a date object
   const commentsWithDate = props.comments.map((com) => {
@@ -31,6 +30,10 @@ export default function SinglePostPage(props) {
   function handleWantComment() {
     setWantComment(!wantComment);
   }
+  if (props.commentsOnComments === undefined) {
+    return console.log('no comments on comments');
+  }
+  // mapping over the comments and translating the createdAt string back to a date object
   const commentsOnCommentsWithDate = props.commentsOnComments.map((com) => {
     const date = new Date(com.createdAt);
     const dateString = date.toLocaleDateString('de-De', {
@@ -47,7 +50,7 @@ export default function SinglePostPage(props) {
     <>
       <div className="card card-side bg-base-100 shadow-xl" />
       <div className="card card-side  shadow-xl m-2.5 bg-secondary flex flex-col max-w-md container mx-auto text-gray-900-50">
-        <figure className="rounded-t-xl rounded-b-none mb-6">
+        <figure className="rounded-t-xl rounded-b-none">
           <Image
             src={props.post[0].pictureUrl}
             className="w-100 h-full"
@@ -56,6 +59,26 @@ export default function SinglePostPage(props) {
             alt="user pic"
           />
         </figure>
+        <div className="m-2">
+          <Link
+            className="flex flex-row justify-center items-center "
+            href={`/profile/${props.post[0].userName}`}
+          >
+            <p className="text-xs font-light text-gray-900 text-opacity-50 mr-6">
+              Created By:{' '}
+            </p>
+            <Image
+              src={props.post[0].userPictureUrl}
+              className="w-8 h-8 rounded-full mr-6"
+              width={100}
+              height={100}
+              alt="user pic"
+            />
+            <p className="text-sm font-medium text-gray-900">
+              {props.post[0].firstName}
+            </p>
+          </Link>
+        </div>
         <div className="card-body">
           <p className="text-4xl font-bold text-gray-900">
             {props.post[0].coffee}

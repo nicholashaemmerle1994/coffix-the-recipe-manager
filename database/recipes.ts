@@ -46,14 +46,20 @@ export const getAllRecipes = cache(async () => {
 });
 
 // Get recipe by id
-export const getRecipeById = cache(async (id: number) => {
+export const getRecipeById = cache(async (recipeId: number) => {
   const recipe = await sql<RecipeSQL[]>`
   SELECT
-  *
+  recipes.*,
+  users.first_name,
+  users.user_name,
+  users.picture_url AS user_picture_url
   FROM
   recipes
+  INNER JOIN users ON users.id = recipes.user_id
   WHERE
-  id = ${id}`;
+    recipes.id = ${recipeId}
+`;
+  console.log(recipe);
   return recipe;
 });
 
