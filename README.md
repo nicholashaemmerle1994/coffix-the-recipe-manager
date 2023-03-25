@@ -20,7 +20,11 @@ Coffix is built using the following technologies:
 
 #### Login
 
+<<<<<<< HEAD
 <img src="/public/login.png" alt="Image description" width="300"/>
+=======
+<img src="/public/login.png" alt="Image description" width="100"/>
+>>>>>>> refs/remotes/origin/main
 
 #### New Recipe
 
