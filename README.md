@@ -34,6 +34,7 @@ Coffix is built using the following technologies:
 <div style="display:flex; justify-content:center; align-items:center;">
 
 <div>
+
 #### Newest Posts
 
 <img src="/public/newestPostFeed.png" alt="Image description" width="300"/>
@@ -54,6 +55,10 @@ Coffix is built using the following technologies:
 
 <img src="/public/commentScreen.png" alt="Image description" width="300"/>
 
+#### Database schema
+
+<img src="/public/database.png" alt="Image description" width="600"/>
+
 ## Features
 
 Coffix comes with the following features:
@@ -71,8 +76,9 @@ Here are some of the upcoming features i plan to add:
 - Search functionality: Implement a powerful search system that enables users to find coffee recipes based on various criteria, including brewing method and tasting notes.
 - Like functionality: Users will be able to like recipes and see the most popular recipes on Coffix.
 - Mark recipes as private: Users can choose to mark their recipes as private so only they can see them.
+- Dark Mode
 
-i am always looking for ways to improve Coffix and welcome any feedback or suggestions you may have.
+I am always looking for ways to improve Coffix and welcome any feedback or suggestions you may have.
 
 ## Installation
 
@@ -152,7 +158,3 @@ If you'd like to contribute to Coffix, please follow these steps:
 4. Make changes to the codebase and commit them (`git commit -am 'Add my new feature'`).
 5. Push your changes to your forked repository (`git push origin my-feature`).
 6. Open a pull request on GitHub.
-
-## License
-
-Coffix is licensed under the MIT License. See [LICENSE](LICENSE) for more information.
