@@ -20,15 +20,26 @@ Coffix is built using the following technologies:
 
 #### Login
 
-![Login](/login.jpg?raw=true)
+<img src="/public/login.png" alt="Image description" width="300"/>
 
 #### New Recipe
 
+<img src="/public/newPost1Screen.png" alt="Image description" width="300"/>
+<img src="/public/newPost2Screen.png" alt="Image description" width="300"/>
+<img src="/public/newPost3Screen.png" alt="Image description" width="300"/>
+<img src="/public/newPost4Screen.png" alt="Image description" width="300"/>
+
 #### Newest Posts
+
+<img src="/public/newestPostFeed.png" alt="Image description" width="300"/>
 
 #### Single Post
 
-#### Comment
+<img src="/public/recipe.png" alt="Image description" width="300"/>
+
+#### Comments
+
+<img src="/public/commentScreen.png" alt="Image description" width="300"/>
 
 ## Features
 
