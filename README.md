@@ -66,8 +66,7 @@ Coffix comes with the following features:
 - Detailed recipe form: Coffix allows users to create and share their coffee recipes with ease. The recipe form includes detailed fields such as roaster, coffee name, brew setup (choose between 5 categories of methods, amount of coffee, temperature, brew time, etc.), tasting notes to describe the coffee, and the ability to upload a picture.
 - Chat functionality: Coffix enables users to share their thoughts about the recipe in comments and chat with other users.
 - Follow other users: Coffix allows users to follow other users and keep track of their recipes.
-- User profiles: Coffix has user profiles that display the user's information, including their recipes, followers, and following.
-- Social sharing: Coffix allows users to share their recipes on social media platforms like Facebook, Twitter, and Pinterest.
+- User profiles: Coffix has user profiles that display the user's information, including their recipes, followers, following and a short bio
 
 ## Roadmap
 
