@@ -57,12 +57,11 @@ To install Coffix, follow these steps:
    ```sudo -u postgres psql```
    
 3. Set up the database 
-   ```
+  ````
    CREATE DATABASE <database name>;
-CREATE USER <user name> WITH ENCRYPTED PASSWORD <user password>;
-GRANT ALL PRIVILEGES ON DATABASE <database name> TO <user name>;
-  
-   ```
+   CREATE USER <user name> WITH ENCRYPTED PASSWORD <user password>;
+   GRANT ALL PRIVILEGES ON DATABASE <database name> TO <user name>;
+```
 
 ## Contributing
 
