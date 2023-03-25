@@ -25,10 +25,10 @@ export default async function SinglePostPAge({ params }) {
     if (recipe.length === 0) {
       return notFound();
     } else {
-      const finalRecipeWithDate = recipe.map((recipe) => {
-        const date = new Date(recipe.createdAt);
+      const finalRecipeWithDate = recipe.map((r) => {
+        const date = new Date(r.createdAt);
         const dateString = date.toDateString();
-        return { ...recipe, createdAt: dateString };
+        return { ...r, createdAt: dateString };
       });
       const comments = await getCommentsWithUsers(finalRecipeWithDate[0].id);
       // convert the Date object form the comments to a string

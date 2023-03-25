@@ -59,7 +59,6 @@ export const getRecipeById = cache(async (recipeId: number) => {
   WHERE
     recipes.id = ${recipeId}
 `;
-  console.log(recipe);
   return recipe;
 });
 

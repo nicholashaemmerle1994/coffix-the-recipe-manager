@@ -30,9 +30,6 @@ export default function SinglePostPage(props) {
   function handleWantComment() {
     setWantComment(!wantComment);
   }
-  if (props.commentsOnComments === undefined) {
-    return console.log('no comments on comments');
-  }
   // mapping over the comments and translating the createdAt string back to a date object
   const commentsOnCommentsWithDate = props.commentsOnComments.map((com) => {
     const date = new Date(com.createdAt);
@@ -155,7 +152,8 @@ export default function SinglePostPage(props) {
                     </p>
                     {/* check if the user is the same as the user who
                           created the post, if yes delete button is shown */}
-                    {userComment.id === props.userId ? (
+                    {console.log(userComment.id, props.userId)}
+                    {userComment.userId === props.userId ? (
                       <button
                         // className="btn btn-danger border border-red-500"
                         onClick={async () => {
@@ -193,13 +191,16 @@ export default function SinglePostPage(props) {
                           <div className="flex w-1/6 flex-col">
                             <Link href={`/profile/${coc.userName}`}>
                               <div>
-                                <Image
-                                  className="rounded-full w-6"
-                                  src={coc.pictureUrl}
-                                  width={10}
-                                  height={10}
-                                  alt="user pic"
-                                />
+                                <div className="avatar">
+                                  <div className="w-6 rounded-full">
+                                    <Image
+                                      src={coc.pictureUrl}
+                                      width={10}
+                                      height={10}
+                                      alt="user pic"
+                                    />
+                                  </div>
+                                </div>
                               </div>
                             </Link>
                             <div className="" />
@@ -314,6 +315,8 @@ export default function SinglePostPage(props) {
               className="textarea w-9/12 h-8 resize-none"
               placeholder="Comment..."
               aria-label="comment"
+              required
+              value={comment}
               onChange={(event) => {
                 setComment(event.target.value);
               }}

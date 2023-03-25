@@ -27,7 +27,7 @@ export const createCommentOnComment = cache(async (comment: Comment) => {
 
 export const getCommentsOnComment = cache(async (recipeId: number) => {
   const comments = await sql<[CommentOnCommentReturn]>`
-    SELECT comments_on_comments.*, users.picture_url, users.first_name FROM comments_on_comments
+    SELECT comments_on_comments.*, users.picture_url, users.first_name, users.user_name FROM comments_on_comments
     LEFT JOIN users ON comments_on_comments.user_id = users.id
     WHERE recipe_id = ${recipeId}
     ORDER BY created_at ASC
