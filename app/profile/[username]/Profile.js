@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { toast, Toaster } from 'react-hot-toast';
 
 export default function Profile({
   user,
@@ -19,6 +20,7 @@ export default function Profile({
   const [updateLastName, setUpdateLastName] = useState(user.lastName);
   const [updatePicture, setUpdatePicture] = useState(false);
   const router = useRouter();
+  const alphanumeric = /^[0-9a-zA-Z]+$/;
 
   // Map over the posts array and translating the createdAt string back to a date object
   const postsWithDate = posts.map((post) => {
@@ -36,6 +38,7 @@ export default function Profile({
 
   async function handleOnSubmitInfo(event) {
     event.preventDefault();
+
     if (updateFirstName === '') {
       setUpdateFirstName(user.firstName);
     }

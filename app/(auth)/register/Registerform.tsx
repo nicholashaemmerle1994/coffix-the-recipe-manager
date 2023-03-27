@@ -12,8 +12,23 @@ export default function Registerform() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
+  const minlength = 6;
+  const alphanumeric = /^[0-9a-zA-Z]+$/;
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (userName.length < minlength || !userName.match(alphanumeric)) {
+      toast.error(
+        'Username must be at least 4 characters long and alphanumeric',
+      );
+      return;
+    }
+    if (password.length < minlength || !password.match(alphanumeric)) {
+      toast.error(
+        'Password must be at least 4 characters long and alphanumeric',
+      );
+      return;
+    }
+
     router.refresh();
     const response = await fetch('/api/register', {
       method: 'POST',
