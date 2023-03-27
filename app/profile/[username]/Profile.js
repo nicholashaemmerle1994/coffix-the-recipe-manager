@@ -14,9 +14,9 @@ export default function Profile({
   followerCount,
 }) {
   const [updateUser, setUpdateUser] = useState(false);
-  const [updateBio, setUpdateBio] = useState('');
-  const [updateFirstName, setUpdateFirstName] = useState('');
-  const [updateLastName, setUpdateLastName] = useState('');
+  const [updateBio, setUpdateBio] = useState(user.bio);
+  const [updateFirstName, setUpdateFirstName] = useState(user.firstName);
+  const [updateLastName, setUpdateLastName] = useState(user.lastName);
   const [updatePicture, setUpdatePicture] = useState(false);
   const router = useRouter();
 
@@ -298,6 +298,7 @@ export default function Profile({
                     className="input input-bordered input-sm w-full max-w-xs"
                     placeholder="First Name"
                     value={updateFirstName}
+                    required
                     onChange={(event) => {
                       setUpdateFirstName(event.target.value);
                     }}
@@ -307,6 +308,7 @@ export default function Profile({
                   <input
                     placeholder="Last Name"
                     className="input input-bordered input-sm w-full max-w-xs"
+                    required
                     value={updateLastName}
                     onChange={(event) => {
                       setUpdateLastName(event.target.value);
@@ -318,6 +320,7 @@ export default function Profile({
                     className="input input-bordered input-sm w-full max-w-xs"
                     placeholder="Bio"
                     value={updateBio}
+                    required
                     onChange={(event) => {
                       setUpdateBio(event.target.value);
                     }}

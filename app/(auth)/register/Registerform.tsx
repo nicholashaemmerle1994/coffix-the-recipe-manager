@@ -93,6 +93,7 @@ export default function Registerform() {
             <span>Password</span>
           </div>
           <div className="flex gap-2">
+            <button className={styles.enter}>Register</button>
             <button
               className={styles.enter}
               onClick={(event) => {
@@ -102,7 +103,6 @@ export default function Registerform() {
             >
               Return
             </button>
-            <button className={styles.enter}>Register</button>
           </div>
         </div>
       </form>

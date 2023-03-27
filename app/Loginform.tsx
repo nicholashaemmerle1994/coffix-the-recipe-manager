@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
@@ -64,6 +63,7 @@ export default function LoginForm() {
             <span>Password</span>
           </div>
           <div>
+            <button className={styles.enter}>Log in</button>
             <button
               className={styles.enter}
               onClick={(event) => {
@@ -73,7 +73,6 @@ export default function LoginForm() {
             >
               Register
             </button>
-            <button className={styles.enter}>Log in</button>
           </div>
         </div>
       </form>
