@@ -5,9 +5,32 @@ import Link from 'next/link';
 import { getUserBySessionToken } from '../database/users';
 
 export const metadata = {
-  title: 'Coffix - The recipe Manager',
+  applicationName: 'Coffix',
+  title: {
+    default: 'Coffix - The recipe Manager',
+    template: '%s - PWA App',
+  },
   description: 'Log your recipes and share them with the world',
+  manifest: '/manifest.json',
+  themeColor: '#F6F2E8',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Coffix - The recipe Manager',
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  icons: {
+    shortcut: '/favicon.ico',
+    apple: [{ url: '/icons/apple-touch-icon.png', sizes: '180x180' }],
+  },
 };
+
+// export const metadata = {
+//   title: 'Coffix - The recipe Manager',
+//   description: 'Log your recipes and share them with the world',
+// };
 
 export default async function RootLayout({
   children,
@@ -34,7 +57,8 @@ export default async function RootLayout({
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content={metadata.description} />
-        <title>{metadata.title}</title>
+        {/* <link rel="apple-touch-icon" href="/logo-96x96.png" /> */}
+        <meta name="apple-mobile-web-app-status-bar" content="#90cdf4" />
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body className="mb-24">
