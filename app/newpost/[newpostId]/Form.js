@@ -206,6 +206,7 @@ export default function Form(props) {
             required
             className="input input-bordered input-sm w-full max-w-xs self-center text-black"
             placeholder="Amount out in grams"
+            type="number"
             onChange={(event) => {
               setCoffee({
                 ...coffee,
@@ -216,6 +217,7 @@ export default function Form(props) {
           <input
             className="input input-bordered input-sm w-full max-w-xs self-center text-black"
             placeholder="Grind size"
+            type="number"
             onChange={(event) => {
               setCoffee({
                 ...coffee,

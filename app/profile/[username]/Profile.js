@@ -20,7 +20,6 @@ export default function Profile({
   const [updateLastName, setUpdateLastName] = useState(user.lastName);
   const [updatePicture, setUpdatePicture] = useState(false);
   const router = useRouter();
-  const alphanumeric = /^[0-9a-zA-Z]+$/;
 
   // Map over the posts array and translating the createdAt string back to a date object
   const postsWithDate = posts.map((post) => {
@@ -113,6 +112,7 @@ export default function Profile({
             <div className="flex flex-row w-2/4 md:w-full">
               <figure className="rounded-l-xl md:w-full md:rounded-xl md:border border-gray-500">
                 <Image
+                  quality={100}
                   className=" w-full h-full md:w-full"
                   src={user.pictureUrl}
                   width={100}
