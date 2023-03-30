@@ -12,19 +12,20 @@ export default function Registerform() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
-  const minlength = 6;
-  const alphanumeric = /^[0-9a-zA-Z]+$/;
+  const alphanumeric = /^(?=.*[a-zA-Z])[a-zA-Z0-9]{6,}$/;
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (userName.length < minlength || !userName.match(alphanumeric)) {
+
+    if (!alphanumeric.test(userName.trim())) {
       toast.error(
-        'Username must be at least 4 characters long and alphanumeric',
+        'Username must be at least 6 characters long and contain at least one letter',
       );
       return;
     }
-    if (password.length < minlength || !password.match(alphanumeric)) {
+
+    if (!alphanumeric.test(password.trim())) {
       toast.error(
-        'Password must be at least 4 characters long and alphanumeric',
+        'Password must be at least 6 characters long and contain at least one letter',
       );
       return;
     }

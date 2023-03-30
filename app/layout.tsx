@@ -8,7 +8,7 @@ export const metadata = {
   applicationName: 'Coffix',
   title: {
     default: 'Coffix - The recipe Manager',
-    template: '%s - PWA App',
+    template: '%s - Coffix-Social',
   },
   description: 'Log your recipes and share them with the world',
   manifest: '/manifest.json',
@@ -23,14 +23,9 @@ export const metadata = {
   },
   icons: {
     shortcut: '/favicon.ico',
-    apple: [{ url: '/icons/apple-touch-icon.png', sizes: '180x180' }],
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
   },
 };
-
-// export const metadata = {
-//   title: 'Coffix - The recipe Manager',
-//   description: 'Log your recipes and share them with the world',
-// };
 
 export default async function RootLayout({
   children,
@@ -60,9 +55,8 @@ export default async function RootLayout({
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
         />
         <meta name="description" content={metadata.description} />
-        {/* <link rel="apple-touch-icon" href="/logo-96x96.png" /> */}
-        <meta name="apple-mobile-web-app-status-bar" content="#90cdf4" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/icon.png" />
       </head>
       <body className="mb-24">
         {children}

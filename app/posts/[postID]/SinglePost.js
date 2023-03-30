@@ -92,8 +92,11 @@ export default function SinglePostPage(props) {
           <div>
             <p> With a brewtime of:</p>
             <p>
-              {props.post[0].brewTimeMinutes} : {props.post[0].brewTimeSeconds}{' '}
-              mins
+              0{props.post[0].brewTimeMinutes} :{' '}
+              {props.post[0].brewTimeSeconds >= 10
+                ? props.post[0].brewTimeSeconds
+                : '0' + props.post[0].brewTimeSeconds}{' '}
+              min
             </p>
           </div>
           <p>{props.post[0].notes}</p>

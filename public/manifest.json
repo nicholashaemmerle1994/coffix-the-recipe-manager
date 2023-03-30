@@ -1,12 +1,11 @@
 {
     "theme_color": "#F6F2E8",
-    "background_color": "#FFFFFF",
+    "background_color": "#f8f0e9",
     "display": "standalone",
     "scope": "/",
     "start_url": "/",
     "name": "Coffix-Social",
     "short_name": "Coffix",
-    "description": "The social recipe manager",
     "icons": [
         {
             "src": "/icon-192x192.png",

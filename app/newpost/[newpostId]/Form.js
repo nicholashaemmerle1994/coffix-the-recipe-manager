@@ -18,8 +18,6 @@ export default function Form(props) {
   const category = props.id;
   const userId = props.userId;
   // setting minutes and seconds for the timer
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(0);
   const apiTaste = [];
   // setting the state for the coffee object will be sent to the api
   const [coffee, setCoffee] = useState({
@@ -89,8 +87,6 @@ export default function Form(props) {
           csrfToken: props.token,
         }),
       });
-      setMinutes(0);
-      setSeconds(0);
 
       router.push('/');
     } else {
@@ -123,8 +119,6 @@ export default function Form(props) {
           csrfToken: props.token,
         }),
       });
-      setMinutes(0);
-      setSeconds(0);
 
       router.push('/');
     }
@@ -132,20 +126,19 @@ export default function Form(props) {
   // creating the handler function for the timer
   // giving the event a type
   const handleMinutesChange = (event) => {
-    setMinutes(parseInt(event.target.value));
     setCoffee({
       ...coffee,
-      brewTimeMinutes: minutes,
+      brewTimeMinutes: parseInt(event.target.value),
     });
     router.refresh();
   };
 
   const handleSecondsChange = (event) => {
-    setSeconds(parseInt(event.target.value));
     setCoffee({
       ...coffee,
-      brewTimeSeconds: seconds,
+      brewTimeSeconds: parseInt(event.target.value),
     });
+    console.log(coffee.brewTimeSeconds);
   };
   // creating the options for the timer
   const minuteOptions = Array.from({ length: 6 }, (unusedParam, i) => (
