@@ -30,6 +30,7 @@ export default function Posts(props) {
     });
   });
 
+
   if (yourFeed.length === 0 && !showAllPosts) {
     return (
       <>

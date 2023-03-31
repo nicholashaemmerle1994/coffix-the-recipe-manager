@@ -29,9 +29,17 @@ export const createFollow = cache(
 export const getFollows = cache(async (userId: number) => {
   const follows = await sql<Follow[]>`
     SELECT * FROM follows
-    WHERE followed_user_id = ${userId}
+    WHERE user_id = ${userId}
   `;
   return follows;
+});
+
+export const getFollowers = cache(async (userId: number) => {
+  const followers = await sql<Follow[]>`
+    SELECT * FROM follows
+    WHERE followed_user_id = ${userId}
+  `;
+  return followers;
 });
 
 // Delete a follow

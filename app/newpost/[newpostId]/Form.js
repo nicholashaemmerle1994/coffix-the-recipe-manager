@@ -1,6 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { toast, Toaster } from 'react-hot-toast';
 import { tastingNotes } from '../../../database/tastingnotes';
 
 // Filter the whole tasting notes database into categories
@@ -34,6 +35,15 @@ export default function Form(props) {
     notes: '',
   });
   async function handleOnSubmit(event) {
+    if (
+      coffee.name === '' ||
+      coffee.roaster === '' ||
+      coffee.amountIn === 0 ||
+      coffee.amountOut === 0
+    ) {
+      toast.error('Please fill out all the fields');
+      return;
+    }
     event.preventDefault();
 
     const form = event.currentTarget;
@@ -87,7 +97,7 @@ export default function Form(props) {
           csrfToken: props.token,
         }),
       });
-
+      toast.success('Recipe added');
       router.push('/');
     } else {
       const finalApiTaste = apiTaste.map((taste) => {
@@ -119,7 +129,7 @@ export default function Form(props) {
           csrfToken: props.token,
         }),
       });
-
+      toast.success('Recipe added');
       router.push('/');
     }
   }
@@ -138,7 +148,6 @@ export default function Form(props) {
       ...coffee,
       brewTimeSeconds: parseInt(event.target.value),
     });
-    console.log(coffee.brewTimeSeconds);
   };
   // creating the options for the timer
   const minuteOptions = Array.from({ length: 6 }, (unusedParam, i) => (
@@ -155,6 +164,16 @@ export default function Form(props) {
 
   return (
     <>
+      <Toaster
+        toastOptions={{
+          success: {
+            duration: 2500,
+          },
+          error: {
+            duration: 2500,
+          },
+        }}
+      />
       <form className="flex flex-col justify-center align-center text-center gap-3 mx-3 text-gray-50 mt-3">
         <h3 className="text-gray-800 font-bold">Setup</h3>
         <div className="flex flex-col bg-secondary justify-self-center gap-3 rounded-xl ">

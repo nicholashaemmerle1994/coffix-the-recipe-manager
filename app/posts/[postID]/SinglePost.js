@@ -155,7 +155,6 @@ export default function SinglePostPage(props) {
                     </p>
                     {/* check if the user is the same as the user who
                           created the post, if yes delete button is shown */}
-                    {console.log(userComment.id, props.userId)}
                     {userComment.userId === props.userId ? (
                       <button
                         // className="btn btn-danger border border-red-500"
@@ -269,6 +268,7 @@ export default function SinglePostPage(props) {
                       <button
                         className="w-3/12 border bg-success text-white rounded-md h-6"
                         onClick={async () => {
+                          if (!commentOnComment) return;
                           const response = await fetch(
                             `/api/commentOnComment`,
                             {
@@ -327,6 +327,9 @@ export default function SinglePostPage(props) {
             <button
               className="w-3/12 border bg-success text-white rounded-md"
               onClick={async () => {
+                if (comment === '') {
+                  return;
+                }
                 const response = await fetch(`/api/comment`, {
                   method: 'POST',
                   headers: {

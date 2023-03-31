@@ -1,5 +1,4 @@
 'use client';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
@@ -62,7 +61,7 @@ export default function Registerform() {
       <Toaster
         toastOptions={{
           success: {
-            duration: 3000,
+            duration: 1500,
           },
         }}
       />
