@@ -12,6 +12,8 @@ export default function Registerform() {
   const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
   const alphanumeric = /^(?=.*[a-zA-Z])[a-zA-Z0-9]{6,}$/;
+  const passwordTest = /^(?=.*[\W_])(?=.*[a-zA-Z0-9]){6,}.*$/;
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -22,9 +24,9 @@ export default function Registerform() {
       return;
     }
 
-    if (!alphanumeric.test(password.trim())) {
+    if (!passwordTest.test(password.trim())) {
       toast.error(
-        'Password must be at least 6 characters long and contain at least one letter',
+        'Password must be at least 6 characters long and contain at least one letter and one special character',
       );
       return;
     }
