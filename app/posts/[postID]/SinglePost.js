@@ -46,17 +46,39 @@ export default function SinglePostPage(props) {
   return (
     <>
       <div className="card card-side bg-base-100 shadow-xl" />
-      <div className="card card-side  shadow-xl m-2.5 bg-secondary flex flex-col max-w-md container mx-auto text-gray-900-50">
-        <figure className="rounded-t-xl rounded-b-none">
-          <Image
-            src={props.post[0].pictureUrl}
-            className="w-100 h-full"
-            width={100}
-            height={100}
-            alt="user pic"
-          />
-        </figure>
-        <div className="m-2">
+      <div className="card card-side  shadow-xl m-2.5 bg-secondary flex flex-col  container mx-auto text-gray-900-50 sm:flex sm:flex-row sm:flex-wrap sm:h-screen mb-16 sm:mb-0">
+        <div className=" sm:flex sm:flex-col">
+          <figure className="rounded-t-xl rounded-b-none sm:w-2/6 sm:h-5/6 sm:w-full">
+            <Image
+              src={props.post[0].pictureUrl}
+              className="w-100 h-full sm:w-full sm:h-full"
+              width={100}
+              height={100}
+              alt="user pic"
+            />
+          </figure>
+          <div className="m-2 hidden sm:flex">
+            <Link
+              className="flex flex-row justify-center items-center "
+              href={`/profile/${props.post[0].userName}`}
+            >
+              <p className="text-xs font-light text-gray-900 text-opacity-50 mr-6">
+                Created By:{' '}
+              </p>
+              <Image
+                src={props.post[0].userPictureUrl}
+                className="w-8 h-8 rounded-full mr-6"
+                width={100}
+                height={100}
+                alt="user pic"
+              />
+              <p className="text-sm font-medium text-gray-900">
+                {props.post[0].firstName}
+              </p>
+            </Link>
+          </div>
+        </div>
+        <div className="m-2 sm:hidden">
           <Link
             className="flex flex-row justify-center items-center "
             href={`/profile/${props.post[0].userName}`}
@@ -76,7 +98,7 @@ export default function SinglePostPage(props) {
             </p>
           </Link>
         </div>
-        <div className="card-body">
+        <div className="card-body sm:hidden">
           <p className="text-4xl font-bold text-gray-900">
             {props.post[0].coffee}
             <span className="text-2xl"> {props.post[0].roaster}</span>

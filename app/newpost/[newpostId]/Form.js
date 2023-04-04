@@ -35,6 +35,7 @@ export default function Form(props) {
     notes: '',
   });
   async function handleOnSubmit(event) {
+    event.preventDefault();
     if (
       coffee.name === '' ||
       coffee.roaster === '' ||
@@ -44,7 +45,6 @@ export default function Form(props) {
       toast.error('Please fill out all the fields');
       return;
     }
-    event.preventDefault();
 
     const form = event.currentTarget;
     const fileInput = Array.from(form.elements).find(
@@ -129,6 +129,7 @@ export default function Form(props) {
           csrfToken: props.token,
         }),
       });
+
       toast.success('Recipe added');
       router.push('/');
     }
@@ -472,13 +473,16 @@ export default function Form(props) {
             name="notes"
             title="notes"
             className="textarea textarea-bordered border-2 border-primary text-gray-800"
+            onChange={(event) => {
+              setCoffee({ ...coffee, notes: event.target.value });
+            }}
           />
         </div>
       </form>
       <form
         method="post"
         onSubmit={handleOnSubmit}
-        className="flex flex-col rounded-xl mb-2"
+        className="flex flex-col rounded-xl mb-20"
       >
         <div className="flex justify-center flex-wrap m-3">
           <input
