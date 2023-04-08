@@ -124,7 +124,7 @@ export default function Profile({
             <div className="flex flex-col w-2/4 md:w-full">
               <div className="card-body p-0 m-2 flex flex-col md:flex-row md:flex-wrap md:items-center">
                 <div className="md:flex md:flex-wrap md:items-center">
-                  <h2 className="card-title md:h-10">{user.firstName}</h2>
+                  <h2 className="card-title md:h-10 mr-2">{user.firstName}</h2>
                   <h2 className="card-title md:h-10"> {user.lastName}</h2>
                 </div>
                 <div className="md:flex md:flex-wrap md:items-start md:flex-col">
@@ -241,7 +241,8 @@ export default function Profile({
           <div className="card-body m-0 p-0 justify-center align-center ">
             <div className="md:flex md:flex-wrap md:items-center text-">
               <h2 className="card-title md:h-10 justify-center">
-                {user.firstName} {user.lastName}
+                {user.firstName}
+                {user.lastName}
               </h2>
             </div>
             <div className="justify-center align-center flex">
@@ -480,18 +481,22 @@ export default function Profile({
               </div>
             </div>
             <div className="card-body p-0 m-2 flex flex-col md:flex-row md:flex-wrap md:items-center">
-              <div className="md:flex md:flex-wrap md:items-center">
-                <h2 className="card-title md:h-10">{user.firstName}</h2>
-                <h2 className="card-title md:h-10"> {user.lastName}</h2>
+              <div className="sm:flex sm:flex-wrap md:items-center">
+                <h2 className="card-title md:h-10 justify-center mr-2">
+                  {user.firstName}
+                </h2>
+                <h2 className="card-title md:h-10 justify-center">
+                  {user.lastName}
+                </h2>
               </div>
               <div className="md:flex md:flex-wrap md:items-start md:flex-col">
                 <p>{user.bio}</p>
-                <div className="flex justify-center">
-                  <div className="mr-3 mt-10">
+                <div className="flex">
+                  <div className="mr-3 mt-2">
                     <p>Posts</p>
                     <p className="text-center">{posts.length}</p>
                   </div>
-                  <div className="mt-10">
+                  <div className="mt-2">
                     <p>Follower</p>
                     <p className="text-center">{followerCount.length}</p>
                   </div>

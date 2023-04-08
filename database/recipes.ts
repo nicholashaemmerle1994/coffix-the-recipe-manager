@@ -35,7 +35,30 @@ type UserRecipe = {
 
 // GET METHODS
 
-// Get all recipes
+// Get all recipes with likes and the users who liked them to check if the user already liked the recipe
+
+export const getAllRecipesWithLikes = cache(async () => {
+  const recipes = await sql<RecipeSQL[]>`
+    SELECT
+    recipes.*,
+    users.first_name,
+    users.user_name,
+    users.picture_url AS user_picture_url,
+    COUNT(likes.recipe_id) AS likes
+    FROM
+    recipes
+    INNER JOIN users ON users.id = recipes.user_id
+    LEFT JOIN likes ON likes.recipe_id = recipes.id
+    GROUP BY
+    recipes.id,
+    users.first_name,
+    users.user_name,
+    users.picture_url
+    ORDER BY created_at DESC
+  `;
+  return recipes;
+});
+
 export const getAllRecipes = cache(async () => {
   const recipes = await sql<RecipeSQL[]>`
     SELECT *
