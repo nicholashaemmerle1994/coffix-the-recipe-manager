@@ -1,10 +1,12 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export default function Posts(props) {
   const [showAllPosts, setShowAllPosts] = useState(true);
+  const router = useRouter();
   // Now take the recipes from the props and translate the createdAt string back to a date object
   const recipesWithDate = props.recipe.map((recipe) => {
     const { createdAt, ...recipeWithoutDate } = recipe;
@@ -22,8 +24,8 @@ export default function Posts(props) {
   const handleShowUserFeed = () => {
     setShowAllPosts(false);
   };
-  // Filter recipesWithDate by the people the user follows
 
+  // Filter recipesWithDate by the people the user follows
   const yourFeed = recipesWithDate.filter((recipe) => {
     return props.yourFeed.some((follow) => {
       return follow.followedUserId === recipe.userId;
@@ -100,7 +102,7 @@ export default function Posts(props) {
                     />
                   </figure>
 
-                  <div className="card-body bg-secondary text-yellow-900 rounded-r-2xl ">
+                  <div className="card-body bg-secondary text-yellow-900 rounded-r-2xl justify-between">
                     <Link href={`/posts/${recipe.id}`}>
                       <h2 className="card-title text-gray-800 font-extrabold">
                         {recipe.categoryName}
@@ -112,61 +114,173 @@ export default function Posts(props) {
                           return <p key={`noteId-${noteId}`}>{note}</p>;
                         })}
                       </div>
-                      <div className="card-actions justify-end">
-                        <button className="btn btn-xs btn-secondary border border-gray-500">
-                          Open
-                        </button>
-                      </div>
                     </Link>
+                    {props.likes.some((like) => {
+                      return like.recipeId === recipe.id;
+                    }) ? (
+                      <div className="flex justify-between align-center">
+                        <button
+                          onClick={async () => {
+                            await fetch(`/api/likes`, {
+                              method: 'DELETE',
+                              headers: {
+                                'Content-Type': 'application/json',
+                              },
+                              body: JSON.stringify({
+                                userId: props.userId,
+                                recipeId: recipe.id,
+                              }),
+                            });
+                            router.refresh();
+                          }}
+                        >
+                          <Image
+                            src="/liked.png"
+                            alt="liked"
+                            width={20}
+                            height={20}
+                          />
+                        </button>
+                        <Link
+                          href={`/posts/${recipe.id}`}
+                          className="btn btn-xs btn-secondary border border-gray-500"
+                        >
+                          Open
+                        </Link>
+                      </div>
+                    ) : (
+                      <div className="flex justify-between align-center">
+                        <button
+                          onClick={async () => {
+                            await fetch(`/api/likes`, {
+                              method: 'POST',
+                              headers: {
+                                'Content-Type': 'application/json',
+                              },
+                              body: JSON.stringify({
+                                userId: props.userId,
+                                recipeId: recipe.id,
+                              }),
+                            });
+                            router.refresh();
+                          }}
+                        >
+                          <Image
+                            src="/unliked.png"
+                            alt="unliked"
+                            width={20}
+                            height={20}
+                          />
+                        </button>
+                        <Link
+                          href={`/posts/${recipe.id}`}
+                          className="btn btn-xs btn-secondary border border-gray-500"
+                        >
+                          Open
+                        </Link>
+                      </div>
+                    )}
                   </div>
                 </div>
               );
             })
           : yourFeed.map((recipe) => {
-              if (yourFeed.length === 0) {
-                return (
-                  <div key={`your-feed-${yourFeed}`}>
-                    <p>You do not follow anyone...</p>
-                  </div>
-                );
-              } else {
-                return (
-                  <div
-                    key={`recipe-${recipe.id}`}
-                    className="card card-side shadow-xl m-2.5 bg-secondary"
-                  >
-                    <figure>
-                      <Image
-                        className="w-100 h-full border rounded-l-2xl"
-                        src={recipe.pictureUrl}
-                        width={100}
-                        height={100}
-                        alt="user pic"
-                      />
-                    </figure>
+              return (
+                <div
+                  key={`recipe-${recipe.id}`}
+                  className="card card-side shadow-xl m-2.5 bg-secondary sm:w-5/12"
+                >
+                  <figure>
+                    <Image
+                      className="w-100 h-full border rounded-l-2xl"
+                      src={recipe.pictureUrl}
+                      width={100}
+                      height={100}
+                      alt="user pic"
+                    />
+                  </figure>
 
-                    <div className="card-body bg-secondary text-yellow-900 rounded-r-2xl ">
-                      <Link href={`/posts/${recipe.id}`}>
-                        <h2 className="card-title text-gray-800 font-extrabold">
-                          {recipe.categoryName}
-                        </h2>
-                        <p className="font-medium">{recipe.coffee}</p>
-                        <div>
-                          {recipe.tastingNotes.map((note, index) => {
-                            const noteId = `recipe-id-${recipe.id}-note-${index}`;
-                            return <p key={`noteId-${noteId}`}>{note}</p>;
-                          })}
-                        </div>
-                        <div className="card-actions justify-end">
-                          <button className="btn btn-xs btn-secondary border border-gray-500">
-                            Open
-                          </button>
-                        </div>
-                      </Link>
-                    </div>
+                  <div className="card-body bg-secondary text-yellow-900 rounded-r-2xl justify-between">
+                    <Link href={`/posts/${recipe.id}`}>
+                      <h2 className="card-title text-gray-800 font-extrabold">
+                        {recipe.categoryName}
+                      </h2>
+                      <p className="font-medium">{recipe.coffee}</p>
+                      <div>
+                        {recipe.tastingNotes.map((note, index) => {
+                          const noteId = `recipe-id-${recipe.id}-note-${index}`;
+                          return <p key={`noteId-${noteId}`}>{note}</p>;
+                        })}
+                      </div>
+                    </Link>
+                    {props.likes.some((like) => {
+                      return like.recipeId === recipe.id;
+                    }) ? (
+                      <div className="flex justify-between align-center">
+                        <button
+                          onClick={async () => {
+                            await fetch(`/api/likes`, {
+                              method: 'DELETE',
+                              headers: {
+                                'Content-Type': 'application/json',
+                              },
+                              body: JSON.stringify({
+                                userId: props.userId,
+                                recipeId: recipe.id,
+                              }),
+                            });
+                            router.refresh();
+                          }}
+                        >
+                          <Image
+                            src="/liked.png"
+                            alt="liked"
+                            width={20}
+                            height={20}
+                          />
+                        </button>
+                        <Link
+                          href={`/posts/${recipe.id}`}
+                          className="btn btn-xs btn-secondary border border-gray-500"
+                        >
+                          Open
+                        </Link>
+                      </div>
+                    ) : (
+                      <div className="flex justify-between align-center">
+                        <button
+                          onClick={async () => {
+                            await fetch(`/api/likes`, {
+                              method: 'POST',
+                              headers: {
+                                'Content-Type': 'application/json',
+                              },
+                              body: JSON.stringify({
+                                userId: props.userId,
+                                recipeId: recipe.id,
+                              }),
+                            });
+                            router.refresh();
+                          }}
+                        >
+                          <Image
+                            src="/unliked.png"
+                            alt="unliked"
+                            width={20}
+                            height={20}
+                          />
+                        </button>
+                        <Link
+                          href={`/posts/${recipe.id}`}
+                          className="btn btn-xs btn-secondary border border-gray-500"
+                        >
+                          Open
+                        </Link>
+                      </div>
+                    )}
                   </div>
-                );
-              }
+                </div>
+              );
             })}
       </div>
     </>

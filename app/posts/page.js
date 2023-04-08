@@ -2,8 +2,9 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { getCategoryNameById } from '../../database/category';
 import { getFollows } from '../../database/follows';
+import { getLikes, getUserLikes } from '../../database/likes';
 import { getTastingNotesFromRecipe } from '../../database/recepisTastingNotes';
-import { getAllRecipes } from '../../database/recipes';
+import { getAllRecipesWithLikes } from '../../database/recipes';
 import { getValidSessionByToken } from '../../database/sessions';
 import { tastingNotes } from '../../database/tastingnotes';
 import Posts from './Posts';
@@ -14,7 +15,7 @@ export const metadata = {
 };
 
 export default async function PostsPage() {
-  const recipes = await getAllRecipes();
+  const recipes = await getAllRecipesWithLikes();
 
   // check if there is a valid session
   const sessionTokenCookie = cookies().get('sessionToken');
@@ -27,7 +28,8 @@ export default async function PostsPage() {
   }
   // getting the user id from the session
   const userId = session.userId;
-
+  // getting the likes from the database
+  const likes = await getUserLikes(userId);
   // Transform the date objects  to a string
   const recipesWithDate = recipes.map((recipe) => {
     const { createdAt, ...recipeWithoutDate } = recipe;
@@ -73,12 +75,12 @@ export default async function PostsPage() {
   );
   const getLoggedUserFollows = await getFollows(userId);
 
-  // map over recipesWithTastingNotesAndName and just return the recipes of the users that the logged user follows
   return (
     <Posts
       recipe={recipesWithTastingNotesAndName}
       userId={userId}
       yourFeed={getLoggedUserFollows}
+      likes={likes}
     />
   );
 }

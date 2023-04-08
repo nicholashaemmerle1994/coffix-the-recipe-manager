@@ -8,6 +8,7 @@ type Follow = {
 };
 
 type CreateFollow = {
+  id: number;
   userId: number;
   followedUserId: number;
 };
