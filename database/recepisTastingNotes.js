@@ -9,12 +9,13 @@ export const insertTastingNoteTable = cache(async (tastingNotes) => {
     'tasting_note_id',
     'recipe_id',
   )}
+  RETURNING *;
 `;
 });
 
 // Function to get all tasting notes from specific recipe from the database
 export const getTastingNotesFromRecipe = cache(async (recipeId) => {
-  return await sql`
+  const note = await sql`
   SELECT
     *
   FROM
@@ -22,6 +23,7 @@ export const getTastingNotesFromRecipe = cache(async (recipeId) => {
   WHERE
     recipe_id = ${recipeId}
 `;
+  return note;
 });
 
 // select all tasting notes for the single recipe_id and give them back in an single object

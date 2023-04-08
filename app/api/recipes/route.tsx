@@ -83,6 +83,5 @@ export async function POST(request: NextRequest) {
   // if newest body is not an empty object, insert the tasting notes
 
   await insertTastingNoteTable(newestBody);
-
   return NextResponse.json({ newRecipe: newRecipe });
 }
