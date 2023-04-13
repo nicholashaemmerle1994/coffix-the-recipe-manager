@@ -1,5 +1,5 @@
 'use client';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
 import { tastingNotes } from '../../../database/tastingnotes';
@@ -98,8 +98,8 @@ export default function Form(props) {
         }),
       });
       toast.success('Recipe added');
+      router.push('/posts');
       router.refresh();
-      redirect('/posts');
     } else {
       const finalApiTaste = apiTaste.map((taste) => {
         return {
@@ -132,8 +132,8 @@ export default function Form(props) {
       });
 
       toast.success('Recipe added');
+      router.push('/posts');
       router.refresh();
-      redirect('/posts');
     }
   }
   // creating the handler function for the timer

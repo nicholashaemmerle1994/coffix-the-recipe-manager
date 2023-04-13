@@ -150,7 +150,7 @@ export default function SinglePostPage(props) {
             return (
               <div
                 key={`comment-${userComment.id}`}
-                className="bg-secondary rounded-md p-2 border border-gray-500 flex flex-row"
+                className="bg-secondary rounded-md p-2 border border-warning flex flex-row"
               >
                 <div className="flex w-1/6 flex-col">
                   <Link href={`/profile/${userComment.userName}`}>
@@ -179,7 +179,6 @@ export default function SinglePostPage(props) {
                           created the post, if yes delete button is shown */}
                     {userComment.userId === props.userId ? (
                       <button
-                        // className="btn btn-danger border border-red-500"
                         onClick={async () => {
                           await fetch(`/api/comment/${userComment.id}`, {
                             method: 'DELETE',
@@ -210,7 +209,7 @@ export default function SinglePostPage(props) {
                       return (
                         <div
                           key={`commentOnComment-${coc.id}`}
-                          className="bg-secondary rounded-md p-2 border border-gray-500 flex flex-row mt-2"
+                          className="bg-secondary rounded-md p-2 border border-warning flex flex-row mt-2"
                         >
                           <div className="flex w-1/6 flex-col">
                             <Link href={`/profile/${coc.userName}`}>
@@ -240,7 +239,6 @@ export default function SinglePostPage(props) {
                               </p>
                               {coc.userId === props.userId ? (
                                 <button
-                                  // className="btn btn-danger border border-red-500"
                                   onClick={async () => {
                                     await fetch(
                                       `/api/commentOnComment/${coc.id}`,

@@ -40,12 +40,12 @@ export default function Posts(props) {
             <ul className="flex">
               <li className="mr-20">
                 <button onClick={handleShowAllPosts}>
-                  <p>Newest</p>
+                  <p className="text-warning">Newest</p>
                 </button>
               </li>
               <li>
                 <button onClick={handleShowUserFeed}>
-                  <p>Your Feed</p>
+                  <p className="text-warning">Your Feed</p>
                 </button>
               </li>
             </ul>
@@ -72,12 +72,12 @@ export default function Posts(props) {
           <ul className="flex">
             <li className="mr-20">
               <button onClick={handleShowAllPosts}>
-                <p>Newest</p>
+                <p className="text-warning">Newest</p>
               </button>
             </li>
             <li>
               <button onClick={handleShowUserFeed}>
-                <p>Your Feed</p>
+                <p className="text-warning">Your Feed</p>
               </button>
             </li>
           </ul>
@@ -102,9 +102,9 @@ export default function Posts(props) {
                     />
                   </figure>
 
-                  <div className="card-body bg-secondary text-primary rounded-r-2xl justify-between">
+                  <div className="card-body bg-secondary text-warning rounded-r-2xl justify-between">
                     <Link href={`/posts/${recipe.id}`}>
-                      <h2 className="card-title text-gray-800 font-extrabold">
+                      <h2 className="card-title font-extrabold">
                         {recipe.categoryName}
                       </h2>
                       <p className="font-medium">{recipe.coffee}</p>
@@ -174,7 +174,7 @@ export default function Posts(props) {
                         </button>
                         <Link
                           href={`/posts/${recipe.id}`}
-                          className="btn btn-xs btn-secondary border border-gray-500 text-neutral"
+                          className="btn btn-xs btn-secondary border border-warning text-warning"
                         >
                           Open
                         </Link>
