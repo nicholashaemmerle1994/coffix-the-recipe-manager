@@ -102,7 +102,7 @@ export default function Posts(props) {
                     />
                   </figure>
 
-                  <div className="card-body bg-secondary text-yellow-900 rounded-r-2xl justify-between">
+                  <div className="card-body bg-secondary text-primary rounded-r-2xl justify-between">
                     <Link href={`/posts/${recipe.id}`}>
                       <h2 className="card-title text-gray-800 font-extrabold">
                         {recipe.categoryName}
@@ -143,7 +143,7 @@ export default function Posts(props) {
                         </button>
                         <Link
                           href={`/posts/${recipe.id}`}
-                          className="btn btn-xs btn-secondary border border-gray-500"
+                          className="btn btn-xs btn-secondary border border-gray-500 text-neutral"
                         >
                           Open
                         </Link>
@@ -174,7 +174,7 @@ export default function Posts(props) {
                         </button>
                         <Link
                           href={`/posts/${recipe.id}`}
-                          className="btn btn-xs btn-secondary border border-gray-500"
+                          className="btn btn-xs btn-secondary border border-gray-500 text-neutral"
                         >
                           Open
                         </Link>
@@ -200,9 +200,9 @@ export default function Posts(props) {
                     />
                   </figure>
 
-                  <div className="card-body bg-secondary text-yellow-900 rounded-r-2xl justify-between">
+                  <div className="card-body bg-secondary rounded-r-2xl justify-between">
                     <Link href={`/posts/${recipe.id}`}>
-                      <h2 className="card-title text-gray-800 font-extrabold">
+                      <h2 className="card-title font-extrabold">
                         {recipe.categoryName}
                       </h2>
                       <p className="font-medium">{recipe.coffee}</p>

@@ -1,5 +1,5 @@
 'use client';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
 import { tastingNotes } from '../../../database/tastingnotes';
@@ -98,7 +98,8 @@ export default function Form(props) {
         }),
       });
       toast.success('Recipe added');
-      router.push('/');
+      router.refresh();
+      redirect('/posts');
     } else {
       const finalApiTaste = apiTaste.map((taste) => {
         return {
@@ -131,7 +132,8 @@ export default function Form(props) {
       });
 
       toast.success('Recipe added');
-      router.push('/');
+      router.refresh();
+      redirect('/posts');
     }
   }
   // creating the handler function for the timer
@@ -175,8 +177,8 @@ export default function Form(props) {
           },
         }}
       />
-      <form className="flex flex-col justify-center align-center text-center gap-3 mx-3 text-gray-50 mt-3">
-        <h3 className="text-gray-800 font-bold">Setup</h3>
+      <form className="flex flex-col justify-center align-center text-center gap-3 mx-3 text-info mt-3">
+        <h3 className="text-info font-bold">Setup</h3>
         <div className="flex flex-col bg-secondary justify-self-center gap-3 rounded-xl ">
           <input
             required
@@ -191,7 +193,7 @@ export default function Form(props) {
           />
           <input
             required
-            className="input input-bordered input-sm w-full max-w-xs self-center mb-3 border-gray-400 text-black"
+            className="input input-bordered input-sm w-full max-w-xs self-center mb-3 border-gray-400 text-info"
             placeholder="Roaster"
             onChange={(event) => {
               setCoffee({
@@ -201,11 +203,11 @@ export default function Form(props) {
             }}
           />
         </div>
-        <h3 className="text-gray-800 font-bold">Brew</h3>
+        <h3 className="text-info font-bold">Brew</h3>
         <div className="flex flex-col bg-secondary gap-3 rounded-xl">
           <input
             required
-            className="input input-bordered input-sm w-full max-w-xs self-center mt-3 text-black"
+            className="input input-bordered input-sm w-full max-w-xs self-center mt-3 text-info"
             placeholder="Amount in grams"
             type="number"
             onChange={(event) => {
@@ -217,7 +219,7 @@ export default function Form(props) {
           />
           <input
             required
-            className="input input-bordered input-sm w-full max-w-xs self-center text-black"
+            className="input input-bordered input-sm w-full max-w-xs self-center text-info"
             placeholder="Amount out in grams"
             type="number"
             onChange={(event) => {
@@ -228,7 +230,7 @@ export default function Form(props) {
             }}
           />
           <input
-            className="input input-bordered input-sm w-full max-w-xs self-center text-black"
+            className="input input-bordered input-sm w-full max-w-xs self-center text-info"
             placeholder="Grind size"
             type="number"
             onChange={(event) => {
@@ -239,7 +241,7 @@ export default function Form(props) {
             }}
           />
           <select
-            className="select select-bordered w-full max-w-xs select-sm self-center text-black"
+            className="select select-bordered w-full max-w-xs select-sm self-center text-info"
             title="brew temperature"
             placeholder="Brew temperature"
             onChange={(event) => {
@@ -251,7 +253,7 @@ export default function Form(props) {
           >
             <option
               defaultValue="Choose the brewing temperature self-center"
-              className='className="text-gray-800 font-bold"'
+              className='className="text-info font-bold"'
             >
               Choose the brewing temperature
             </option>
@@ -269,9 +271,9 @@ export default function Form(props) {
             <div id="brew-time-select" aria-label="Select brew time">
               {/* set brew time minutes */}
               <div className="mb-3">
-                <p className="text-gray-800 font-bold"> Brew Time: </p>
+                <p className="text-warning font-bold"> Brew Time: </p>
                 <select
-                  className="select select-bordered select-xs text-gray-800"
+                  className="select select-bordered select-xs text-info"
                   title="minutes"
                   name="minutes"
                   onChange={handleMinutesChange}
@@ -281,7 +283,7 @@ export default function Form(props) {
                 <span> : </span>
                 {/* set brew time seconds */}
                 <select
-                  className="select select-bordered select-xs text-gray-800"
+                  className="select select-bordered select-xs text-info"
                   title="seconds"
                   name="seconds"
                   onChange={handleSecondsChange}
@@ -292,15 +294,15 @@ export default function Form(props) {
             </div>
           </label>
         </div>
-        <h3 className="text-gray-800 font-bold"> Tasting Notes</h3>
+        <h3 className="text-info font-bold"> Tasting Notes</h3>
         {/* mapping over the chocolatey array to display every possiple choice for the user */}
-        <h4 className="text-gray-800 font-semibold">Chocolatey</h4>
+        <h4 className="text-info font-semibold">Chocolatey</h4>
         <div className="flex flex-col bg-secondary rounded-xl">
           <div className="flex justify-center flex-wrap m-3">
             {chocolatey.map((note) => (
               <label
                 key={`option-${note.name}`}
-                className="text-center align-center justify-center m-2 text-gray-800"
+                className="text-center align-center justify-center m-2 text-warning"
               >
                 <input
                   type="checkbox"
@@ -323,13 +325,13 @@ export default function Form(props) {
           </div>
         </div>
         {/* Mapping over the Fruity array to display all choices for the user */}
-        <h4 className="text-gray-800 font-semibold">Fruity</h4>
+        <h4 className="text-info font-semibold">Fruity</h4>
         <div className="flex flex-row bg-secondary rounded-xl">
           <div className="flex justify-center flex-wrap m-3">
             {fruity.map((note) => (
               <label
                 key={`option-${note.name}`}
-                className="text-center align-center justify-center m-2 text-gray-800"
+                className="text-center align-center justify-center m-2 text-warning"
               >
                 <input
                   type="checkbox"
@@ -352,13 +354,13 @@ export default function Form(props) {
           </div>
         </div>
         {/* Mapping over the Nutty array to display all choices for the user */}
-        <h4 className="text-gray-800 font-semibold">Nutty</h4>
+        <h4 className="text-info font-semibold">Nutty</h4>
         <div className="flex flex-col bg-secondary rounded-xl">
           <div className="flex justify-center flex-wrap m-3">
             {nutty.map((note) => (
               <label
                 key={`option-${note.name}`}
-                className="text-center align-center justify-center m-2 text-gray-800"
+                className="text-center align-center justify-center m-2 text-warning"
               >
                 <input
                   type="checkbox"
@@ -381,13 +383,13 @@ export default function Form(props) {
           </div>
         </div>
         {/* Mapping over the Sweet array to display all choices for the user */}
-        <h4 className="text-gray-800 font-semibold">Sweet</h4>
+        <h4 className="text-info font-semibold">Sweet</h4>
         <div className="flex flex-col bg-secondary rounded-xl">
           <div className="flex justify-center flex-wrap m-3">
             {sweet.map((note) => (
               <label
                 key={`option-${note.name}`}
-                className="text-center align-center justify-center m-2 text-gray-800"
+                className="text-center align-center justify-center m-2 text-warning"
               >
                 <input
                   type="checkbox"
@@ -410,13 +412,13 @@ export default function Form(props) {
           </div>
         </div>
         {/* Mapping over the Floral array to display all choices for the user */}
-        <h4 className="text-gray-800 font-semibold">Floral</h4>
+        <h4 className="text-info font-semibold">Floral</h4>
         <div className="flex flex-col bg-secondary rounded-xl">
           <div className="flex justify-center flex-wrap m-3">
             {floral.map((note) => (
               <label
                 key={`option-${note.name}`}
-                className="text-center align-center justify-center m-2 text-gray-800"
+                className="text-center align-center justify-center m-2 text-warning"
               >
                 <input
                   type="checkbox"
@@ -439,17 +441,17 @@ export default function Form(props) {
           </div>
         </div>
         {/* Mapping over the Spicy array to display all choices for the user */}
-        <h4 className="text-gray-800 font-semibold">Spices</h4>
+        <h4 className="text-info font-semibold">Spices</h4>
         <div className="flex flex-col bg-secondary rounded-xl">
           <div className="flex justify-center flex-wrap m-3">
             {spice.map((note) => (
               <label
                 key={`option-${note.name}`}
-                className="text-center align-center justify-center m-2 text-gray-800"
+                className="text-center align-center justify-center m-2 text-warning"
               >
                 <input
                   type="checkbox"
-                  className="checkbox checkbox-sm mx-3 bg-default border-2 border-primary text-gray-800"
+                  className="checkbox checkbox-sm mx-3 bg-default border-2 border-primary text-info"
                   value={note.name}
                   onChange={(event) => {
                     if (event.target.checked) {
@@ -467,12 +469,12 @@ export default function Form(props) {
             ))}
           </div>
         </div>
-        <h3 className="text-gray-800 font-semibold">Notes</h3>
+        <h3 className="text-info font-semibold">Notes</h3>
         <div>
           <textarea
             name="notes"
             title="notes"
-            className="textarea textarea-bordered border-2 border-primary text-gray-800"
+            className="textarea textarea-bordered border-2 border-primary text-info"
             onChange={(event) => {
               setCoffee({ ...coffee, notes: event.target.value });
             }}
