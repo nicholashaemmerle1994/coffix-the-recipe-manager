@@ -277,7 +277,7 @@ export default function SinglePostPage(props) {
                   {wantComment ? (
                     <div className="flex flex-wrap mt-3 focus:bg-secondary">
                       <input
-                        className=" w-9/12 h-6 rounded-md"
+                        className=" w-9/12 h-6 rounded-md bg-base-100"
                         placeholder="Comment..."
                         aria-label="comment"
                         required
@@ -286,7 +286,7 @@ export default function SinglePostPage(props) {
                         }}
                       />
                       <button
-                        className="w-3/12 border bg-success text-white rounded-md h-6"
+                        className="w-3/12 border bg-primary text-white rounded-md h-6"
                         onClick={async () => {
                           if (!commentOnComment) return;
                           const response = await fetch(
@@ -345,7 +345,7 @@ export default function SinglePostPage(props) {
               }}
             />
             <button
-              className="w-3/12 border bg-success text-white rounded-md"
+              className="w-3/12 border bg-primary text-white rounded-md"
               onClick={async () => {
                 if (comment === '') {
                   return;

@@ -143,7 +143,7 @@ export default function Posts(props) {
                         </button>
                         <Link
                           href={`/posts/${recipe.id}`}
-                          className="btn btn-xs btn-secondary border border-gray-500 text-neutral"
+                          className="btn btn-xs btn-secondary border border-primary text-primary"
                         >
                           Open
                         </Link>
@@ -174,7 +174,7 @@ export default function Posts(props) {
                         </button>
                         <Link
                           href={`/posts/${recipe.id}`}
-                          className="btn btn-xs btn-secondary border border-warning text-warning"
+                          className="btn btn-xs btn-secondary border border-primary text-primary"
                         >
                           Open
                         </Link>
@@ -241,7 +241,7 @@ export default function Posts(props) {
                         </button>
                         <Link
                           href={`/posts/${recipe.id}`}
-                          className="btn btn-xs btn-secondary border border-gray-500"
+                          className="btn btn-xs btn-secondary border border-primary text-primary"
                         >
                           Open
                         </Link>
@@ -272,7 +272,7 @@ export default function Posts(props) {
                         </button>
                         <Link
                           href={`/posts/${recipe.id}`}
-                          className="btn btn-xs btn-secondary border border-gray-500"
+                          className="btn btn-xs btn-secondary border border-primary text-primary"
                         >
                           Open
                         </Link>

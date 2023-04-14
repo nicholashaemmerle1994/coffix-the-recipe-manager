@@ -16,7 +16,7 @@ module.exports = {
     themes: [
       {
         light: {
-          primary: '#8B5A2B',
+          primary: '#00755E',
           secondary: '#F6F2E8',
           accent: '#E6B31E',
           neutral: '#4A4A4A',
@@ -24,7 +24,7 @@ module.exports = {
           info: '#121212',
           success: '#28A745',
           warning: '#121212',
-          error: '#DC3545',
+          error: '#e15765',
         },
       },
       {
@@ -37,7 +37,7 @@ module.exports = {
           info: '#9b9991',
           success: '#28A745',
           warning: '#121212',
-          error: '#DC3545',
+          error: '#e19ea5',
         },
       },
     ],

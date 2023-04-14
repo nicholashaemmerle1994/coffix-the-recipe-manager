@@ -43,7 +43,7 @@ export default async function RootLayout({
     : await getUserBySessionToken(sessionToken.value);
 
   return (
-    <html lang="en-US" data-theme="light">
+    <html lang="en-US" data-theme="dark">
       <head>
         <meta charSet="utf-8" />
         <meta

@@ -28,6 +28,7 @@
     "dotenv-cli": "^7.0.0",
     "dotenv-safe": "^8.2.0",
     "eslint-config-next": "^13.2.3",
+    "js-cookie": "^3.0.1",
     "ley": "^0.8.1",
     "next": "^13.2.3",
     "patch-package": "^6.5.1",

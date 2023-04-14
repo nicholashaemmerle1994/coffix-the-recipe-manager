@@ -142,7 +142,7 @@ export default function Profile({
                 </div>
               </div>
               <button
-                className={followsOrNot ? 'bg-red-500' : 'bg-green-500'}
+                className={followsOrNot ? 'bg-error' : 'bg-success'}
                 onClick={async (event) => {
                   event.preventDefault();
                   if (followsOrNot === false) {

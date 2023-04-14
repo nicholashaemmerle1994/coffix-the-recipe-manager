@@ -30,11 +30,15 @@ export async function POST(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   const body = await request.json();
-  const userId = body.userId;
+  const userId = Number(body.userId);
+
+  const followedUserId = Number(body.followedUserId);
+
   if (!userId) {
     return NextResponse.json({ error: 'No user id' }, { status: 400 });
   }
 
-  const follow = await deleteFollow(userId, body.followedUserId);
+  const follow = await deleteFollow(userId, followedUserId);
+
   return NextResponse.json({ follow: follow });
 }
