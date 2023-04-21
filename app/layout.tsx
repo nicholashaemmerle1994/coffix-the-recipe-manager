@@ -42,8 +42,13 @@ export default async function RootLayout({
     ? undefined
     : await getUserBySessionToken(sessionToken.value);
 
+  // get theme cookie
+
+  const theme = cookies().get('darkMode');
+  const darkMode = theme?.value === 'true' ? 'dark' : 'light';
+
   return (
-    <html lang="en-US" data-theme="dark">
+    <html lang="en-US" data-theme={darkMode}>
       <head>
         <meta charSet="utf-8" />
         <meta

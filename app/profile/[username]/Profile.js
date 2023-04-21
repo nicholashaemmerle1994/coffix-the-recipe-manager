@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { toast, Toaster } from 'react-hot-toast';
+import { setStringifiedCookie } from '../../../utils/cookies';
 
 export default function Profile({
   user,
@@ -13,12 +13,14 @@ export default function Profile({
   token,
   followsOrNot,
   followerCount,
+  isDark,
 }) {
   const [updateUser, setUpdateUser] = useState(false);
   const [updateBio, setUpdateBio] = useState(user.bio);
   const [updateFirstName, setUpdateFirstName] = useState(user.firstName);
   const [updateLastName, setUpdateLastName] = useState(user.lastName);
   const [updatePicture, setUpdatePicture] = useState(false);
+  const [darkMode, setDarkMode] = useState(isDark);
   const router = useRouter();
 
   // Map over the posts array and translating the createdAt string back to a date object
@@ -414,6 +416,20 @@ export default function Profile({
           <div className="flex flex-col w-2/4 md:w-full">
             <div className="flex flex-row justify-end align-center ">
               <button
+                onClick={() => {
+                  setStringifiedCookie('darkMode', !darkMode);
+                  setDarkMode(!darkMode);
+                  router.refresh();
+                }}
+              >
+                <Image
+                  src={darkMode ? '/moon.png' : '/sun.png'}
+                  width={20}
+                  height={20}
+                  alt="edit info"
+                />
+              </button>
+              <button
                 className="m-2 xl:hidden"
                 onClick={() => {
                   setUpdateUser(!updateUser);
@@ -439,6 +455,7 @@ export default function Profile({
                   alt="edit info"
                 />
               </button>
+              {/* On a big screen there will be a dropdown activated. Otherwise it is a like to a new page */}
               <div className="dropdown dropdown-end m-2 hidden xl:flex">
                 <button tabIndex={0} htmlFor="dropdown">
                   <Image
