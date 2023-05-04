@@ -12,7 +12,7 @@ export const metadata = {
   },
   description: 'Log your recipes and share them with the world',
   manifest: '/manifest.json',
-  themeColor: '#F6F2E8',
+  themeColor: '#000000',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
@@ -44,8 +44,12 @@ export default async function RootLayout({
 
   // get theme cookie
 
-  const theme = cookies().get('darkMode');
-  const darkMode = theme?.value === 'true' ? 'dark' : 'light';
+  let theme = cookies().get('darkMode');
+  if (theme === undefined) {
+    theme = { value: false };
+  }
+
+  const darkMode = theme!.value === 'true' ? 'dark' : 'light';
 
   return (
     <html lang="en-US" data-theme={darkMode}>

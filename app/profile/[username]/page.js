@@ -82,9 +82,11 @@ export default async function ProfilePage(props) {
     followsOrNotValue = true;
   }
   const followerCount = await getFollowers(user.id);
-  const darkModeCookie = cookies().get('darkMode');
+  let darkModeCookie = cookies().get('darkMode');
+  if (!darkModeCookie) {
+    darkModeCookie = { value: false };
+  }
   const darkMode = JSON.parse(darkModeCookie.value);
-
   return (
     <div>
       <Profile
