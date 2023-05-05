@@ -25,6 +25,7 @@ export async function POST(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   const body = await request.json();
+
   const userId = body.userId;
   if (!userId) {
     return NextResponse.json({ error: 'No user id' }, { status: 400 });

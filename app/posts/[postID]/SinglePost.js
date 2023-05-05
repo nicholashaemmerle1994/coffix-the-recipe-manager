@@ -252,7 +252,6 @@ export default function SinglePostPage(props) {
                                         }),
                                       },
                                     );
-
                                     router.refresh();
                                   }}
                                 >
@@ -377,17 +376,21 @@ export default function SinglePostPage(props) {
             <button
               className="btn bg-error w-20 text-white justify-center"
               onClick={async () => {
-                await fetch(`/api/recipes/${props.post[0].id}`, {
-                  method: 'DELETE',
-                  headers: {
-                    'Content-Type': 'application/json',
+                const response = await fetch(
+                  `/api/recipes/${props.post[0].id}`,
+                  {
+                    method: 'DELETE',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      id: props.post[0].id,
+                      csrfToken: props.token,
+                    }),
                   },
-                  body: JSON.stringify({
-                    id: props.post[0].id,
-                    csrfToken: props.token,
-                  }),
-                });
-                router.push('/posts');
+                );
+                console.log(response);
+                // router.push('/posts');
                 router.refresh();
               }}
             >

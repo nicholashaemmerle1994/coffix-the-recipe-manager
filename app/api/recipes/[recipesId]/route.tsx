@@ -30,15 +30,22 @@ export async function DELETE(
 ) {
   const cookieStore = cookies();
   const token = cookieStore.get('sessionToken');
-
   // 2. validate that session
   // 3. get the user profile matching the session
   const user = token && (await getUserBySessionToken(token.value));
-
   if (!user) {
     return NextResponse.json({ error: 'session token is not valid' });
   }
+
   const body = await request.json();
+  console.log(body);
+  if (!body) {
+    return NextResponse.json(
+      { error: 'Request body is empty and you are dumb' },
+      { status: 400 },
+    );
+  }
+
   if (!validateCsrfToken(user.csrfSecret, body.csrfToken)) {
     return NextResponse.json(
       {
