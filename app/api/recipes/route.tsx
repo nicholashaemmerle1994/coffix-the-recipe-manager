@@ -37,7 +37,6 @@ export async function POST(request: NextRequest) {
   if (!user) {
     return NextResponse.json({ error: 'session token is not valid' });
   }
-
   const body: FormBody = await request.json();
   const recipeBody = {
     userId: body.userId,

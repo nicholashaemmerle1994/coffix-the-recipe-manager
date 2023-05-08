@@ -38,7 +38,6 @@ export async function DELETE(
   }
 
   const body = await request.json();
-  console.log(body);
   if (!body) {
     return NextResponse.json(
       { error: 'Request body is empty and you are dumb' },

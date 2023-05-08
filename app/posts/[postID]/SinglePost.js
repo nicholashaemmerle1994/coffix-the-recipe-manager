@@ -376,21 +376,17 @@ export default function SinglePostPage(props) {
             <button
               className="btn bg-error w-20 text-white justify-center"
               onClick={async () => {
-                const response = await fetch(
-                  `/api/recipes/${props.post[0].id}`,
-                  {
-                    method: 'DELETE',
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                      id: props.post[0].id,
-                      csrfToken: props.token,
-                    }),
+                await fetch(`/api/recipes/${props.post[0].id}`, {
+                  method: 'DELETE',
+                  headers: {
+                    'Content-Type': 'application/json',
                   },
-                );
-                console.log(response);
-                // router.push('/posts');
+                  body: JSON.stringify({
+                    id: props.post[0].id,
+                    csrfToken: props.token,
+                  }),
+                });
+                router.push('/posts');
                 router.refresh();
               }}
             >
