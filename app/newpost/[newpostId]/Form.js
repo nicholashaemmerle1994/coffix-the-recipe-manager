@@ -182,7 +182,7 @@ export default function Form(props) {
         <div className="flex flex-col bg-secondary justify-self-center gap-3 rounded-xl ">
           <input
             required
-            className="input input-bordered input-sm w-full max-w-xs self-center mt-3 border-gray-400 text-black"
+            className="input input-bordered input-sm w-full max-w-xs self-center mt-3 border-gray-400 text-info"
             placeholder="Coffee Name"
             onChange={(event) => {
               setCoffee({
