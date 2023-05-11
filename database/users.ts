@@ -21,11 +21,6 @@ export type GetUser = {
   bio: string | null;
 };
 
-type CreateUser = {
-  id: number;
-  userName: string;
-};
-
 // function to get user by username
 
 export const getUserByUsername = cache(async (username: string) => {

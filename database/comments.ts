@@ -25,7 +25,7 @@ export const createComment = cache(async (comment: Comment) => {
 
 // Get all comments for a recipe ordered by date
 export const getComments = cache(async (recipeId: number) => {
-  const comments = await sql`
+  const comments = await sql<SQLComment[]>`
     SELECT * FROM comments
     WHERE recipe_id = ${recipeId}
     ORDER BY created_at DESC
