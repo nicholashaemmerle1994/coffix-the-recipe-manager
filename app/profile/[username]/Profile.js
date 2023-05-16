@@ -282,7 +282,7 @@ export default function Profile({
               </figure>
             </div>
             <div className="flex flex-col w-2/4 md:w-full">
-              <div className="flex flex-row justify-end align-center">
+              <div className="flex flex-row justify-end align-center md:hidden">
                 <div className="m-2">
                   <Link href="/api/logout" prefetch={false}>
                     <Image
@@ -416,6 +416,7 @@ export default function Profile({
           <div className="flex flex-col w-2/4 md:w-full">
             <div className="flex flex-row justify-end align-center ">
               <button
+                className="sm:hidden"
                 onClick={() => {
                   setStringifiedCookie('darkMode', !darkMode);
                   setDarkMode(!darkMode);
@@ -486,7 +487,7 @@ export default function Profile({
                   </li>
                 </ul>
               </div>
-              <div className="m-2">
+              <div className="m-2 md:hidden">
                 <Link href="/api/logout" prefetch={false}>
                   <Image
                     src="/logout1.png"

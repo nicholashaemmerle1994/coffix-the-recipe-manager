@@ -29,7 +29,7 @@ export function getParsedCookie(key: string) {
 }
 
 // more robust way to set items to set the cookie without stringify all the time
-export function setStringifiedCookie(key: string, value: string) {
+export function setStringifiedCookie(key: string, value: boolean) {
   Cookies.set(key, JSON.stringify(value));
 }
 

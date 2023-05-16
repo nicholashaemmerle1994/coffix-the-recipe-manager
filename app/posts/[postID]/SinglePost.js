@@ -52,9 +52,9 @@ export default function SinglePostPage(props) {
             <Image
               src={props.post[0].pictureUrl}
               className="w-100 h-full sm:w-full sm:h-full"
-              width={100}
-              height={100}
-              alt="user pic"
+              width={500}
+              height={500}
+              alt="coffee pic"
             />
           </figure>
           <div className="m-2 hidden sm:flex">

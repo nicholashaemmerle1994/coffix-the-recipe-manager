@@ -1,7 +1,6 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { getValidSessionByToken } from '../database/sessions';
-import { createCsrfToken } from '../utils/csrf';
 import LoginForm from './Loginform';
 
 export default async function LoginPage() {

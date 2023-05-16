@@ -90,24 +90,25 @@ export default function Posts(props) {
               return (
                 <div
                   key={`recipe-${recipe.id}`}
-                  className="card card-side shadow-xl m-2.5 bg-secondary sm:w-5/12"
+                  className="card card-side shadow-xl m-2.5 bg-secondary sm:w-5/12 min-h-fit"
                 >
                   <figure>
                     <Image
                       className="w-100 h-full border rounded-l-2xl"
                       src={recipe.pictureUrl}
-                      width={100}
-                      height={100}
+                      width={300}
+                      height={300}
                       alt="user pic"
                     />
                   </figure>
 
-                  <div className="card-body bg-secondary text-warning rounded-r-2xl justify-between">
-                    <Link href={`/posts/${recipe.id}`}>
+                  <div className="card-body bg-secondary text-warning rounded-r-2xl justify-between min-h-fit">
+                    <Link href={`/posts/${recipe.id}`} className="min-h-fit">
                       <h2 className="card-title font-extrabold">
                         {recipe.categoryName}
                       </h2>
                       <p className="font-medium">{recipe.coffee}</p>
+                      <p>{recipe.roaster}</p>
                       <div>
                         {recipe.tastingNotes.map((note, index) => {
                           const noteId = `recipe-id-${recipe.id}-note-${index}`;
