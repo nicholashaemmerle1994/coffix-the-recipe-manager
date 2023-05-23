@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
-import { RegisterResponseBody } from './api/(auth)/register/route';
+import { RegisterResponseBody } from '../api/(auth)/register/route';
 import styles from './login.module.scss';
 
 export default function LoginForm() {

@@ -24,6 +24,54 @@ export default function Posts(props) {
   const handleShowUserFeed = () => {
     setShowAllPosts(false);
   };
+  if (!props.userId) {
+    return (
+      <>
+        <div className="card card-side bg-base-100 shadow-xl" />
+        <div className="sm:flex sm:flex-wrap justify-center  mb-16 sm:mb-0 max-w-4xl">
+          {recipesWithDate.map((recipe) => {
+            return (
+              <div
+                key={`recipe-${recipe.id}`}
+                className="card card-side shadow-xl m-2.5 bg-secondary sm:w-5/12 min-h-fit "
+              >
+                <figure>
+                  <Image
+                    className="w-100 h-full border rounded-l-2xl"
+                    src={recipe.pictureUrl}
+                    width={300}
+                    height={300}
+                    alt="user pic"
+                  />
+                </figure>
+                <div className="card-body bg-secondary text-warning rounded-r-2xl justify-between min-h-fit">
+                  <Link href={`/posts/${recipe.id}`} className="min-h-fit">
+                    <h2 className="card-title font-extrabold">
+                      {recipe.categoryName}
+                    </h2>
+                    <p className="font-medium">{recipe.coffee}</p>
+                    <p>{recipe.roaster}</p>
+                    <div>
+                      {recipe.tastingNotes.map((note, index) => {
+                        const noteId = `recipe-id-${recipe.id}-note-${index}`;
+                        return <p key={`noteId-${noteId}`}>{note}</p>;
+                      })}
+                    </div>
+                  </Link>
+                  <Link
+                    href={`/posts/${recipe.id}`}
+                    className="btn btn-xs btn-secondary border border-primary text-primary"
+                  >
+                    Open
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </>
+    );
+  }
 
   // Filter recipesWithDate by the people the user follows
   const yourFeed = recipesWithDate.filter((recipe) => {
@@ -67,7 +115,7 @@ export default function Posts(props) {
   // These are the Posts of the people the user follows
   return (
     <>
-      <header className="flex sticky top-0 z-10 bg-secondary border-solid border-b border-gray-400 w-screen justify-center">
+      <header className="flex sticky top-0 z-10 bg-secondary border-solid border-b border-gray-400 w-full justify-center">
         <nav>
           <ul className="flex">
             <li className="mr-20">

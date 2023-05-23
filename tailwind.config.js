@@ -30,13 +30,13 @@ module.exports = {
       {
         dark: {
           primary: '#F2BD10',
-          secondary: '#7C7A74',
+          secondary: '#2c2b2b',
           accent: '#E6B31E',
           neutral: '#4A4A4A',
           'base-100': '#121212',
           info: '#9b9991',
           success: '#28A745',
-          warning: '#121212',
+          warning: '#e4e2e2',
           error: '#e19ea5',
         },
       },

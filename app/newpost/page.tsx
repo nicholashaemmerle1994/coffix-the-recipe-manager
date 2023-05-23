@@ -13,14 +13,14 @@ export default async function CategoryPage() {
     (await getValidSessionByToken(sessionTokenCookie.value));
   // if there is, redirect to home page
   if (!session) {
-    redirect('/');
+    redirect('/login');
   }
   // if not, render login form
   const category = await getCategory();
   return (
     <div className="w-auto h-full max-w-lg mx-auto lg:mt-12 sm:mb-20 sm:mt-12 md:mb-20 bg-default rounded-lg  justify-center align-center flex-col flex text-center ">
       <h2 className="text-4xl my-12 font-black">Choose your brew method</h2>
-      <div className="flex flex-wrap justify-center align-center text-gray-50">
+      <div className="flex flex-wrap justify-center align-center text-warning">
         {category.map((brew) => {
           return (
             <Link
@@ -39,7 +39,7 @@ export default async function CategoryPage() {
                   height={50}
                   className="w-14 h-14 mx-auto my-2 rounded-lg"
                 />
-                <p className="text-gray-800 font-bold">{brew.name}</p>
+                <p className="text-warning font-bold">{brew.name}</p>
               </div>
             </Link>
           );

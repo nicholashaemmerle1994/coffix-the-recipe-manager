@@ -109,7 +109,7 @@ export default function Profile({
     return (
       <>
         <div className="card card-side bg-base-100 shadow-xl" />
-        <div className="card card-side shadow-xl m-2.5 bg-secondary h-screen flex flex-col  gap-3 md:flex-row">
+        <div className="card card-side shadow-xl m-2.5 bg-transparent h-screen flex flex-col  gap-3 md:flex-row">
           <div className="card card-side bg-secondary p-2  flex flex-row border border-warning rounded-lg md:w-2/6 md:flex-col">
             <div className="flex flex-row w-2/4 md:w-full">
               <figure className="rounded-l-xl md:w-full md:rounded-xl md:border border-warning">
@@ -400,7 +400,7 @@ export default function Profile({
   return (
     <>
       <div className="card card-side bg-base-100 shadow-xl" />
-      <div className="sm:card sm:card-side shadow-xl m-2.5 bg-secondary h-screen flex flex-col  gap-3 md:flex-row ">
+      <div className="sm:card sm:card-side shadow-xl m-2.5 bg-transparent h-screen flex flex-col  gap-3 md:flex-row ">
         <div className="card card-side bg-secondary p-2  flex border border-warning rounded-lg md:w-2/6 md:flex-col">
           <div className="flex w-2/4 md:w-full ">
             <figure className="rounded-l-xl md:w-full md:rounded-xl md:border border-warning ">
@@ -528,7 +528,7 @@ export default function Profile({
           {postsWithDate.map((post) => {
             return (
               <Link href={`/posts/${post.id}`} key={`post-id-${post.id}`}>
-                <div className="card w-28 h-40 shadow-xl py-2 m-0 border border-warning rounded-lg md:w-52 md:h-72 gap-2">
+                <div className="card w-28 h-40 shadow-xl py-2 m-0 border border-warning bg-secondary rounded-lg md:w-52 md:h-72 gap-2 text-warning">
                   <figure className="rounded-l-xl h-full md:h-44">
                     <Image
                       src={post.pictureUrl}

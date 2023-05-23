@@ -18,7 +18,6 @@
   gap: 35px;
   border-radius: 15px;
   background: #f6f2e8;
-  box-shadow: 16px 16px 32px #c8c8c8, -16px -16px 32px #fefefe;
 }
 
 .inputBox,
@@ -114,8 +113,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  width: 100vw;
-  background: linear-gradient(45deg, #e3e3e3, #fff);
+  width: 100%;
 }
 
 .buttonContainer {

@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getValidSessionByToken } from '../../../database/sessions';
 import { createCsrfToken } from '../../../utils/csrf';
@@ -17,10 +18,24 @@ export default async function NewPostPage({ params }: Params) {
     sessionTokenCookie &&
     (await getValidSessionByToken(sessionTokenCookie.value));
   if (!user) {
-    redirect('/');
+    return (
+      <main>
+        <h1>
+          You need to <Link href="/">Log in</Link>
+        </h1>
+      </main>
+    );
+    // redirect('/');
   }
   if (!user.userId) {
-    redirect('/');
+    return (
+      <main>
+        <h1>
+          You need to <Link href="/">Log in</Link>
+        </h1>
+      </main>
+    );
+    // redirect('/');
   }
   const csrfToken = createCsrfToken(user.csrfSecret);
   const userId = user.userId;

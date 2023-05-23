@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers';
+import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
 import { getCategory, getCategoryNameById } from '../../../database/category';
 import { getFollowers, isFollowing } from '../../../database/follows';
@@ -18,7 +19,14 @@ export default async function ProfilePage(props) {
     (await getValidSessionByToken(sessionTokenCookie.value));
   // if there is, redirect to home page
   if (!session) {
-    redirect('/');
+    return (
+      <main>
+        <h1>
+          You need to <Link href="/">Log in</Link>
+        </h1>
+      </main>
+    );
+    // redirect('/');
   }
   // if not, render login form
 
