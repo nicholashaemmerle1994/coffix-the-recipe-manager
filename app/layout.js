@@ -28,24 +28,22 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  // 1. get the session token from the cookie
   const cookieStore = cookies();
   const sessionToken = cookieStore.get('sessionToken');
-
-  // 2. validate that session
-  // 3. get the user profile matching the session
-  const user = !sessionToken?.value
-    ? undefined
-    : await getUserBySessionToken(sessionToken.value);
-
-  // get theme cookie
-
-  let theme = cookies().get('darkMode');
-
-  if (theme === undefined) {
-    theme = { name: 'darkMode', value: 'false' };
-  }
+  const user = sessionToken?.value
+    ? await getUserBySessionToken(sessionToken.value)
+    : undefined;
+  const theme = cookies().get('darkMode') || {
+    name: 'darkMode',
+    value: 'false',
+  };
   const darkMode = theme.value === 'true' ? 'dark' : 'light';
+
+  const bodyClassName = `flex w-screen ${
+    darkMode === 'dark'
+      ? 'bg-gradient-to-br from-gray-800 to-gray-600'
+      : 'bg-gradient-to-br from-gray-100 to-gray-300'
+  } min-h-screen`;
 
   return (
     <html lang="en-US" data-theme={darkMode}>
@@ -57,55 +55,15 @@ export default async function RootLayout({ children }) {
         />
         <meta name="description" content={metadata.description} />
       </head>
-      {darkMode === 'dark' ? (
-        <body className="flex w-screen bg-gradient-to-br from-gray-800 to-gray-600 min-h-screen">
-          {user ? (
-            <>
-              <Sidebar user={user} />
-              <div className="flex sm:w-5/6 w-full justify-center align-center">
-                <main className="flex flex-col  w-screen justify-start">
-                  {children}
-                </main>
-              </div>
-              <Footer user={user} />
-            </>
-          ) : (
-            <>
-              <Sidebar />
-              <div className="flex sm:w-5/6 w-full justify-center align-center">
-                <main className="flex flex-col  w-screen justify-start sm:mt-8">
-                  {children}
-                </main>
-              </div>
-              <Footer />
-            </>
-          )}
-        </body>
-      ) : (
-        <body className="flex w-screen bg-gradient-to-br from-gray-100 to-gray-300 min-h-screen">
-          {user ? (
-            <>
-              <Sidebar user={user} />
-              <div className="flex sm:w-5/6 w-full justify-center align-center">
-                <main className="flex flex-col  w-screen justify-start">
-                  {children}
-                </main>
-              </div>
-              <Footer user={user} />
-            </>
-          ) : (
-            <>
-              <Sidebar />
-              <div className="flex sm:w-5/6 w-full justify-center align-center">
-                <main className="flex flex-col  w-screen justify-start sm:mt-8">
-                  {children}
-                </main>
-              </div>
-              <Footer />
-            </>
-          )}
-        </body>
-      )}
+      <body className={bodyClassName}>
+        <Sidebar user={user} />
+        <div className="flex sm:w-5/6 w-full justify-center align-center">
+          <main className="flex flex-col w-screen justify-start">
+            {children}
+          </main>
+        </div>
+        <Footer user={user} />
+      </body>
     </html>
   );
 }
