@@ -98,7 +98,7 @@ export default function Form(props) {
         }),
       });
       toast.success('Recipe added');
-      router.push('/posts');
+      router.push('/');
       router.refresh();
     } else {
       const finalApiTaste = apiTaste.map((taste) => {
@@ -132,7 +132,7 @@ export default function Form(props) {
       });
 
       toast.success('Recipe added');
-      router.push('/posts');
+      router.push('/');
       router.refresh();
     }
   }

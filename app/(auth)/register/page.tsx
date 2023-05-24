@@ -11,7 +11,7 @@ export default async function RegisterPage() {
     (await getValidSessionByToken(sessionTokenCookie.value));
   // if there is, redirect to home page
   if (session) {
-    redirect('/posts');
+    redirect('/');
   }
   // if not, render login form
 

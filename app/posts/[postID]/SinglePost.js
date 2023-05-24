@@ -387,7 +387,7 @@ export default function SinglePostPage(props) {
                       csrfToken: props.token,
                     }),
                   });
-                  router.push('/posts');
+                  router.push('/');
                   router.refresh();
                 }}
               >
