@@ -109,9 +109,9 @@ export default function Profile({
     return (
       <>
         <div className="card card-side bg-base-100 shadow-xl" />
-        <div className="card card-side shadow-xl m-2.5 bg-transparent h-screen flex flex-col  gap-3 md:flex-row">
-          <div className="card card-side bg-secondary p-2  flex flex-row border border-warning rounded-lg md:w-2/6 md:flex-col">
-            <div className="flex flex-row w-2/4 md:w-full">
+        <div className="m-2.5 bg-transparent h-screen flex flex-col gap-3 sm:ml-16">
+          <div className="card card-side bg-secondary p-2  flex border border-warning rounded-lg max-w-xl">
+            <div className="flex w-2/4 md:w-full">
               <figure className="rounded-l-xl md:w-full md:rounded-xl md:border border-warning">
                 <Image
                   quality={100}
@@ -124,12 +124,12 @@ export default function Profile({
               </figure>
             </div>
             <div className="flex flex-col w-2/4 md:w-full">
-              <div className="card-body p-0 m-2 flex flex-col md:flex-row md:flex-wrap md:items-center">
-                <div className="md:flex md:flex-wrap md:items-center">
+              <div className="card-body p-0 m-2 flex flex-col md:flex-wrap md:items-center">
+                <div className="md:flex md:flex-wrap md:justify-between">
                   <h2 className="card-title md:h-10 mr-2">{user.firstName}</h2>
                   <h2 className="card-title md:h-10"> {user.lastName}</h2>
                 </div>
-                <div className="md:flex md:flex-wrap md:items-start md:flex-col">
+                <div className="md:flex md:flex-wrap md:items-start md:flex-col md:ml-8">
                   <p>{user.bio}</p>
                   <div className="flex">
                     <div className="mr-3 mt-2">
@@ -142,42 +142,45 @@ export default function Profile({
                     </div>
                   </div>
                 </div>
+                <button
+                  // className={followsOrNot ? 'bg-error' : 'bg-success'}
+                  className={`btn btn-xs sm:mt-12 btn-primary ${
+                    followsOrNot ? 'bg-error' : 'bg-success'
+                  }`}
+                  onClick={async (event) => {
+                    event.preventDefault();
+                    if (followsOrNot === false) {
+                      // POST request to follow user
+                      await fetch('/api/follow', {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                          userId: loggedUser,
+                          followedUserId: user.id,
+                        }),
+                      });
+                      router.refresh();
+                    } else {
+                      // DELETE request to unfollow user
+                      await fetch('/api/follow', {
+                        method: 'DELETE',
+                        headers: {
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                          userId: loggedUser,
+                          followedUserId: user.id,
+                        }),
+                      });
+                      router.refresh();
+                    }
+                  }}
+                >
+                  {followsOrNot ? 'Unfollow' : 'Follow'}
+                </button>
               </div>
-              <button
-                className={followsOrNot ? 'bg-error' : 'bg-success'}
-                onClick={async (event) => {
-                  event.preventDefault();
-                  if (followsOrNot === false) {
-                    // POST request to follow user
-                    await fetch('/api/follow', {
-                      method: 'POST',
-                      headers: {
-                        'Content-Type': 'application/json',
-                      },
-                      body: JSON.stringify({
-                        userId: loggedUser,
-                        followedUserId: user.id,
-                      }),
-                    });
-                    router.refresh();
-                  } else {
-                    // DELETE request to unfollow user
-                    await fetch('/api/follow', {
-                      method: 'DELETE',
-                      headers: {
-                        'Content-Type': 'application/json',
-                      },
-                      body: JSON.stringify({
-                        userId: loggedUser,
-                        followedUserId: user.id,
-                      }),
-                    });
-                    router.refresh();
-                  }
-                }}
-              >
-                {followsOrNot ? 'Unfollow' : 'Follow'}
-              </button>
             </div>
           </div>
 
@@ -255,7 +258,7 @@ export default function Profile({
                 accept="en-US"
               />
             </div>
-            <button className="btn btn-sm border border-warning bg-secondary text-gray-900">
+            <button className="btn btn-sm border border-warning bg-primary text-gray-900">
               Save
             </button>
           </div>
@@ -268,10 +271,10 @@ export default function Profile({
     return (
       <>
         <div className="card card-side bg-base-100 shadow-xl" />
-        <div className="card card-side shadow-xl m-2.5 bg-secondary h-screen flex flex-col  gap-3 md:flex-row">
-          <div className="card card-side bg-secondary p-2  flex flex-row border border-warning rounded-lg md:w-2/6 md:flex-col">
+        <div className="m-2.5 bg-transparent h-screen flex flex-col gap-3 sm:ml-16">
+          <div className="card card-side bg-secondary p-2  flex border border-warning rounded-lg max-w-xl">
             <div className="flex flex-row w-2/4 md:w-full ">
-              <figure className="rounded-l-xl md:w-full md:rounded-xl md:border border-warning ">
+              <figure className="rounded-l-xl md:w-full md:rounded-xl md:border border-warning">
                 <Image
                   className=" w-full h-full md:w-full"
                   src={user.pictureUrl}
@@ -282,7 +285,7 @@ export default function Profile({
               </figure>
             </div>
             <div className="flex flex-col w-2/4 md:w-full">
-              <div className="flex flex-row justify-end align-center md:hidden">
+              <div className="flex flex-row justify-end align-center">
                 <div className="m-2">
                   <Link href="/api/logout" prefetch={false}>
                     <Image
@@ -332,10 +335,10 @@ export default function Profile({
                     }}
                   />
                 </div>
-                <button className="btn btn-sm border border-warning bg-secondary text-gray-900">
+                <button className="btn btn-sm border border-warning bg-primary text-gray-900">
                   Save
                 </button>
-                <div className="md:flex md:flex-wrap md:items-start md:flex-col">
+                <div className="md:flex md:flex-wrap md:items-start md:flex-col md:ml-8">
                   <p>{user.bio}</p>
                   <div className="flex">
                     <div className="mr-3 mt-2">
@@ -352,7 +355,7 @@ export default function Profile({
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-2 mx-2 ">
+          <div className="flex flex-wrap gap-2">
             {postsWithDate.map((post) => {
               return (
                 <Link href={`/posts/${post.id}`} key={`post-id-${post.id}`}>
@@ -400,10 +403,10 @@ export default function Profile({
   return (
     <>
       <div className="card card-side bg-base-100 shadow-xl" />
-      <div className="sm:card sm:card-side shadow-xl m-2.5 bg-transparent h-screen flex flex-col  gap-3 md:flex-row ">
-        <div className="card card-side bg-secondary p-2  flex border border-warning rounded-lg md:w-2/6 md:flex-col">
+      <div className="m-2.5 bg-transparent h-screen flex flex-col gap-3 sm:ml-16">
+        <div className="card card-side bg-secondary p-2  flex border border-warning rounded-lg max-w-xl">
           <div className="flex w-2/4 md:w-full ">
-            <figure className="rounded-l-xl md:w-full md:rounded-xl md:border border-warning ">
+            <figure className="rounded-l-xl md:w-full md:rounded-xl md:border border-warning">
               <Image
                 className=" w-full h-full md:w-full"
                 src={user.pictureUrl}
@@ -414,7 +417,7 @@ export default function Profile({
             </figure>
           </div>
           <div className="flex flex-col w-2/4 md:w-full">
-            <div className="flex flex-row justify-end align-center ">
+            <div className="flex flex-row justify-end align-center">
               <button
                 className="sm:hidden"
                 onClick={() => {
@@ -499,15 +502,11 @@ export default function Profile({
               </div>
             </div>
             <div className="card-body p-0 m-2 flex flex-col md:flex-row md:flex-wrap md:items-center">
-              <div className="sm:flex sm:flex-wrap md:items-center">
-                <h2 className="card-title md:h-10 justify-center mr-2">
-                  {user.firstName}
-                </h2>
-                <h2 className="card-title md:h-10 justify-center">
-                  {user.lastName}
-                </h2>
+              <div className="sm:flex sm:flex-wrap md:items-center md:ml-8">
+                <h2 className="card-title md:h-10 mr-2">{user.firstName}</h2>
+                <h2 className="card-title md:h-10">{user.lastName}</h2>
               </div>
-              <div className="md:flex md:flex-wrap md:items-start md:flex-col">
+              <div className="md:flex md:flex-wrap md:items-start md:flex-col md:ml-8">
                 <p>{user.bio}</p>
                 <div className="flex">
                   <div className="mr-3 mt-2">
@@ -524,7 +523,7 @@ export default function Profile({
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-2 mx-2 ">
+        <div className="flex flex-wrap gap-2">
           {postsWithDate.map((post) => {
             return (
               <Link href={`/posts/${post.id}`} key={`post-id-${post.id}`}>

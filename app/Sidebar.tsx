@@ -47,74 +47,74 @@ export default function Sidebar({ user }: { user: User | undefined }) {
           </div>
         </Link>
         {user ? (
-          <Link href={`/profile/${user.userName}`}>
-            <div className="flex gap-3 align-center text-center">
-              <Image
-                src="/profile.png"
-                alt="home"
-                width={30}
-                height={30}
-                className="py-4 sm:mx-3"
-              />
-              <div className="flex flex-col align-center justify-center mr-3">
-                <p>Profile</p>
+          <>
+            <Link href={`/profile/${user.userName}`}>
+              <div className="flex gap-3 align-center text-center">
+                <Image
+                  src="/profile.png"
+                  alt="home"
+                  width={30}
+                  height={30}
+                  className="py-4 sm:mx-3"
+                />
+                <div className="flex flex-col align-center justify-center mr-3">
+                  <p>Profile</p>
+                </div>
               </div>
-            </div>
-          </Link>
+            </Link>
+            <button
+              onClick={(event) => {
+                event.preventDefault();
+                router.push('/api/logout');
+                router.refresh();
+              }}
+            >
+              <div className="flex gap-3 align-center text-center">
+                <Image
+                  src="/logout1.png"
+                  width={30}
+                  height={30}
+                  alt="Logout"
+                  className="py-4 sm:mx-3"
+                />
+                <div className="flex flex-col align-center justify-center mr-3">
+                  <p>Log out</p>
+                </div>
+              </div>
+            </button>
+          </>
         ) : (
-          <Link href="/login">
-            <div className="flex gap-3 align-center text-center">
-              <Image
-                src="/profile.png"
-                alt="home"
-                width={30}
-                height={30}
-                className="py-4 sm:mx-3"
-              />
-              <div className="flex flex-col align-center justify-center mr-3">
-                <p>Profile</p>
+          <>
+            <Link href="/login">
+              <div className="flex gap-3 align-center text-center">
+                <Image
+                  src="/profile.png"
+                  alt="home"
+                  width={30}
+                  height={30}
+                  className="py-4 sm:mx-3"
+                />
+                <div className="flex flex-col align-center justify-center mr-3">
+                  <p>Profile</p>
+                </div>
               </div>
-            </div>
-          </Link>
+            </Link>
+            <Link href="/login" prefetch={false}>
+              <div className="flex gap-3 align-center text-center">
+                <Image
+                  src="/logout1.png"
+                  width={30}
+                  height={30}
+                  alt="Logout"
+                  className="py-4 sm:mx-3"
+                />
+                <div className="flex flex-col align-center justify-center mr-3">
+                  <p>Log in</p>
+                </div>
+              </div>
+            </Link>
+          </>
         )}
-        {user ? (
-          <button
-            onClick={(event) => {
-              event.preventDefault();
-              router.push('/api/logout');
-              router.refresh();
-            }}
-          >
-            <div className="flex gap-3 align-center text-center">
-              <Image
-                src="/logout1.png"
-                width={30}
-                height={30}
-                alt="Logout"
-                className="py-4 sm:mx-3"
-              />
-              <div className="flex flex-col align-center justify-center mr-3">
-                <p>Log out</p>
-              </div>
-            </div>
-          </button>
-        ) : (
-          <Link href="/login" prefetch={false}>
-            <div className="flex gap-3 align-center text-center">
-              <Image
-                src="/logout1.png"
-                width={30}
-                height={30}
-                alt="Logout"
-                className="py-4 sm:mx-3"
-              />
-              <div className="flex flex-col align-center justify-center mr-3">
-                <p>Log in</p>
-              </div>
-            </div>
-          </Link>
-        )}
-
         <button
           onClick={() => {
             setStringifiedCookie('darkMode', !darkMode);
